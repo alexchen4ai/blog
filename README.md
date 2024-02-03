@@ -7,3 +7,13 @@
 
 
 To make life easier, we use [nbdev](https://nbdev.fast.ai/getting_started.html) to write the blog.
+
+# How to do CI/CD
+Firstly, configure any installation according to this [page](https://quarto.org/docs/publishing/github-pages.html#publish-command).
+- Set `gh-pages` branch.
+
+To make any changes, we can just edit the files in the current folder, and then run the following command to update deployment.
+
+```bash
+quarto publish gh-pages
+```
