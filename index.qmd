@@ -1,7 +1,7 @@
 ---
-title: "website"
+title: "Alex's personal website"
 ---
 
-This is a Quarto website.
+This is the website created by Alex CHEN.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+The website is created by Quarto websites visit <https://quarto.org/docs/websites>.
