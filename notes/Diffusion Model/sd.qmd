@@ -1,0 +1,11 @@
+---
+title: "Stable diffusion model"
+categories: Diffusion Model
+date: 02-03-2024
+---
+
+::: {.callout-tip}
+A text to image generation model from the diffusion architecture.
+:::
+
+📝 **Paper**: [https://arxiv.org/abs/2112.10752](https://arxiv.org/abs/2112.10752)

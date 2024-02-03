@@ -25,3 +25,7 @@ ax.set_rticks([0.5, 1, 1.5, 2])
 ax.grid(True)
 plt.show()
 ```
+
+Of course, we can also write equations here freely.
+
+$$\hat{m} = (w_1 A_1 + w_2 A_2 + \dots + w_N A_N) (w_1 B_1 + w_2 B_2 + \dots + w_N B_N).$$

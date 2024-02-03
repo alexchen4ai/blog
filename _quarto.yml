@@ -3,18 +3,40 @@ project:
 
 website:
   title: "website"
+  bread-crumbs: false
+  site-url: https://alexchen4ai.github.io/blog
+  favicon: images/favicon.ico
   navbar:
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
-      - hello.qmd
+      - text: "Home"
+        href: index.qmd
+      - text: "About"
+        href: about.qmd
+      - text: "Notes"
+        href: notes.qmd
+      - text: "Hello"
+        href: hello.qmd
+    right: 
+      - icon: github
+        href: https://github.com/alexchen4ai
+      - icon: linkedin
+        href: https://www.linkedin.com/in/wei-chen-stanford
+  
+  sidebar:
+    - id: notes
+      title: "Notes"
+      style: "floating"
+      align: left
+      contents:
+        - section: "🗣️ **Large language models**"
+          contents: "notes/Large Language Model/*"
+        - text: "---"
+        - section: "💡 **Diffusion models**"
+          contents: "notes/Diffusion Model/*"
 
-format:
-  html:
-    theme: cosmo
-    css: styles.css
-    toc: true
+comments:
+  utterances:
+    repo: https://github.com/alexchen4ai/blog
 
 
 
