@@ -1,0 +1,11 @@
+---
+title: "Orca – Progressive Learning from Complex Explanation Traces of GPT-4"
+categories: Large Language Models
+date: 02-03-2024
+---
+
+::: {.callout-tip}
+Orca is a 13B parameter LLM with ChatGPT level of performance thanks to a huge dataset of 5M samples with step-by-step explanations.
+:::
+
+📝 **Paper**: [https://arxiv.org/abs/2306.02707](https://arxiv.org/abs/2306.02707)

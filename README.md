@@ -17,3 +17,5 @@ To make any changes, we can just edit the files in the current folder, and then 
 ```bash
 quarto publish gh-pages
 ```
+
+If you need to rebuild the project, use `quarto render` to rebuild the project. And we can use `quarto preview` to preview the project locally.
