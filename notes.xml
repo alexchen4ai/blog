@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>website</title>
+<link>https://alexchen4ai.github.io/blog/notes.html</link>
+<atom:link href="https://alexchen4ai.github.io/blog/notes.xml" rel="self" type="application/rss+xml"/>
+<description>Personal summaries and insights gathered from reading various research papers and articles.</description>
+<generator>quarto-1.4.549</generator>
+<lastBuildDate>Sat, 03 Feb 2024 08:00:00 GMT</lastBuildDate>
+<item>
+  <title>Orca – Progressive Learning from Complex Explanation Traces of GPT-4</title>
+  <dc:creator>Alex Chen</dc:creator>
+  <link>https://alexchen4ai.github.io/blog/notes/Large Language Model/orca.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Orca is a 13B parameter LLM with ChatGPT level of performance thanks to a huge dataset of 5M samples with step-by-step explanations.</p>
+</div>
+</div>
+<p>📝 <strong>Paper</strong>: <a href="https://arxiv.org/abs/2306.02707">https://arxiv.org/abs/2306.02707</a></p>
+
+
+
+ ]]></description>
+  <category>Large Language Models</category>
+  <guid>https://alexchen4ai.github.io/blog/notes/Large Language Model/orca.html</guid>
+  <pubDate>Sat, 03 Feb 2024 08:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Stable diffusion model</title>
+  <dc:creator>Alex Chen</dc:creator>
+  <link>https://alexchen4ai.github.io/blog/notes/Diffusion Model/sd.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A text to image generation model from the diffusion architecture.</p>
+</div>
+</div>
+<p>📝 <strong>Paper</strong>: <a href="https://arxiv.org/abs/2112.10752">https://arxiv.org/abs/2112.10752</a></p>
+
+
+
+ ]]></description>
+  <category>Diffusion Model</category>
+  <guid>https://alexchen4ai.github.io/blog/notes/Diffusion Model/sd.html</guid>
+  <pubDate>Sat, 03 Feb 2024 08:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
