@@ -81,10 +81,6 @@ code {
     font-size: 220%;
 }
 
-.quarto-title-banner, .navbar-light, .navbar-dark {
-    background: linear-gradient(90deg, rgba(254,200,16,1) 0%, rgba(255,128,237,1) 100%);
-    /* background: linear-gradient(90deg, rgba(59,112,254,1) 0%, rgba(49,195,135,1) 100%); */
-}
 
 .quarto-post {
     background-color: rgba(255,255,255,0.8);
@@ -231,6 +227,6 @@ nav.quarto-secondary-nav {
     display: none;
 }
 
-.quarto-page-breadcrumbs {
-    display: none !important;
+.quarto-title-banner, .navbar-light, .navbar-dark, .navbar{
+    background: linear-gradient(90deg, rgba(153,111,228,1) 0%, rgba(155,210,252,1) 100%);
 }

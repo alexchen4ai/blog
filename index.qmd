@@ -2,6 +2,4 @@
 title: "Alex's personal website"
 ---
 
-This is the website created by Alex CHEN.
-
-The website is created by Quarto websites visit <https://quarto.org/docs/websites>.
+This is the website created by Alex CHEN to share AI.
