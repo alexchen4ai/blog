@@ -1,8 +1,12 @@
 project:
   type: website
 
+format:
+  html:
+    css: styles.css
+
 website:
-  title: "website"
+  title: "Alex Chen's Blog"
   bread-crumbs: false
   site-url: https://alexchen4ai.github.io/blog
   favicon: images/favicon.ico
@@ -14,6 +18,8 @@ website:
         href: about.qmd
       - text: "Notes"
         href: notes.qmd
+      - text: "A chat model demo"
+        href: chat_model.ipynb
       - text: "Hello"
         href: hello.qmd
     right: 
@@ -34,9 +40,9 @@ website:
         - section: "💡 **Diffusion models**"
           contents: "notes/Diffusion Model/*"
 
-comments:
-  utterances:
-    repo: https://github.com/alexchen4ai/blog
+# comments:
+#   utterances:
+#     repo:  alexchen4ai/blog
 
 
 
