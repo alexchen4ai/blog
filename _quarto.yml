@@ -14,8 +14,6 @@ website:
     left:
       - text: "Home"
         href: index.qmd
-      - text: "About"
-        href: about.qmd
       - text: "Notes"
         href: notes.qmd
       - text: "A chat model demo"
