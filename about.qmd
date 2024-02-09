@@ -1,5 +1,30 @@
 ---
-title: "About"
+title: "About Wei Chen"
+format: html
 ---
 
-About this site
+<div id="about-me" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+
+<div id="profile-picture" style="margin-bottom: 20px;">
+![I am inside a Hawaii cafe](images/profile.jpeg)
+</div>
+
+<div id="social-media" style="margin-bottom: 20px;">
+  <!-- Replace with your actual social media links and ensure you have the icons in your images folder -->
+  <a href="https://twitter.com/alexchen4ai"><img src="images/twitter.png" alt="Twitter" style="width: 24px; height: 24px; margin-right: 5px;"></a>
+  <a href="https://www.linkedin.com/in/wei-chen-stanford/"><img src="images/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px; margin-right: 5px;"></a>
+  <a href="https://github.com/alexchen4ai"><img src="images/github.png" alt="GitHub" style="width: 30px; height: 30px;"></a>
+</div>
+
+<div id="content" style="flex: 1;">
+Greetings! My name is **Alex Chen**, an **AI researcher and startup founder** in Silicon Valley. Previously, I pursued a PhD at Stanford University, delving into numerical simulation and artificial intelligence research.
+
+In this space, I aim to share my journey in academia and industry, providing insights into cutting-edge research and practical applications of AI and machine learning.
+
+---
+Feel free to connect with me:
+
+- Email: [weichen6@stanford.edu](mailto:weichen6@stanford.edu)
+- Check out my startup: [AI Tools by Nexa](https://www.nexa4ai.com/ai-tools)
+</div>
+</div>
