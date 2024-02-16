@@ -1,11 +1,135 @@
 ---
-title: "Orca – Progressive Learning from Complex Explanation Traces of GPT-4"
+title: "Reinforcement learning for large language model"
 categories: Large Language Models
-date: 02-03-2024
+date: 02-15-2024
 ---
 
 ::: {.callout-tip}
-Orca is a 13B parameter LLM with ChatGPT level of performance thanks to a huge dataset of 5M samples with step-by-step explanations.
+Reinforment is a common technique, which can be applied to the large language model area. 
 :::
 
-📝 **Paper**: [https://arxiv.org/abs/2306.02707](https://arxiv.org/abs/2306.02707)
+## Background of reinforcement learning
+In the first section, we will review the fundamental concept of the reinforcement learning. The fundamental part of the reinforcement learning includes the **agent** and **environment**. The process is as the following:
+<p align=center>
+    <img src="../../images/RL_basic.png" width="60%"/>
+</p>
+
+At each iteration step, we have the state of the environement marked as $S$, the action $A$ and the reward $R$. Below, we list the step at the time step $t$:
+
+1. Based on the current state $S_t$, the agent make the action $A_t$;
+2. The environment react to the action and transit to the state $S_{t+1}$ and reward $R_{t+1}$.
+
+Therefore, related to each action, we will have a state of $S_t, A_t, S_{t+1}, R_{t+1}$. And these four variables will be the critical data used for the reinforcement learning! Now, let me introduce more about the **glossary** of the reinforcement learning terms. 
+
+* *Markov chain*: The Markov chain means that the action taken by the agent is only dependent on the most recent state/present state, and is independent of past states. 
+* *Observation/State*: The state is the complete description while the observation is just the partial description. The partial description means part of the state.
+* *policy*: The policy is usually denoted as $\pi$ and it is used to decide which action $a$ to take. According to the Markov chain, we have $\pi(s)=a$. 
+* *reward*: Reward is the value that we can get immediately after we take a new action. For example, in cartpole example, we get every positive feedback if the cartpole doesn't fail.
+* *Value*: The value function to calculate the discounted sum of all future rewards! Thus, the values are different from the reward.
+
+These are some basic concepts in the reinforcement learning! We will introduce more advanced concept along with more topics involved below. We revisit the fundamental part of the RL: The agent can repeated to take actions and get feedback (rewards/values) from the environment so that it can update the agent itself to behave better to get best reward or values. The deep learning and pytorch is not designed for the RL, and RL is more a mathematically which may not naturally suited for the deep learning. Rather, we design some equation to apply the deep learning. Thus, when we design the RL, we need to think from the fundamental math, and deep learning is just a method to solve a math problem.
+
+## The classification of RL
+To solve the RL problem, we have various methods! The detailed is concluded in the figure below. We will study more about the policy based method, the value based method. And for SOTA, the LLM usuaully use a combined method. When we consider how to train the RL, we should first think about how to use the pretrained model. We wish the model to guide us to get the best action to take at every step! Thus, we need a great policy $\pi^*$!. 
+
+
+<p align=center>
+    <img src="../../images/RL_classification.png" width="100%"/>
+</p>
+
+### The value based method
+The famous $Q$ learning is a typical value-based method. The original paper can be accessed [**here**](https://link.springer.com/content/pdf/10.1007/BF00992698.pdf). The $Q$ is the abbreviate of *quality*. The value based method has two submethods called the state-value function and the action-value function. Usually, we use $V$ to represent the value, which is 
+
+$$
+V_{\pi}(s) = \mathbb{E}_{\pi}\left[ R_{t+1}+\gamma R_{t+2} + \gamma^2R_{t+3}+... | S_t=s \right]
+$$
+
+Let me clarify the equation above in a probability. The $\pi$ is like a distribution, and we may express the value as
+
+$$
+V_{\pi}(s) = \mathbb{E}_{\tau\sim\pi}\left[ R_{t+1}+\gamma R_{t+2} + \gamma^2R_{t+3}+... | S_t=s \right]
+$$
+
+since we have $a\sim \pi(s)$. And $a$ is directly relevant to the trajectory $\tau$ which can be used for comprehensive rewards. Now, we have known the value function, this is a value that can evaluate the current confidence to get the best reward based on the current state! Another better and granular method is not just the current state, but also the action. And we introduce the $Q$ value. However, fundamentally, we have $Q$ and $V$ to express the same meaning, the confidence or the estimated quality of the current condition. The only difference is that the $Q$ function also count in the actions.
+
+The comparison would be $V_\pi (s)=\mathbb{E}_\pi [G_t|S_t=s]$ vs. $Q_{\pi}(s, a)=\mathbb{E_\pi}[G_t|S_t=s, A_t=a]$. The $G_t$ here represent the ending state. Then, as stated above how do we get the best policy? We can use 
+
+$$
+\pi^* = \text{arg}\max_a Q^*(s, a)
+$$
+
+To simulate the RL, we usually need to simulate the whole episode, like a cartpole example would continue until it fails. However, there are ways to simplify the process by **Bellman equation**:
+$$
+V_\pi(s) = \mathbb{E}_{\pi} [R_{t+1}+\gamma * V_{\pi}(S_{t+1})|S_t=s].
+$$
+And we can update the value function by **Monte Carlo** or the **Temporary Difference** method. The $Q$ learning is an off-policy (when updating the value function choose a different way to sample the action) value-based method that uses a TD approach to train its action-value function. 
+
+Before move on, we explain the off-policy. In RL, we usually use $\epsilon$ greedy policy to choose the actions. That is for a given state $s$, we take the action by sample $p\in [0,1]$:
+$$
+f(x) = 
+\begin{cases} 
+\pi^*(s) & \text{$p\leq\epsilon$}, \\
+\text{random action} & \text{otherwise}.
+\end{cases}
+$$
+This is a combination of exploration and eploitation. And each time, when we train the $Q$ function, we update it like
+$$
+Q(S_t, A_t) \leftarrow Q(S_t, A_t) +\alpha (R_{t+1}+\gamma \max_a Q(S_{t+1}, a) -Q(S_t, A_t))
+$$
+
+For certain case with finite number of state and actions, we can easily use a table to record the $Q$ function. However, for some infinite number of states and actions, we need more complicated expression. For example, a math function, and abstract that function we can get the deep neural network $Q$. This is how we can infer the [DQN, a natural paper](https://www.nature.com/articles/nature14236). This basically tell us the value of $Q_\theta (s, a)$.
+
+A DQN algorithm is:
+
+1. Initialize replay memory $D$ to capacity $N$
+2. Initialize action-value function $Q$ with random weights $\theta$
+3. Initialize target action-value function $\hat{Q}$ with weights $\theta^{-} = \theta$
+4. For episode = $1, M$ do
+   * Initialize sequence $s_1 = \{x_1\}$ and preprocessed sequence $\phi_1 = \phi(s_1)$
+   * For $t = 1, T$ do
+      *  With probability $\varepsilon$ select a random action $a_t$
+         otherwise select $a_t = \text{argmax}_a Q(\phi(s_t), a; \theta)$
+      *  Execute action $a_t$ in emulator and observe reward $r_t$ and image $x_{t+1}$
+      *  Set $s_{t+1} = s_t, a_t, x_{t+1}$ and preprocess $\phi_{t+1} = \phi(s_{t+1})$
+      *  Store transition $(\phi_t, a_t, r_t, \phi_{t+1})$ in $D$
+      *  Sample random minibatch of transitions $(\phi_j, a_j, r_j, \phi_{j+1})$ from $D$
+      *  Set $y_j = \left\{\begin{array}{ll}
+         r_j & \text{if episode terminates at step } j+1 \\
+         r_j + \gamma \max_{a'} \hat{Q}(\phi_{j+1}, a'; \theta^{-}) & \text{otherwise}
+         \end{array}\right.$
+      *  Perform a gradient descent step on $(y_j - Q(\phi_j, a_j; \theta))^2$ with respect to the network parameters $\theta$
+      *  Every $C$ steps reset $\hat{Q} = Q$
+
+Here $\phi$ represent some feature encoder! For example, if the state can be represented as image. Then, $\phi$ is something like the RGB value extractor.
+
+
+
+### The policy based method
+We can also train the policy directly $\pi_\theta$ and set the loss as the rewarding function! It is more intuitive but it becomes hard to converge and takes really long time to train. 
+
+Note that $\pi_\theta (s) = \mathbb{P}(A|s;\theta)$. Thus, the training basically becomes that when we have postive reward, we should increase the proability of the state and action pair. Otherwise, decrease it. The objective function is still the total rewards!
+$$
+J(\theta) = \mathbb{E}_{\tau\sim \pi}[R(\tau)],
+$$
+where $\tau$ is a trajectory (a whole simulation process). We already have a theorem to update the policy:
+
+$$
+\nabla_\theta J(\theta)=\mathbb{E}_{\pi_\theta}\left[\nabla_\theta \log \pi_\theta\left(a_t \mid s_t\right) R(\tau)\right]
+$$
+
+which is valid for any differentiable policy and for any policy objective function! To better understand the process, we introduce the **Monte Carlo Reinforce**.
+In a loop:
+
+- Use the policy $\pi_\theta$ to collect an episode $\tau$
+- Use the episode to estimate the gradient $\hat{g}=\nabla_\theta J(\theta)$ $$
+\nabla_\theta J(\theta) \approx \hat{g}=\sum_{t=0} \nabla_\theta \log \pi_\theta\left(a_t \mid s_t\right) R(\tau)
+$$
+- Update the weights of the policy: $\theta \leftarrow \theta+\alpha \hat{g}$. (Gradient descent)
+
+::: {.callout-tip}
+Now, we usually use a mixed method containing both policy based and value based methods.
+:::
+
+### The actor-critic method and PPO
+
+TODO...
