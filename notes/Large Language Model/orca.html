@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Chen">
-<meta name="dcterms.date" content="2024-02-03">
+<meta name="dcterms.date" content="2024-02-15">
 
-<title>Alex Chen’s Blog - Orca – Progressive Learning from Complex Explanation Traces of GPT-4</title>
+<title>Alex Chen’s Blog - Reinforcement learning for large language model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,6 +70,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -131,7 +160,7 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">Orca – Progressive Learning from Complex Explanation Traces of GPT-4</h1>
+          <h1 class="quarto-secondary-nav-title">Reinforcement learning for large language model</h1>
         </a>     
     </div>
   </nav>
@@ -140,7 +169,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title d-none d-lg-block">Orca – Progressive Learning from Complex Explanation Traces of GPT-4</h1>
+      <h1 class="title d-none d-lg-block">Reinforcement learning for large language model</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Large Language Models</div>
               </div>
@@ -160,7 +189,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 3, 2024</p>
+        <p class="date">February 15, 2024</p>
       </div>
     </div>
     
@@ -185,7 +214,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../notes/Large Language Model/orca.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Orca – Progressive Learning from Complex Explanation Traces of GPT-4</span></a>
+ <span class="menu-text">Reinforcement learning for large language model</span></a>
   </div>
 </li>
       </ul>
@@ -231,12 +260,128 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Orca is a 13B parameter LLM with ChatGPT level of performance thanks to a huge dataset of 5M samples with step-by-step explanations.</p>
+<p>Reinforment is a common technique, which can be applied to the large language model area.</p>
 </div>
 </div>
-<p>📝 <strong>Paper</strong>: <a href="https://arxiv.org/abs/2306.02707">https://arxiv.org/abs/2306.02707</a></p>
+<section id="background-of-reinforcement-learning" class="level2">
+<h2 class="anchored" data-anchor-id="background-of-reinforcement-learning">Background of reinforcement learning</h2>
+In the first section, we will review the fundamental concept of the reinforcement learning. The fundamental part of the reinforcement learning includes the <strong>agent</strong> and <strong>environment</strong>. The process is as the following:
+<p align="center">
+<img src="../../images/RL_basic.png" width="60%">
+</p>
+<p>At each iteration step, we have the state of the environement marked as <span class="math inline">\(S\)</span>, the action <span class="math inline">\(A\)</span> and the reward <span class="math inline">\(R\)</span>. Below, we list the step at the time step <span class="math inline">\(t\)</span>:</p>
+<ol type="1">
+<li>Based on the current state <span class="math inline">\(S_t\)</span>, the agent make the action <span class="math inline">\(A_t\)</span>;</li>
+<li>The environment react to the action and transit to the state <span class="math inline">\(S_{t+1}\)</span> and reward <span class="math inline">\(R_{t+1}\)</span>.</li>
+</ol>
+<p>Therefore, related to each action, we will have a state of <span class="math inline">\(S_t, A_t, S_{t+1}, R_{t+1}\)</span>. And these four variables will be the critical data used for the reinforcement learning! Now, let me introduce more about the <strong>glossary</strong> of the reinforcement learning terms.</p>
+<ul>
+<li><em>Markov chain</em>: The Markov chain means that the action taken by the agent is only dependent on the most recent state/present state, and is independent of past states.</li>
+<li><em>Observation/State</em>: The state is the complete description while the observation is just the partial description. The partial description means part of the state.</li>
+<li><em>policy</em>: The policy is usually denoted as <span class="math inline">\(\pi\)</span> and it is used to decide which action <span class="math inline">\(a\)</span> to take. According to the Markov chain, we have <span class="math inline">\(\pi(s)=a\)</span>.</li>
+<li><em>reward</em>: Reward is the value that we can get immediately after we take a new action. For example, in cartpole example, we get every positive feedback if the cartpole doesn’t fail.</li>
+<li><em>Value</em>: The value function to calculate the discounted sum of all future rewards! Thus, the values are different from the reward.</li>
+</ul>
+<p>These are some basic concepts in the reinforcement learning! We will introduce more advanced concept along with more topics involved below. We revisit the fundamental part of the RL: The agent can repeated to take actions and get feedback (rewards/values) from the environment so that it can update the agent itself to behave better to get best reward or values. The deep learning and pytorch is not designed for the RL, and RL is more a mathematically which may not naturally suited for the deep learning. Rather, we design some equation to apply the deep learning. Thus, when we design the RL, we need to think from the fundamental math, and deep learning is just a method to solve a math problem.</p>
+</section>
+<section id="the-classification-of-rl" class="level2">
+<h2 class="anchored" data-anchor-id="the-classification-of-rl">The classification of RL</h2>
+<p>To solve the RL problem, we have various methods! The detailed is concluded in the figure below. We will study more about the policy based method, the value based method. And for SOTA, the LLM usuaully use a combined method. When we consider how to train the RL, we should first think about how to use the pretrained model. We wish the model to guide us to get the best action to take at every step! Thus, we need a great policy <span class="math inline">\(\pi^*\)</span>!.</p>
+<p align="center">
+<img src="../../images/RL_classification.png" width="100%">
+</p>
+<section id="the-value-based-method" class="level3">
+<h3 class="anchored" data-anchor-id="the-value-based-method">The value based method</h3>
+<p>The famous <span class="math inline">\(Q\)</span> learning is a typical value-based method. The original paper can be accessed <a href="https://link.springer.com/content/pdf/10.1007/BF00992698.pdf"><strong>here</strong></a>. The <span class="math inline">\(Q\)</span> is the abbreviate of <em>quality</em>. The value based method has two submethods called the state-value function and the action-value function. Usually, we use <span class="math inline">\(V\)</span> to represent the value, which is</p>
+<p><span class="math display">\[
+V_{\pi}(s) = \mathbb{E}_{\pi}\left[ R_{t+1}+\gamma R_{t+2} + \gamma^2R_{t+3}+... | S_t=s \right]
+\]</span></p>
+<p>Let me clarify the equation above in a probability. The <span class="math inline">\(\pi\)</span> is like a distribution, and we may express the value as</p>
+<p><span class="math display">\[
+V_{\pi}(s) = \mathbb{E}_{\tau\sim\pi}\left[ R_{t+1}+\gamma R_{t+2} + \gamma^2R_{t+3}+... | S_t=s \right]
+\]</span></p>
+<p>since we have <span class="math inline">\(a\sim \pi(s)\)</span>. And <span class="math inline">\(a\)</span> is directly relevant to the trajectory <span class="math inline">\(\tau\)</span> which can be used for comprehensive rewards. Now, we have known the value function, this is a value that can evaluate the current confidence to get the best reward based on the current state! Another better and granular method is not just the current state, but also the action. And we introduce the <span class="math inline">\(Q\)</span> value. However, fundamentally, we have <span class="math inline">\(Q\)</span> and <span class="math inline">\(V\)</span> to express the same meaning, the confidence or the estimated quality of the current condition. The only difference is that the <span class="math inline">\(Q\)</span> function also count in the actions.</p>
+<p>The comparison would be <span class="math inline">\(V_\pi (s)=\mathbb{E}_\pi [G_t|S_t=s]\)</span> vs.&nbsp;<span class="math inline">\(Q_{\pi}(s, a)=\mathbb{E_\pi}[G_t|S_t=s, A_t=a]\)</span>. The <span class="math inline">\(G_t\)</span> here represent the ending state. Then, as stated above how do we get the best policy? We can use</p>
+<p><span class="math display">\[
+\pi^* = \text{arg}\max_a Q^*(s, a)
+\]</span></p>
+<p>To simulate the RL, we usually need to simulate the whole episode, like a cartpole example would continue until it fails. However, there are ways to simplify the process by <strong>Bellman equation</strong>: <span class="math display">\[
+V_\pi(s) = \mathbb{E}_{\pi} [R_{t+1}+\gamma * V_{\pi}(S_{t+1})|S_t=s].
+\]</span> And we can update the value function by <strong>Monte Carlo</strong> or the <strong>Temporary Difference</strong> method. The <span class="math inline">\(Q\)</span> learning is an off-policy (when updating the value function choose a different way to sample the action) value-based method that uses a TD approach to train its action-value function.</p>
+<p>Before move on, we explain the off-policy. In RL, we usually use <span class="math inline">\(\epsilon\)</span> greedy policy to choose the actions. That is for a given state <span class="math inline">\(s\)</span>, we take the action by sample <span class="math inline">\(p\in [0,1]\)</span>: <span class="math display">\[
+f(x) =
+\begin{cases}
+\pi^*(s) &amp; \text{$p\leq\epsilon$}, \\
+\text{random action} &amp; \text{otherwise}.
+\end{cases}
+\]</span> This is a combination of exploration and eploitation. And each time, when we train the <span class="math inline">\(Q\)</span> function, we update it like <span class="math display">\[
+Q(S_t, A_t) \leftarrow Q(S_t, A_t) +\alpha (R_{t+1}+\gamma \max_a Q(S_{t+1}, a) -Q(S_t, A_t))
+\]</span></p>
+<p>For certain case with finite number of state and actions, we can easily use a table to record the <span class="math inline">\(Q\)</span> function. However, for some infinite number of states and actions, we need more complicated expression. For example, a math function, and abstract that function we can get the deep neural network <span class="math inline">\(Q\)</span>. This is how we can infer the <a href="https://www.nature.com/articles/nature14236">DQN, a natural paper</a>. This basically tell us the value of <span class="math inline">\(Q_\theta (s, a)\)</span>.</p>
+<p>A DQN algorithm is:</p>
+<ol type="1">
+<li>Initialize replay memory <span class="math inline">\(D\)</span> to capacity <span class="math inline">\(N\)</span></li>
+<li>Initialize action-value function <span class="math inline">\(Q\)</span> with random weights <span class="math inline">\(\theta\)</span></li>
+<li>Initialize target action-value function <span class="math inline">\(\hat{Q}\)</span> with weights <span class="math inline">\(\theta^{-} = \theta\)</span></li>
+<li>For episode = <span class="math inline">\(1, M\)</span> do
+<ul>
+<li>Initialize sequence <span class="math inline">\(s_1 = \{x_1\}\)</span> and preprocessed sequence <span class="math inline">\(\phi_1 = \phi(s_1)\)</span></li>
+<li>For <span class="math inline">\(t = 1, T\)</span> do
+<ul>
+<li>With probability <span class="math inline">\(\varepsilon\)</span> select a random action <span class="math inline">\(a_t\)</span> otherwise select <span class="math inline">\(a_t = \text{argmax}_a Q(\phi(s_t), a; \theta)\)</span></li>
+<li>Execute action <span class="math inline">\(a_t\)</span> in emulator and observe reward <span class="math inline">\(r_t\)</span> and image <span class="math inline">\(x_{t+1}\)</span></li>
+<li>Set <span class="math inline">\(s_{t+1} = s_t, a_t, x_{t+1}\)</span> and preprocess <span class="math inline">\(\phi_{t+1} = \phi(s_{t+1})\)</span></li>
+<li>Store transition <span class="math inline">\((\phi_t, a_t, r_t, \phi_{t+1})\)</span> in <span class="math inline">\(D\)</span></li>
+<li>Sample random minibatch of transitions <span class="math inline">\((\phi_j, a_j, r_j, \phi_{j+1})\)</span> from <span class="math inline">\(D\)</span></li>
+<li>Set <span class="math inline">\(y_j = \left\{\begin{array}{ll}
+r_j &amp; \text{if episode terminates at step } j+1 \\
+r_j + \gamma \max_{a'} \hat{Q}(\phi_{j+1}, a'; \theta^{-}) &amp; \text{otherwise}
+\end{array}\right.\)</span></li>
+<li>Perform a gradient descent step on <span class="math inline">\((y_j - Q(\phi_j, a_j; \theta))^2\)</span> with respect to the network parameters <span class="math inline">\(\theta\)</span></li>
+<li>Every <span class="math inline">\(C\)</span> steps reset <span class="math inline">\(\hat{Q} = Q\)</span></li>
+</ul></li>
+</ul></li>
+</ol>
+<p>Here <span class="math inline">\(\phi\)</span> represent some feature encoder! For example, if the state can be represented as image. Then, <span class="math inline">\(\phi\)</span> is something like the RGB value extractor.</p>
+</section>
+<section id="the-policy-based-method" class="level3">
+<h3 class="anchored" data-anchor-id="the-policy-based-method">The policy based method</h3>
+<p>We can also train the policy directly <span class="math inline">\(\pi_\theta\)</span> and set the loss as the rewarding function! It is more intuitive but it becomes hard to converge and takes really long time to train.</p>
+<p>Note that <span class="math inline">\(\pi_\theta (s) = \mathbb{P}(A|s;\theta)\)</span>. Thus, the training basically becomes that when we have postive reward, we should increase the proability of the state and action pair. Otherwise, decrease it. The objective function is still the total rewards! <span class="math display">\[
+J(\theta) = \mathbb{E}_{\tau\sim \pi}[R(\tau)],
+\]</span> where <span class="math inline">\(\tau\)</span> is a trajectory (a whole simulation process). We already have a theorem to update the policy:</p>
+<p><span class="math display">\[
+\nabla_\theta J(\theta)=\mathbb{E}_{\pi_\theta}\left[\nabla_\theta \log \pi_\theta\left(a_t \mid s_t\right) R(\tau)\right]
+\]</span></p>
+<p>which is valid for any differentiable policy and for any policy objective function! To better understand the process, we introduce the <strong>Monte Carlo Reinforce</strong>. In a loop:</p>
+<ul>
+<li>Use the policy <span class="math inline">\(\pi_\theta\)</span> to collect an episode <span class="math inline">\(\tau\)</span></li>
+<li>Use the episode to estimate the gradient <span class="math inline">\(\hat{g}=\nabla_\theta J(\theta)\)</span> <span class="math display">\[
+\nabla_\theta J(\theta) \approx \hat{g}=\sum_{t=0} \nabla_\theta \log \pi_\theta\left(a_t \mid s_t\right) R(\tau)
+\]</span></li>
+<li>Update the weights of the policy: <span class="math inline">\(\theta \leftarrow \theta+\alpha \hat{g}\)</span>. (Gradient descent)</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Now, we usually use a mixed method containing both policy based and value based methods.</p>
+</div>
+</div>
+</section>
+<section id="the-actor-critic-method-and-ppo" class="level3">
+<h3 class="anchored" data-anchor-id="the-actor-critic-method-and-ppo">The actor-critic method and PPO</h3>
+<p>TODO…</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
