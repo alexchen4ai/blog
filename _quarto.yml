@@ -16,7 +16,7 @@ website:
         href: index.qmd
       - text: "Notes"
         href: notes.qmd
-      - text: "A chat model demo"
+      - text: "LLM code example"
         href: chat_model.ipynb
       - text: "Hello"
         href: hello.qmd
