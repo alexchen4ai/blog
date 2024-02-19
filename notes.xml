@@ -705,9 +705,20 @@ Tip
 <section id="deal-with-the-advantage-values" class="level4">
 <h4 class="anchored" data-anchor-id="deal-with-the-advantage-values">Deal with the advantage values</h4>
 <p>The action value is simply as <img src="https://latex.codecogs.com/png.latex?%0AA(s_t,%20a_t)%20=%20Q(s_t,%20a_t)%20-%20V(s_t)%20=%20r%20+%20%5Cgamma%20V(s_%7Bt+1%7D)%20-%20V(s)%0A"> Here, we use <img src="https://latex.codecogs.com/png.latex?r%20+%20%5Cgamma%20V(s_%7Bt+1%7D)"> to appriximate the <img src="https://latex.codecogs.com/png.latex?Q"> value, but recall in the DQN algorithm, we use it as well!</p>
-
-
 </section>
+</section>
+<section id="apply-ppo-to-llm" class="level3">
+<h3 class="anchored" data-anchor-id="apply-ppo-to-llm">Apply PPO to LLM</h3>
+<p>Now, we discuss the pivotal topic of this blog. How to consider the LLM training as a PPO.</p>
+<p>We use the concept of RL, and explain how LLM can be used here.</p>
+<ul>
+<li><strong>environment</strong>: The language world, when you output a new word, it will be added as the context of the conversation. The observation/state is the existing generation and the initial language;</li>
+<li><strong>state</strong>: The existing generation and the initial language;</li>
+<li><strong>agent</strong>: The LLM model it self. We have <code>LLM(curr_words) = next_token</code>. Here <img src="https://latex.codecogs.com/png.latex?%5Cpi_%5Ctheta"> = LLM;</li>
+<li><strong>reward</strong>: Can be customized, and we usually choose to add a linear layer (two-heads output) to the last embedding layer of the LLM as the reward function.</li>
+</ul>
+
+
 </section>
 </section>
 

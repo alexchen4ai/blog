@@ -164,7 +164,7 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../chat_model.html"> 
-<span class="menu-text">A chat model demo</span></a>
+<span class="menu-text">LLM code example</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../hello.html"> 
@@ -664,9 +664,20 @@ Tip
 <p>The action value is simply as <span class="math display">\[
 A(s_t, a_t) = Q(s_t, a_t) - V(s_t) = r + \gamma V(s_{t+1}) - V(s)
 \]</span> Here, we use <span class="math inline">\(r + \gamma V(s_{t+1})\)</span> to appriximate the <span class="math inline">\(Q\)</span> value, but recall in the DQN algorithm, we use it as well!</p>
-
-
 </section>
+</section>
+<section id="apply-ppo-to-llm" class="level3">
+<h3 class="anchored" data-anchor-id="apply-ppo-to-llm">Apply PPO to LLM</h3>
+<p>Now, we discuss the pivotal topic of this blog. How to consider the LLM training as a PPO.</p>
+<p>We use the concept of RL, and explain how LLM can be used here.</p>
+<ul>
+<li><strong>environment</strong>: The language world, when you output a new word, it will be added as the context of the conversation. The observation/state is the existing generation and the initial language;</li>
+<li><strong>state</strong>: The existing generation and the initial language;</li>
+<li><strong>agent</strong>: The LLM model it self. We have <code>LLM(curr_words) = next_token</code>. Here <span class="math inline">\(\pi_\theta\)</span> = LLM;</li>
+<li><strong>reward</strong>: Can be customized, and we usually choose to add a linear layer (two-heads output) to the last embedding layer of the LLM as the reward function.</li>
+</ul>
+
+
 </section>
 </section>
 
