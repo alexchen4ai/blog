@@ -32,7 +32,6 @@ These are some basic concepts in the reinforcement learning! We will introduce m
 ## The classification of RL
 To solve the RL problem, we have various methods! The detailed is concluded in the figure below. We will study more about the policy based method, the value based method. And for SOTA, the LLM usuaully use a combined method. When we consider how to train the RL, we should first think about how to use the pretrained model. We wish the model to guide us to get the best action to take at every step! Thus, we need a great policy $\pi^*$!. 
 
-
 <p align=center>
     <img src="../../images/RL_classification.png" width="100%"/>
 </p>
@@ -41,7 +40,7 @@ To solve the RL problem, we have various methods! The detailed is concluded in t
 The famous $Q$ learning is a typical value-based method. The original paper can be accessed [**here**](https://link.springer.com/content/pdf/10.1007/BF00992698.pdf). The $Q$ is the abbreviate of *quality*. The value based method has two submethods called the state-value function and the action-value function. Usually, we use $V$ to represent the value, which is 
 
 $$
-V_{\pi}(s) = \mathbb{E}_{\pi}\left[ R_{t+1}+\gamma R_{t+2} + \gamma^2R_{t+3}+... | S_t=s \right]
+V_{\pi}(s) = \mathbb{E}_{\pi}\left[ R_{t+1}+\gamma R_{t+2} + \gamma^2R_{t+3}+... | S_t=s \right] 
 $$
 
 Let me clarify the equation above in a probability. The $\pi$ is like a distribution, and we may express the value as
@@ -74,8 +73,8 @@ f(x) =
 $$
 This is a combination of exploration and eploitation. And each time, when we train the $Q$ function, we update it like
 $$
-Q(S_t, A_t) \leftarrow Q(S_t, A_t) +\alpha (R_{t+1}+\gamma \max_a Q(S_{t+1}, a) -Q(S_t, A_t))
-$$
+Q(S_t, A_t) \leftarrow Q(S_t, A_t) +\alpha (R_{t+1}+\gamma \max_a Q(S_{t+1}, a) -Q(S_t, A_t)) 
+$${#eq-q-update}
 
 For certain case with finite number of state and actions, we can easily use a table to record the $Q$ function. However, for some infinite number of states and actions, we need more complicated expression. For example, a math function, and abstract that function we can get the deep neural network $Q$. This is how we can infer the [DQN, a natural paper](https://www.nature.com/articles/nature14236). This basically tell us the value of $Q_\theta (s, a)$.
 
@@ -100,12 +99,58 @@ A DQN algorithm is:
       *  Perform a gradient descent step on $(y_j - Q(\phi_j, a_j; \theta))^2$ with respect to the network parameters $\theta$
       *  Every $C$ steps reset $\hat{Q} = Q$
 
-Here $\phi$ represent some feature encoder! For example, if the state can be represented as image. Then, $\phi$ is something like the RGB value extractor.
+Here $\phi$ represent some feature encoder! For example, if the state can be represented as image. Then, $\phi$ is something like the RGB value extractor. From the DQN algorithm above, we notice that the gradient descent is applied on the loss term of
+$$
+(y_j - Q(\phi_j, a_j; \theta))^2 
+$${#eq-mse}
+
+This is to make the learned $Q$ function to approximate the value of the predicted $Q$ value. If we revisit the @eq-q-update, we notice that the original Q value update is to directly update the $Q(S_t, A_t)$, and the goal is to reduce the difference between $R_{t+1}+\gamma \max_a Q(S_{t+1}, a)$ and the $Q(S_t, A_t)$. In the context of the DQN, we can direcly construct the @eq-mse for it! One notation here is that in the @eq-q-update, we set the $R_{t+1}$, with the same subscript as $S_{t+1}$, but in the algorithm described above, we have it expressed as $r_{j}$ with the `-1` subscript compared to $\phi_{j+1}$. However, the two terms are the same, we use $t$ since it represents the time step. For the use of $j$, it is one step of generated rewards! It is just different notation. 
+
+
+::: {.callout-tip}
+Why do we use @eq-mse? Q is the quality value, and it is used to estimate the total expected rewards based on the current state and the action. Suppose we already have the best $Q$, then $Q(\phi_j, a_j)$ should be equal to the reward after we take the action $a_j$, and then based on the state $\phi_{j+1}$, the best rewards we can expect, and we use a greedy algorithm here.
+:::
+
+
+::: {.callout-tip}
+It is always good to visit the code implementation to make sure you understand the detail.
+:::
+
+We can study a [DQN example from the atari simulation](https://huggingface.co/learn/deep-rl-course/en/unit3/deep-q-algorithm), and the full github code can be accessed there. Now, we will combine the algorithm and the code to introduce more about the DQN. 
+
+Firstly, we need to have data generation process, and we can use 
+```python
+next_obs, rewards, terminations, truncations, infos = envs.step(actions)
+```
+to get the variables $R, S, A$ and so on. And we save the generated data to the replay
+```python
+rb.add(obs, real_next_obs, actions, rewards, terminations, infos)
+```
+And the update process is like
+```python
+data = rb.sample(args.batch_size)
+with torch.no_grad():
+   target_max, _ = target_network(data.next_observations).max(dim=1)
+   # data.dones is 0 or 1.
+   td_target = data.rewards.flatten() + args.gamma * target_max * (1 - data.dones.flatten())
+old_val = q_network(data.observations).gather(1, data.actions).squeeze()
+loss = F.mse_loss(td_target, old_val)
+```
+
 
 
 
 ### The policy based method
-We can also train the policy directly $\pi_\theta$ and set the loss as the rewarding function! It is more intuitive but it becomes hard to converge and takes really long time to train. 
+We can also train the policy directly $\pi_\theta$. It is more intuitive. Compared to the value-based method, it has pros and cons. 
+
+For pros: (a) Can explore stochastic polify, no need for the exploration and exploitation effort; (b) More effective in high-dimensional action space, especially the continuous actions spaces; (c) Better convergence properties, the curve is smoother. 
+
+For the cons: (a) Often get suboptimal result; (b) Take longer time to train; (c) Policy gradient have high variance (**The policy gradient in different step has really different result**). 
+
+::: {.callout-tip}
+Note that Q learning method needs the `argmax` to get the best action. And if the action is a continuous space, we need to do some pretty complicated optimization to get the result!
+:::
+
 
 Note that $\pi_\theta (s) = \mathbb{P}(A|s;\theta)$. Thus, the training basically becomes that when we have postive reward, we should increase the proability of the state and action pair. Otherwise, decrease it. The objective function is still the total rewards!
 $$
@@ -124,12 +169,201 @@ In a loop:
 - Use the episode to estimate the gradient $\hat{g}=\nabla_\theta J(\theta)$ $$
 \nabla_\theta J(\theta) \approx \hat{g}=\sum_{t=0} \nabla_\theta \log \pi_\theta\left(a_t \mid s_t\right) R(\tau)
 $$
-- Update the weights of the policy: $\theta \leftarrow \theta+\alpha \hat{g}$. (Gradient descent)
+- Update the weights of the policy: $\theta \leftarrow \theta+\alpha \hat{g}$. (Gradient ascent)
+
+
+Alternatively, we can collect multiple trajectories (helpful to mitigate the variance), and the gradient becomes
+$$
+\nabla_\theta J(\theta) \approx \hat{g}=\frac{1}{m}\sum_{i=1}^m\sum_{t=0} \nabla_\theta \log \pi_\theta\left(a_t^{(i)} \mid s_t^{(i)}\right) R(\tau^{(i)}).
+$$
 
 ::: {.callout-tip}
-Now, we usually use a mixed method containing both policy based and value based methods.
+We can treat the $\nabla_\theta \log\pi_\theta(a_t\mid s_t)$ is the direction of the steeppest increase of the log probability of selected action based on the $s_t$. This is because that we wish to maximize the objective here (rewards).
 :::
 
-### The actor-critic method and PPO
+For the derivation of the policy gradient theorem, check the following:
 
-TODO...
+::: {#thm-policy-gradient-theorem}
+
+## policy-gradient-theorem
+The derivation of the policy gradient theorem is as the following:
+
+$$
+\begin{aligned}
+\nabla_\theta J(\theta)  &= \mathbb{E}_{\tau\sim \pi}[R(\tau)] \\
+   &= \nabla_\theta \sum_{\tau}P(\tau;\theta)R(\tau) \\
+   &= \sum_{\tau} \nabla_\theta P(\tau;\theta)R(\tau) \\
+   &= \sum_{\tau} P(\tau;\theta) \frac{\nabla_\theta P(\tau;\theta)}{P(\tau;\theta)}R(\tau) \\
+   &= \sum_{\tau} P(\tau;\theta) \nabla_\theta \log P(\tau;\theta)R(\tau) \\
+   &= \sum_{\tau} P(\tau;\theta) \nabla_\theta\log [\phi(s_0)\prod_{t=0}^T P(s_{t+1}|s_t, a_t)\pi_\theta (a_t\mid s_t)] R(\tau)\\
+   &= \sum_{\tau} P(\tau;\theta) \nabla_\theta\left[\log\phi(s_0) + \log\sum_{t=0}^T P(s_{t+1}|s_t, a_t) +\log\sum_{t=0}^T\pi_\theta (a_t\mid s_t)\right] R(\tau)\\
+   &= \sum_{\tau} P(\tau;\theta) \nabla_\theta\left[\log\sum_{t=0}^T\pi_\theta (a_t\mid s_t)\right] R(\tau).
+\end{aligned}
+$${#eq-policy}
+:::
+
+For the code part, using the cartpole as an example, the policy framework would be
+```python
+class Policy(nn.Module):
+    def __init__(self, s_size, a_size, h_size):
+        super(Policy, self).__init__()
+        self.fc1 = nn.Linear(s_size, h_size)
+        self.fc2 = nn.Linear(h_size, a_size)
+
+    def forward(self, x):
+        x = F.relu(self.fc1(x))
+        x = self.fc2(x)
+        return F.softmax(x, dim=1)
+
+    def act(self, state):
+        state = torch.from_numpy(state).float().unsqueeze(0).to(device)
+        probs = self.forward(state).cpu()
+        m = Categorical(probs)
+        action = np.argmax(m)
+        return action.item(), m.log_prob(action)
+```
+
+Note that we need to use the `Categorical` from `torch.distributions` to enable the backpropagation. The reinforce process can be constructed according to the reinfoce algorithm introduced above. 
+
+```python
+def reinforce(policy, optimizer, n_training_episodes, max_t, gamma, print_every):
+    scores_deque = deque(maxlen=100)
+    scores = []
+    for i_episode in range(1, n_training_episodes + 1):
+        saved_log_probs = []
+        rewards = []
+        state = env.reset()
+        for t in range(max_t):
+            action, log_prob = policy.act(state)
+            saved_log_probs.append(log_prob)
+            state, reward, done, _ = env.step(action)
+            rewards.append(reward)
+            if done:
+                break
+        scores_deque.append(sum(rewards))
+        scores.append(sum(rewards))
+
+        returns = deque(maxlen=max_t)
+        n_steps = len(rewards)
+        
+        for t in range(n_steps)[::-1]:
+            disc_return_t = returns[0] if len(returns) > 0 else 0
+            returns.appendleft(gamma * disc_return_t + rewards[t])
+
+        ## standardization of the returns is employed to make training more stable
+        eps = np.finfo(np.float32).eps.item()
+
+        ## eps is the smallest representable float, which is
+        # added to the standard deviation of the returns to avoid numerical instabilities
+        returns = torch.tensor(returns)
+        returns = (returns - returns.mean()) / (returns.std() + eps)
+
+        policy_loss = []
+        for log_prob, disc_return in zip(saved_log_probs, returns):
+            policy_loss.append(-log_prob * disc_return)
+        policy_loss = torch.cat(policy_loss).sum()
+
+        optimizer.zero_grad()
+        policy_loss.backward()
+        optimizer.step()
+
+        if i_episode % print_every == 0:
+            print("Episode {}\tAverage Score: {:.2f}".format(i_episode, np.mean(scores_deque)))
+    return scores
+```
+
+
+
+
+
+### The actor-critic method and PPO
+::: {.callout-tip}
+SOTA, we usually use a mixed method containing both policy based and value based methods.
+:::
+
+The motivation of the actor-critic method is to lower the variation of the policy method. We can use a large number of the trajectories but it is not efficient. Therefore, we choose a new method called actor-critic method. That is to say, instead of giving rewards/feedback to the policy (actor) after many trajectories, we can use critic to give instant feedback to evaluate the actions taken by the policy.  Now, we have two network to train:
+
+- A policy function with parameters $\pi_\theta(s)$;
+- A value function with parameters ${q}_w(s, a)$
+
+This is a combined methods of the policy-based and value-based methods. For one step of time $t$
+
+1. At time step $t$, we have the state $s_t$;
+2. We have the policy $\pi_\theta(s_t) = a_t$;
+3. Now, we can compute the Q-value by the value function directly as $Q_t={q}_w(s, a)$;
+4. Execute the action $a_t$ and get the new state $s_{t+1}$ and new reward $r_{t+1}$. 
+5. Update the policy parameters using the Q value;
+6. Using the updated parameters to get the next action $a_{t+1}$, and use the new action to update critic parameters. 
+
+::: {.callout-tip}
+In policy based function, @eq-policy needs to use $R(\tau)$, and $R(\tau)$ is obtained by iterative experiments. Now, we can use Q value since they represent the same meaning. Also, when we update the Q parameters, we use `argmax` to get the best action, now we use the updated policy to calculate the best action. This actor-critic is somewhat like the iterative-optimization methods seen in many math problems.
+:::
+
+::: {.callout-tip}
+To stabilize the training, now we tend to use the advantage function to replace the Q value.
+:::
+
+PPO is an algorithm based on the actor-critic method, and it is to clip the ratio which indicates the difference of policy to [$1-\epsilon$, $1+\epsilon$].
+
+To do so, we just need to the change the policy objection function (with advantage function) from
+$$
+J(\theta) = \mathbb{E}_t\left[ \log\pi_\theta (a_t\mid s_t)*A_t \right]
+$$
+
+to 
+$$
+J(\theta)=\hat{\mathbb{E}}_t\left[\min \left(r_t(\theta) \hat{A}_t, \operatorname{clip}\left(r_t(\theta), 1-\epsilon, 1+\epsilon\right) \hat{A}_t\right)\right]
+$$
+
+where the ratio is 
+$$
+r_t(\theta)=\frac{\pi_\theta\left(a_t \mid s_t\right)}{\pi_{\theta_{\text {old }}}\left(a_t \mid s_t\right)}.
+$$
+
+Now, we use a PPO implementation to better study the algorithm above. The [full code implementation can be found here](https://github.com/vwxyzjn/cleanrl/blob/master/cleanrl/ppo.py). There is also [another wonderful post about PPO implementation](https://iclr-blog-track.github.io/2022/03/25/ppo-implementation-details/). Let's study the code now.   
+
+
+#### Define both the actor and critic
+We usually define the network directly! 
+
+```python
+class Agent(nn.Module):
+    def __init__(self, envs):
+        super().__init__()
+        self.critic = nn.Sequential(
+            layer_init(nn.Linear(np.array(envs.single_observation_space.shape).prod(), 64)),
+            nn.Tanh(),
+            layer_init(nn.Linear(64, 64)),
+            nn.Tanh(),
+            layer_init(nn.Linear(64, 1), std=1.0),
+        )
+        self.actor = nn.Sequential(
+            layer_init(nn.Linear(np.array(envs.single_observation_space.shape).prod(), 64)),
+            nn.Tanh(),
+            layer_init(nn.Linear(64, 64)),
+            nn.Tanh(),
+            layer_init(nn.Linear(64, envs.single_action_space.n), std=0.01),
+        )
+
+    def get_value(self, x):
+        return self.critic(x)
+
+    def get_action_and_value(self, x, action=None):
+        logits = self.actor(x)
+        probs = Categorical(logits=logits)
+        if action is None:
+            action = probs.sample()
+        return action, probs.log_prob(action), probs.entropy(), self.critic(x)
+```
+Note that we don't have q value here since the PPO uses the advantage value which means we don't need the Q value anymore! And you may observe that critic output is a single dim value.
+
+::: {.callout-tip}
+In pytorch, the forward process is not necessarily defined in `forward()` function. We often use it since it has customization so that `model(**params)` is equal to `model.forward(**params)`. 
+:::
+
+#### Deal with the advantage values
+The action value is simply as 
+$$
+A(s_t, a_t) = Q(s_t, a_t) - V(s_t) = r + \gamma V(s_{t+1}) - V(s)
+$$
+Here, we use $r + \gamma V(s_{t+1})$ to appriximate the $Q$ value, but recall in the DQN algorithm, we use it as well!

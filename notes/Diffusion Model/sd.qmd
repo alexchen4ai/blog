@@ -1,11 +1,11 @@
 ---
-title: "Stable diffusion model"
+title: "Scalable diffusion models with transformers"
 categories: Diffusion Model
-date: 02-03-2024
+date: 02-19-2024
 ---
 
 ::: {.callout-tip}
 A text to image generation model from the diffusion architecture.
 :::
 
-📝 **Paper**: [https://arxiv.org/abs/2112.10752](https://arxiv.org/abs/2112.10752)
+📝 **Paper**: [https://arxiv.org/abs/2212.09748](https://arxiv.org/abs/2212.09748)
