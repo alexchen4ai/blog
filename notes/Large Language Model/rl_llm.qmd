@@ -367,3 +367,18 @@ $$
 A(s_t, a_t) = Q(s_t, a_t) - V(s_t) = r + \gamma V(s_{t+1}) - V(s)
 $$
 Here, we use $r + \gamma V(s_{t+1})$ to appriximate the $Q$ value, but recall in the DQN algorithm, we use it as well!
+
+
+### Apply PPO to LLM
+
+Now, we discuss the pivotal topic of this blog. How to consider the LLM training as a PPO. 
+
+We use the concept of RL, and explain how LLM can be used here.
+
+- **environment**: The language world, when you output a new word, it will be added as the context of the conversation. The observation/state is the existing generation and the initial language;
+- **state**: The existing generation and the initial language;
+- **agent**: The LLM model it self. We have `LLM(curr_words) = next_token`. Here $\pi_\theta$ = LLM;
+- **reward**: Can be customized, and we usually choose to add a linear layer (two-heads output) to the last embedding layer of the LLM as the reward function.   
+
+
+
