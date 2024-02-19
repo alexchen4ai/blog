@@ -378,7 +378,7 @@ We use the concept of RL, and explain how LLM can be used here.
 - **environment**: The language world, when you output a new word, it will be added as the context of the conversation. The observation/state is the existing generation and the initial language;
 - **state**: The existing generation and the initial language;
 - **agent**: The LLM model it self. We have `LLM(curr_words) = next_token`. Here $\pi_\theta$ = LLM;
-- **reward**: Can be customized, and we usually choose to add a linear layer (two-heads output) to the last embedding layer of the LLM as the reward function.   
+- **reward**: Can be customized, and we usually choose to add a linear layer (two-heads output) to the last embedding layer of the LLM as the reward function.  
 
 
 
