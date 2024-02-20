@@ -104,7 +104,7 @@ In the first section, we will review the fundamental concept of the reinforcemen
 <p><img src="https://latex.codecogs.com/png.latex?%0A%5Cpi%5E*%20=%20%5Ctext%7Barg%7D%5Cmax_a%20Q%5E*(s,%20a)%0A"></p>
 <p>To simulate the RL, we usually need to simulate the whole episode, like a cartpole example would continue until it fails. However, there are ways to simplify the process by <strong>Bellman equation</strong>: <img src="https://latex.codecogs.com/png.latex?%0AV_%5Cpi(s)%20=%20%5Cmathbb%7BE%7D_%7B%5Cpi%7D%20%5BR_%7Bt+1%7D+%5Cgamma%20*%20V_%7B%5Cpi%7D(S_%7Bt+1%7D)%7CS_t=s%5D.%0A"> And we can update the value function by <strong>Monte Carlo</strong> or the <strong>Temporary Difference</strong> method. The <img src="https://latex.codecogs.com/png.latex?Q"> learning is an off-policy (when updating the value function choose a different way to sample the action) value-based method that uses a TD approach to train its action-value function.</p>
 <p>Before move on, we explain the off-policy. In RL, we usually use <img src="https://latex.codecogs.com/png.latex?%5Cepsilon"> greedy policy to choose the actions. That is for a given state <img src="https://latex.codecogs.com/png.latex?s">, we take the action by sample <img src="https://latex.codecogs.com/png.latex?p%5Cin%20%5B0,1%5D">: <img src="https://latex.codecogs.com/png.latex?%0Af(x)%20=%0A%5Cbegin%7Bcases%7D%0A%5Cpi%5E*(s)%20&amp;%20%5Ctext%7B$p%5Cleq%5Cepsilon$%7D,%20%5C%5C%0A%5Ctext%7Brandom%20action%7D%20&amp;%20%5Ctext%7Botherwise%7D.%0A%5Cend%7Bcases%7D%0A"> This is a combination of exploration and eploitation. And each time, when we train the <img src="https://latex.codecogs.com/png.latex?Q"> function, we update it like <span id="eq-q-update"><img src="https://latex.codecogs.com/png.latex?%0AQ(S_t,%20A_t)%20%5Cleftarrow%20Q(S_t,%20A_t)%20+%5Calpha%20(R_%7Bt+1%7D+%5Cgamma%20%5Cmax_a%20Q(S_%7Bt+1%7D,%20a)%20-Q(S_t,%20A_t))%0A%5Ctag%7B1%7D"></span></p>
-<p>For certain case with finite number of state and actions, we can easily use a table to record the <img src="https://latex.codecogs.com/png.latex?Q"> function. However, for some infinite number of states and actions, we need more complicated expression. For example, a math function, and abstract that function we can get the deep neural network <img src="https://latex.codecogs.com/png.latex?Q">. This is how we can infer the <a href="https://www.nature.com/articles/nature14236">DQN, a natural paper</a>. This basically tell us the value of <img src="https://latex.codecogs.com/png.latex?Q_%5Ctheta%20(s,%20a)">.</p>
+<p>For certain case with finite number of state and actions, we can easily use a table to record the <img src="https://latex.codecogs.com/png.latex?Q"> function. However, for some infinite number of states and actions, we need more complicated expression. For example, a math function, and abstract that function we can get the deep neural network <img src="https://latex.codecogs.com/png.latex?Q">. This is how we can infer the <a href="https://www.nature.com/articles/nature14236">DQN, a nature paper</a>. This basically tell us the value of <img src="https://latex.codecogs.com/png.latex?Q_%5Ctheta%20(s,%20a)">.</p>
 <p>A DQN algorithm is:</p>
 <ol type="1">
 <li>Initialize replay memory <img src="https://latex.codecogs.com/png.latex?D"> to capacity <img src="https://latex.codecogs.com/png.latex?N"></li>
@@ -717,6 +717,45 @@ Tip
 <li><strong>agent</strong>: The LLM model it self. We have <code>LLM(curr_words) = next_token</code>. Here <img src="https://latex.codecogs.com/png.latex?%5Cpi_%5Ctheta"> = LLM;</li>
 <li><strong>reward</strong>: Can be customized, and we usually choose to add a linear layer (two-heads output) to the last embedding layer of the LLM as the reward function.</li>
 </ul>
+<p>The step of the PPO can be formulated as the following:</p>
+<ol type="1">
+<li>Given the preference pair (<img src="https://latex.codecogs.com/png.latex?y_%7BY%7D">, <img src="https://latex.codecogs.com/png.latex?y_%7BN%7D">), we train a reward model. The reward model can be trained using the following loss: <img src="https://latex.codecogs.com/png.latex?%0A%5Cmathcal%7BL%7D_R%5Cleft(r_%5Cphi,%20%5Cmathcal%7BD%7D%5Cright)=-%5Cmathbb%7BE%7D_%7B%5Cleft(x,%20y_Y,%20y_N%5Cright)%20%5Csim%20%5Cmathcal%7BD%7D%7D%5Cleft%5B%5Clog%20%5Csigma%5Cleft(r_%5Cphi%5Cleft(x,%20y_Y%5Cright)-r_%5Cphi%5Cleft(x,%20y_N%5Cright)%5Cright)%5Cright%5D%0A"></li>
+<li>After the have the reward function, we freeze the parameters <img src="https://latex.codecogs.com/png.latex?%5Cphi"> and train the <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> by optimization of <img src="https://latex.codecogs.com/png.latex?%0A%5Cmax%20_%7B%5Cpi_%5Ctheta%7D%20%5Cmathbb%7BE%7D_%7Bx%20%5Csim%20%5Cmathcal%7BD%7D,%20y%20%5Csim%20%5Cpi_%5Ctheta(y%20%5Cmid%20x)%7D%5Cleft%5Br_%5Cphi(x,%20y)%5Cright%5D-%5Cbeta%20%5Cmathbb%7BD%7D_%7B%5Cmathrm%7BKL%7D%7D%5Cleft%5B%5Cpi_%5Ctheta(y%20%5Cmid%20x)%20%5C%7C%20%5Cpi_%7B%5Cmathrm%7Bref%7D%7D(y%20%5Cmid%20x)%5Cright%5D%0A"></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The here should be perceived as a probability function. Thus, <img src="https://latex.codecogs.com/png.latex?%5Cpi_%5Ctheta(y%7Cx)"> will output a probability!</p>
+<p>Actually, in the case of LLM, we have <img src="https://latex.codecogs.com/png.latex?%0A%5Cpi_%5Ctheta(y%7Cx)%20=%20p(y%7Cx;%20%5Ctext%7BLLM%7D)%20=%20p(y_%7B0%7D%7Cx,%20y)%5Cprod_%7Bi=1%7D%5ETp(y_%7B1%7D%7Cx,%20y_%7B0,...,i-1%7D;%20%5Ctext%7BLLM%7D)%0A"></p>
+</div>
+</div>
+</section>
+<section id="dpo" class="level3">
+<h3 class="anchored" data-anchor-id="dpo">DPO</h3>
+<p>DPO is another method inspired by the limitation of the PPO. In the case of direct preference of choosing from two results. The human preference distribution <img src="https://latex.codecogs.com/png.latex?p%5E*"> can be expressed with reward function: <img src="https://latex.codecogs.com/png.latex?%0Ap%5E*%5Cleft(y_1%20%5Csucc%20y_2%20%5Cmid%20x%5Cright)=%5Cfrac%7B%5Cexp%20%5Cleft(r%5E*%5Cleft(x,%20y_1%5Cright)%5Cright)%7D%7B%5Cexp%20%5Cleft(r%5E*%5Cleft(x,%20y_1%5Cright)%5Cright)+%5Cexp%20%5Cleft(r%5E*%5Cleft(x,%20y_2%5Cright)%5Cright)%7D%0A"></p>
+<p>The DPO paper indicate that we can express the probability under the policy <img src="https://latex.codecogs.com/png.latex?%5Cpi%5E*"> with</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ap%5E*%5Cleft(y_1%20%5Csucc%20y_2%20%5Cmid%20x%5Cright)=%5Cfrac%7B1%7D%7B1+%5Cexp%20%5Cleft(%5Cbeta%20%5Clog%20%5Cfrac%7B%5Cpi%5E*%5Cleft(y_2%20%5Cmid%20x%5Cright)%7D%7B%5Cpi_%7B%5Cmathrm%7Bref%7D%7D%5Cleft(y_2%20%5Cmid%20x%5Cright)%7D-%5Cbeta%20%5Clog%20%5Cfrac%7B%5Cpi%5E*%5Cleft(y_1%20%5Cmid%20x%5Cright)%7D%7B%5Cpi_%7B%5Cmathrm%7Bref%7D%7D%5Cleft(y_1%20%5Cmid%20x%5Cright)%7D%5Cright)%7D%0A"></p>
+<p>Therefore, we don’t need the real PPO now. And we just need to do something like a SFT with a different loss function: <img src="https://latex.codecogs.com/png.latex?%0A%5Cmathcal%7BL%7D_%7B%5Cmathrm%7BDPO%7D%7D%5Cleft(%5Cpi_%5Ctheta%20;%20%5Cpi_%7B%5Cmathrm%7Bref%7D%7D%5Cright)=-%5Cmathbb%7BE%7D_%7B%5Cleft(x,%20y_w,%20y_l%5Cright)%20%5Csim%20%5Cmathcal%7BD%7D%7D%5Cleft%5B%5Clog%20%5Csigma%5Cleft(%5Cbeta%20%5Clog%20%5Cfrac%7B%5Cpi_%5Ctheta%5Cleft(y_w%20%5Cmid%20x%5Cright)%7D%7B%5Cpi_%7B%5Ctext%20%7Bref%20%7D%7D%5Cleft(y_w%20%5Cmid%20x%5Cright)%7D-%5Cbeta%20%5Clog%20%5Cfrac%7B%5Cpi_%5Ctheta%5Cleft(y_l%20%5Cmid%20x%5Cright)%7D%7B%5Cpi_%7B%5Ctext%20%7Bref%20%7D%7D%5Cleft(y_l%20%5Cmid%20x%5Cright)%7D%5Cright)%5Cright%5D%20.%0A"></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>During training, the <img src="https://latex.codecogs.com/png.latex?%5Cpi_%7Bref%7D"> is freezed!</p>
+</div>
+</div>
 
 
 </section>

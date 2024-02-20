@@ -351,7 +351,7 @@ f(x) =
 \]</span> This is a combination of exploration and eploitation. And each time, when we train the <span class="math inline">\(Q\)</span> function, we update it like <span id="eq-q-update"><span class="math display">\[
 Q(S_t, A_t) \leftarrow Q(S_t, A_t) +\alpha (R_{t+1}+\gamma \max_a Q(S_{t+1}, a) -Q(S_t, A_t))
 \tag{1}\]</span></span></p>
-<p>For certain case with finite number of state and actions, we can easily use a table to record the <span class="math inline">\(Q\)</span> function. However, for some infinite number of states and actions, we need more complicated expression. For example, a math function, and abstract that function we can get the deep neural network <span class="math inline">\(Q\)</span>. This is how we can infer the <a href="https://www.nature.com/articles/nature14236">DQN, a natural paper</a>. This basically tell us the value of <span class="math inline">\(Q_\theta (s, a)\)</span>.</p>
+<p>For certain case with finite number of state and actions, we can easily use a table to record the <span class="math inline">\(Q\)</span> function. However, for some infinite number of states and actions, we need more complicated expression. For example, a math function, and abstract that function we can get the deep neural network <span class="math inline">\(Q\)</span>. This is how we can infer the <a href="https://www.nature.com/articles/nature14236">DQN, a nature paper</a>. This basically tell us the value of <span class="math inline">\(Q_\theta (s, a)\)</span>.</p>
 <p>A DQN algorithm is:</p>
 <ol type="1">
 <li>Initialize replay memory <span class="math inline">\(D\)</span> to capacity <span class="math inline">\(N\)</span></li>
@@ -676,6 +676,57 @@ A(s_t, a_t) = Q(s_t, a_t) - V(s_t) = r + \gamma V(s_{t+1}) - V(s)
 <li><strong>agent</strong>: The LLM model it self. We have <code>LLM(curr_words) = next_token</code>. Here <span class="math inline">\(\pi_\theta\)</span> = LLM;</li>
 <li><strong>reward</strong>: Can be customized, and we usually choose to add a linear layer (two-heads output) to the last embedding layer of the LLM as the reward function.</li>
 </ul>
+<p>The step of the PPO can be formulated as the following:</p>
+<ol type="1">
+<li>Given the preference pair (<span class="math inline">\(y_{Y}\)</span>, <span class="math inline">\(y_{N}\)</span>), we train a reward model. The reward model can be trained using the following loss: <span class="math display">\[
+\mathcal{L}_R\left(r_\phi, \mathcal{D}\right)=-\mathbb{E}_{\left(x, y_Y, y_N\right) \sim \mathcal{D}}\left[\log \sigma\left(r_\phi\left(x, y_Y\right)-r_\phi\left(x, y_N\right)\right)\right]
+\]</span></li>
+<li>After the have the reward function, we freeze the parameters <span class="math inline">\(\phi\)</span> and train the <span class="math inline">\(\theta\)</span> by optimization of <span class="math display">\[
+\max _{\pi_\theta} \mathbb{E}_{x \sim \mathcal{D}, y \sim \pi_\theta(y \mid x)}\left[r_\phi(x, y)\right]-\beta \mathbb{D}_{\mathrm{KL}}\left[\pi_\theta(y \mid x) \| \pi_{\mathrm{ref}}(y \mid x)\right]
+\]</span></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The here should be perceived as a probability function. Thus, <span class="math inline">\(\pi_\theta(y|x)\)</span> will output a probability!</p>
+<p>Actually, in the case of LLM, we have <span class="math display">\[
+\pi_\theta(y|x) = p(y|x; \text{LLM}) = p(y_{0}|x, y)\prod_{i=1}^Tp(y_{1}|x, y_{0,...,i-1}; \text{LLM})
+\]</span></p>
+</div>
+</div>
+</section>
+<section id="dpo" class="level3">
+<h3 class="anchored" data-anchor-id="dpo">DPO</h3>
+<p>DPO is another method inspired by the limitation of the PPO. In the case of direct preference of choosing from two results. The human preference distribution <span class="math inline">\(p^*\)</span> can be expressed with reward function: <span class="math display">\[
+p^*\left(y_1 \succ y_2 \mid x\right)=\frac{\exp \left(r^*\left(x, y_1\right)\right)}{\exp \left(r^*\left(x, y_1\right)\right)+\exp \left(r^*\left(x, y_2\right)\right)}
+\]</span></p>
+<p>The DPO paper indicate that we can express the probability under the policy <span class="math inline">\(\pi^*\)</span> with</p>
+<p><span class="math display">\[
+p^*\left(y_1 \succ y_2 \mid x\right)=\frac{1}{1+\exp \left(\beta \log \frac{\pi^*\left(y_2 \mid x\right)}{\pi_{\mathrm{ref}}\left(y_2 \mid x\right)}-\beta \log \frac{\pi^*\left(y_1 \mid x\right)}{\pi_{\mathrm{ref}}\left(y_1 \mid x\right)}\right)}
+\]</span></p>
+<p>Therefore, we don’t need the real PPO now. And we just need to do something like a SFT with a different loss function: <span class="math display">\[
+\mathcal{L}_{\mathrm{DPO}}\left(\pi_\theta ; \pi_{\mathrm{ref}}\right)=-\mathbb{E}_{\left(x, y_w, y_l\right) \sim \mathcal{D}}\left[\log \sigma\left(\beta \log \frac{\pi_\theta\left(y_w \mid x\right)}{\pi_{\text {ref }}\left(y_w \mid x\right)}-\beta \log \frac{\pi_\theta\left(y_l \mid x\right)}{\pi_{\text {ref }}\left(y_l \mid x\right)}\right)\right] .
+\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>During training, the <span class="math inline">\(\pi_{ref}\)</span> is freezed!</p>
+</div>
+</div>
 
 
 </section>
