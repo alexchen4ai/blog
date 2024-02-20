@@ -76,7 +76,7 @@ $$
 Q(S_t, A_t) \leftarrow Q(S_t, A_t) +\alpha (R_{t+1}+\gamma \max_a Q(S_{t+1}, a) -Q(S_t, A_t)) 
 $${#eq-q-update}
 
-For certain case with finite number of state and actions, we can easily use a table to record the $Q$ function. However, for some infinite number of states and actions, we need more complicated expression. For example, a math function, and abstract that function we can get the deep neural network $Q$. This is how we can infer the [DQN, a natural paper](https://www.nature.com/articles/nature14236). This basically tell us the value of $Q_\theta (s, a)$.
+For certain case with finite number of state and actions, we can easily use a table to record the $Q$ function. However, for some infinite number of states and actions, we need more complicated expression. For example, a math function, and abstract that function we can get the deep neural network $Q$. This is how we can infer the [DQN, a nature paper](https://www.nature.com/articles/nature14236). This basically tell us the value of $Q_\theta (s, a)$.
 
 A DQN algorithm is:
 
@@ -380,5 +380,45 @@ We use the concept of RL, and explain how LLM can be used here.
 - **agent**: The LLM model it self. We have `LLM(curr_words) = next_token`. Here $\pi_\theta$ = LLM;
 - **reward**: Can be customized, and we usually choose to add a linear layer (two-heads output) to the last embedding layer of the LLM as the reward function.  
 
+The step of the PPO can be formulated as the following:
+
+1. Given the preference pair ($y_{Y}$, $y_{N}$), we train a reward model. The reward model can be trained using the following loss:
+    $$
+    \mathcal{L}_R\left(r_\phi, \mathcal{D}\right)=-\mathbb{E}_{\left(x, y_Y, y_N\right) \sim \mathcal{D}}\left[\log \sigma\left(r_\phi\left(x, y_Y\right)-r_\phi\left(x, y_N\right)\right)\right]
+    $$
+2. After the have the reward function, we freeze the parameters $\phi$ and train the $\theta$ by optimization of
+    $$
+    \max _{\pi_\theta} \mathbb{E}_{x \sim \mathcal{D}, y \sim \pi_\theta(y \mid x)}\left[r_\phi(x, y)\right]-\beta \mathbb{D}_{\mathrm{KL}}\left[\pi_\theta(y \mid x) \| \pi_{\mathrm{ref}}(y \mid x)\right]
+    $$
 
 
+::: {.callout-tip}
+The \pi here should be perceived as a probability function. Thus, $\pi_\theta(y|x)$ will output a probability!
+
+Actually, in the case of LLM, we have
+$$
+\pi_\theta(y|x) = p(y|x; \text{LLM}) = p(y_{0}|x, y)\prod_{i=1}^Tp(y_{1}|x, y_{0,...,i-1}; \text{LLM})
+$$
+:::
+
+
+### DPO
+DPO is another method inspired by the limitation of the PPO. In the case of direct preference of choosing from two results. The human preference distribution $p^*$ can be expressed with reward function:
+$$
+p^*\left(y_1 \succ y_2 \mid x\right)=\frac{\exp \left(r^*\left(x, y_1\right)\right)}{\exp \left(r^*\left(x, y_1\right)\right)+\exp \left(r^*\left(x, y_2\right)\right)}
+$$
+
+The DPO paper indicate that we can express the probability under the policy $\pi^*$ with
+
+$$
+p^*\left(y_1 \succ y_2 \mid x\right)=\frac{1}{1+\exp \left(\beta \log \frac{\pi^*\left(y_2 \mid x\right)}{\pi_{\mathrm{ref}}\left(y_2 \mid x\right)}-\beta \log \frac{\pi^*\left(y_1 \mid x\right)}{\pi_{\mathrm{ref}}\left(y_1 \mid x\right)}\right)}
+$$
+
+Therefore, we don't need the real PPO now. And we just need to do something like a SFT with a different loss function:
+$$
+\mathcal{L}_{\mathrm{DPO}}\left(\pi_\theta ; \pi_{\mathrm{ref}}\right)=-\mathbb{E}_{\left(x, y_w, y_l\right) \sim \mathcal{D}}\left[\log \sigma\left(\beta \log \frac{\pi_\theta\left(y_w \mid x\right)}{\pi_{\text {ref }}\left(y_w \mid x\right)}-\beta \log \frac{\pi_\theta\left(y_l \mid x\right)}{\pi_{\text {ref }}\left(y_l \mid x\right)}\right)\right] .
+$$
+
+::: {.callout-tip}
+During training, the $\pi_{ref}$ is freezed!
+:::
