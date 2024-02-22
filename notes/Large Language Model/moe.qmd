@@ -78,5 +78,9 @@ and we know the dimension of $H(x)$ is $n=8$.
 
 
 ::: {.callout-tip}
-Set to $-\infty$ so that it becomes zero during softmax. Thus, for the final output, we only have k experts which are really used.
+Set to $-\infty$ so that it becomes zero during softmax. Thus, for the final output, we only have $k$ experts which are really used.
+:::
+
+::: {.callout-tip}
+For different batch of tokens, they will choose different experts! For example the `batch[0]` will choose the expert 0 and 3, while the `batch[1]` will choose the expert 4 and 7.
 :::
