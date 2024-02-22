@@ -104,4 +104,25 @@ $$
 f_i = P_i = \frac{1}{N}.
 $$
 
-You can prove it by [Cauchy-Schwarz inequality](https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality).
+To prove that the minimum of the objective function $\mathbf{a} \cdot \mathbf{b}=\sum_{i=1}^N a_i b_i$ is achieved when $a_i=$ $b_i=\frac{1}{N}$ under the given constraints, we use the method of Lagrange multipliers for the constraints:
+
+Given constraints:
+1. $\sum_{i=1}^N a_i=1, a_i \geq 0$.
+2. $\sum_{i=1}^N b_i=1, b_i \geq 0$.
+
+Objective Function to minimize:
+- $L=\mathbf{a} \cdot \mathbf{b}-\lambda\left(\sum_{i=1}^N a_i-1\right)-\mu\left(\sum_{i=1}^N b_i-1\right)$, where $\lambda$ and $\mu$ are Lagrange multipliers.
+
+Taking partial derivatives of $L$ with respect to $a_i, b_i, \lambda$, and $\mu$ and setting them to zero gives:
+1. $\frac{\partial L}{\partial a_i}=b_i-\lambda=0 \Rightarrow b_i=\lambda$.
+2. $\frac{\partial L}{\partial b_i}=a_i-\mu=0 \Rightarrow a_i=\mu$.
+3. $\frac{\partial L}{\partial \lambda}=\sum_{i=1}^N a_i-1=0$.
+4. $\frac{\partial L}{\partial \mu}=\sum_{i=1}^N b_i-1=0$.
+
+From equations 1 and 2 , all $a_i$ and $b_i$ must be constant for all $i$, because they equal the respective Lagrange multipliers $\lambda$ and $\mu$, which are constants. Thus, $a_i=a$ and $b_i=b$ for some constants $a$ and $b$ for all $i$.
+
+Given the constraints $\sum_{i=1}^N a_i=1$ and $\sum_{i=1}^N b_i=1$, and knowing that $a_i=a$ and $b_i=b$ for all $i$, we have:
+- $\sum_{i=1}^N a=N \cdot a=1 \Rightarrow a=\frac{1}{N}$.
+- $\sum_{i=1}^N b=N \cdot b=1 \Rightarrow b=\frac{1}{N}$.
+
+Therefore, setting $a_i=b_i=\frac{1}{N}$ for all $i$ satisfies the constraints and minimizes the objective function $\mathbf{a} \cdot \mathbf{b}=\sum_{i=1}^N a_i b_i$, as any local minimum in a convex function over a convex set is a global minimum.
