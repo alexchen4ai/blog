@@ -7,3 +7,9 @@ date: 02-22-2024
 ::: {.callout-tip}
 As to today, we have many different evaluation metrics for the large language models. In this blog, I will summarize the different metric used to evaluate a language model, and how we can get the metric after we run the language model. 
 :::
+
+::: {.callout-tip}
+There are different kinds of metric. For example, the general metric, or special metric especially to evaluate the model in certain aspect like the Chinese language or the function call capability.
+:::
+
+## General metric
