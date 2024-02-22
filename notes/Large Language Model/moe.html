@@ -409,13 +409,25 @@ P_i=\frac{1}{T} \sum_{x \in \mathcal{B}} p_i(x)
 <p>We add this loss since we want to encourages uniform routing since the loss is minimized when <span class="math display">\[
 f_i = P_i = \frac{1}{N}.
 \]</span></p>
-<p>To prove that the minimum of the objective function <span class="math inline">\(\mathbf{a} \cdot \mathbf{b}=\sum_{i=1}^N a_i b_i\)</span> is achieved when <span class="math inline">\(a_i=\)</span> <span class="math inline">\(b_i=\frac{1}{N}\)</span> under the given constraints, we use the method of Lagrange multipliers for the constraints:</p>
+<div id="thm-policy-gradient-theorem" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1</strong></span> To prove that the minimum of the objective function <span class="math inline">\(\mathbf{a} \cdot \mathbf{b}=\sum_{i=1}^N a_i b_i\)</span> is achieved when <span class="math inline">\(a_i=\)</span> <span class="math inline">\(b_i=\frac{1}{N}\)</span> under the given constraints, we use the method of Lagrange multipliers for the constraints:</p>
 <p>Given constraints: 1. <span class="math inline">\(\sum_{i=1}^N a_i=1, a_i \geq 0\)</span>. 2. <span class="math inline">\(\sum_{i=1}^N b_i=1, b_i \geq 0\)</span>.</p>
 <p>Objective Function to minimize: - <span class="math inline">\(L=\mathbf{a} \cdot \mathbf{b}-\lambda\left(\sum_{i=1}^N a_i-1\right)-\mu\left(\sum_{i=1}^N b_i-1\right)\)</span>, where <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\mu\)</span> are Lagrange multipliers.</p>
-<p>Taking partial derivatives of <span class="math inline">\(L\)</span> with respect to <span class="math inline">\(a_i, b_i, \lambda\)</span>, and <span class="math inline">\(\mu\)</span> and setting them to zero gives: 1. <span class="math inline">\(\frac{\partial L}{\partial a_i}=b_i-\lambda=0 \Rightarrow b_i=\lambda\)</span>. 2. <span class="math inline">\(\frac{\partial L}{\partial b_i}=a_i-\mu=0 \Rightarrow a_i=\mu\)</span>. 3. <span class="math inline">\(\frac{\partial L}{\partial \lambda}=\sum_{i=1}^N a_i-1=0\)</span>. 4. <span class="math inline">\(\frac{\partial L}{\partial \mu}=\sum_{i=1}^N b_i-1=0\)</span>.</p>
+<p>Taking partial derivatives of <span class="math inline">\(L\)</span> with respect to <span class="math inline">\(a_i, b_i, \lambda\)</span>, and <span class="math inline">\(\mu\)</span> and setting them to zero gives:</p>
+<ol type="1">
+<li><span class="math inline">\(\frac{\partial L}{\partial a_i}=b_i-\lambda=0 \Rightarrow b_i=\lambda\)</span>.</li>
+<li><span class="math inline">\(\frac{\partial L}{\partial b_i}=a_i-\mu=0 \Rightarrow a_i=\mu\)</span>.</li>
+<li><span class="math inline">\(\frac{\partial L}{\partial \lambda}=\sum_{i=1}^N a_i-1=0\)</span>.</li>
+<li><span class="math inline">\(\frac{\partial L}{\partial \mu}=\sum_{i=1}^N b_i-1=0\)</span>.</li>
+</ol>
 <p>From equations 1 and 2 , all <span class="math inline">\(a_i\)</span> and <span class="math inline">\(b_i\)</span> must be constant for all <span class="math inline">\(i\)</span>, because they equal the respective Lagrange multipliers <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\mu\)</span>, which are constants. Thus, <span class="math inline">\(a_i=a\)</span> and <span class="math inline">\(b_i=b\)</span> for some constants <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> for all <span class="math inline">\(i\)</span>.</p>
-<p>Given the constraints <span class="math inline">\(\sum_{i=1}^N a_i=1\)</span> and <span class="math inline">\(\sum_{i=1}^N b_i=1\)</span>, and knowing that <span class="math inline">\(a_i=a\)</span> and <span class="math inline">\(b_i=b\)</span> for all <span class="math inline">\(i\)</span>, we have: - <span class="math inline">\(\sum_{i=1}^N a=N \cdot a=1 \Rightarrow a=\frac{1}{N}\)</span>. - <span class="math inline">\(\sum_{i=1}^N b=N \cdot b=1 \Rightarrow b=\frac{1}{N}\)</span>.</p>
+<p>Given the constraints <span class="math inline">\(\sum_{i=1}^N a_i=1\)</span> and <span class="math inline">\(\sum_{i=1}^N b_i=1\)</span>, and knowing that <span class="math inline">\(a_i=a\)</span> and <span class="math inline">\(b_i=b\)</span> for all <span class="math inline">\(i\)</span>, we have:</p>
+<ul>
+<li><span class="math inline">\(\sum_{i=1}^N a=N \cdot a=1 \Rightarrow a=\frac{1}{N}\)</span>.</li>
+<li><span class="math inline">\(\sum_{i=1}^N b=N \cdot b=1 \Rightarrow b=\frac{1}{N}\)</span>.</li>
+</ul>
 <p>Therefore, setting <span class="math inline">\(a_i=b_i=\frac{1}{N}\)</span> for all <span class="math inline">\(i\)</span> satisfies the constraints and minimizes the objective function <span class="math inline">\(\mathbf{a} \cdot \mathbf{b}=\sum_{i=1}^N a_i b_i\)</span>, as any local minimum in a convex function over a convex set is a global minimum.</p>
+</div>
 
 
 </section>
