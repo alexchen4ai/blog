@@ -109,10 +109,12 @@ $$
 To prove that the minimum of the objective function $\mathbf{a} \cdot \mathbf{b}=\sum_{i=1}^N a_i b_i$ is achieved when $a_i=$ $b_i=\frac{1}{N}$ under the given constraints, we use the method of Lagrange multipliers for the constraints:
 
 Given constraints:
+
 1. $\sum_{i=1}^N a_i=1, a_i \geq 0$.
 2. $\sum_{i=1}^N b_i=1, b_i \geq 0$.
 
 Objective Function to minimize:
+
 - $L=\mathbf{a} \cdot \mathbf{b}-\lambda\left(\sum_{i=1}^N a_i-1\right)-\mu\left(\sum_{i=1}^N b_i-1\right)$, where $\lambda$ and $\mu$ are Lagrange multipliers.
 
 Taking partial derivatives of $L$ with respect to $a_i, b_i, \lambda$, and $\mu$ and setting them to zero gives:
