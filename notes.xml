@@ -206,8 +206,15 @@ Tip
 <p>We add this loss since we want to encourages uniform routing since the loss is minimized when <img src="https://latex.codecogs.com/png.latex?%0Af_i%20=%20P_i%20=%20%5Cfrac%7B1%7D%7BN%7D.%0A"></p>
 <div id="thm-policy-gradient-theorem" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 1</strong></span> To prove that the minimum of the objective function <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Ba%7D%20%5Ccdot%20%5Cmathbf%7Bb%7D=%5Csum_%7Bi=1%7D%5EN%20a_i%20b_i"> is achieved when <img src="https://latex.codecogs.com/png.latex?a_i="> <img src="https://latex.codecogs.com/png.latex?b_i=%5Cfrac%7B1%7D%7BN%7D"> under the given constraints, we use the method of Lagrange multipliers for the constraints:</p>
-<p>Given constraints: 1. <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bi=1%7D%5EN%20a_i=1,%20a_i%20%5Cgeq%200">. 2. <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bi=1%7D%5EN%20b_i=1,%20b_i%20%5Cgeq%200">.</p>
-<p>Objective Function to minimize: - <img src="https://latex.codecogs.com/png.latex?L=%5Cmathbf%7Ba%7D%20%5Ccdot%20%5Cmathbf%7Bb%7D-%5Clambda%5Cleft(%5Csum_%7Bi=1%7D%5EN%20a_i-1%5Cright)-%5Cmu%5Cleft(%5Csum_%7Bi=1%7D%5EN%20b_i-1%5Cright)">, where <img src="https://latex.codecogs.com/png.latex?%5Clambda"> and <img src="https://latex.codecogs.com/png.latex?%5Cmu"> are Lagrange multipliers.</p>
+<p>Given constraints:</p>
+<ol type="1">
+<li><img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bi=1%7D%5EN%20a_i=1,%20a_i%20%5Cgeq%200">.</li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bi=1%7D%5EN%20b_i=1,%20b_i%20%5Cgeq%200">.</li>
+</ol>
+<p>Objective Function to minimize:</p>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?L=%5Cmathbf%7Ba%7D%20%5Ccdot%20%5Cmathbf%7Bb%7D-%5Clambda%5Cleft(%5Csum_%7Bi=1%7D%5EN%20a_i-1%5Cright)-%5Cmu%5Cleft(%5Csum_%7Bi=1%7D%5EN%20b_i-1%5Cright)">, where <img src="https://latex.codecogs.com/png.latex?%5Clambda"> and <img src="https://latex.codecogs.com/png.latex?%5Cmu"> are Lagrange multipliers.</li>
+</ul>
 <p>Taking partial derivatives of <img src="https://latex.codecogs.com/png.latex?L"> with respect to <img src="https://latex.codecogs.com/png.latex?a_i,%20b_i,%20%5Clambda">, and <img src="https://latex.codecogs.com/png.latex?%5Cmu"> and setting them to zero gives:</p>
 <ol type="1">
 <li><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%5Cpartial%20L%7D%7B%5Cpartial%20a_i%7D=b_i-%5Clambda=0%20%5CRightarrow%20b_i=%5Clambda">.</li>

@@ -411,8 +411,15 @@ f_i = P_i = \frac{1}{N}.
 \]</span></p>
 <div id="thm-policy-gradient-theorem" class="theorem">
 <p><span class="theorem-title"><strong>Theorem 1</strong></span> To prove that the minimum of the objective function <span class="math inline">\(\mathbf{a} \cdot \mathbf{b}=\sum_{i=1}^N a_i b_i\)</span> is achieved when <span class="math inline">\(a_i=\)</span> <span class="math inline">\(b_i=\frac{1}{N}\)</span> under the given constraints, we use the method of Lagrange multipliers for the constraints:</p>
-<p>Given constraints: 1. <span class="math inline">\(\sum_{i=1}^N a_i=1, a_i \geq 0\)</span>. 2. <span class="math inline">\(\sum_{i=1}^N b_i=1, b_i \geq 0\)</span>.</p>
-<p>Objective Function to minimize: - <span class="math inline">\(L=\mathbf{a} \cdot \mathbf{b}-\lambda\left(\sum_{i=1}^N a_i-1\right)-\mu\left(\sum_{i=1}^N b_i-1\right)\)</span>, where <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\mu\)</span> are Lagrange multipliers.</p>
+<p>Given constraints:</p>
+<ol type="1">
+<li><span class="math inline">\(\sum_{i=1}^N a_i=1, a_i \geq 0\)</span>.</li>
+<li><span class="math inline">\(\sum_{i=1}^N b_i=1, b_i \geq 0\)</span>.</li>
+</ol>
+<p>Objective Function to minimize:</p>
+<ul>
+<li><span class="math inline">\(L=\mathbf{a} \cdot \mathbf{b}-\lambda\left(\sum_{i=1}^N a_i-1\right)-\mu\left(\sum_{i=1}^N b_i-1\right)\)</span>, where <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\mu\)</span> are Lagrange multipliers.</li>
+</ul>
 <p>Taking partial derivatives of <span class="math inline">\(L\)</span> with respect to <span class="math inline">\(a_i, b_i, \lambda\)</span>, and <span class="math inline">\(\mu\)</span> and setting them to zero gives:</p>
 <ol type="1">
 <li><span class="math inline">\(\frac{\partial L}{\partial a_i}=b_i-\lambda=0 \Rightarrow b_i=\lambda\)</span>.</li>
