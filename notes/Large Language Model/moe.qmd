@@ -1,0 +1,82 @@
+---
+title: "Mixture of expert"
+categories: Large Language Models
+date: 02-21-2024
+---
+
+::: {.callout-tip}
+MoE means the mixture of expert. In this blog, we will introduce the type of MoE used in the `mixtral8x7B` model. The blog will assume that you already understand the llama2 model. Thus, we will not revisit any knowledge already inside the llama2 model. Another focus of this blog will combine the code implementation to delve into the arc of MoE.
+:::
+
+::: {.callout-tip}
+📝 **Paper**: [https://arxiv.org/abs/2101.03961](https://arxiv.org/abs/2101.03961)
+:::
+
+
+## Difference from the llama2
+In causal LM, we know that the decoder model can be decomposed into multiple small parts. Let's visit the architecture of the llama2 in the @fig-llama2.
+
+![The architecture of the llama2 model](../../images/llama2.png){#fig-llama2}
+
+There are many components inside the llama2 architecure, like the attention layer, positional embedding, RMS norm, FC etc. The only difference here is the block of **FF SwiGLU** (`FF` is the feedforward network and the implementation is add the hidden embedding dimension first, through the activation function and finally decrease the dimension). Instead of using only one FF function, we use the mixture of expert, which export is the actually a **FF**. In llama2, the code implementation would be as simple as:
+
+```python
+class LlamaMLP(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+        self.config = config
+        self.hidden_size = config.hidden_size
+        self.intermediate_size = config.intermediate_size
+        self.gate_proj = nn.Linear(self.hidden_size, self.intermediate_size, bias=False)
+        self.up_proj = nn.Linear(self.hidden_size, self.intermediate_size, bias=False)
+        self.down_proj = nn.Linear(self.intermediate_size, self.hidden_size, bias=False)
+        self.act_fn = ACT2FN[config.hidden_act]
+
+    def forward(self, x):
+        down_proj = self.down_proj(self.act_fn(self.gate_proj(x)) * self.up_proj(x))
+        return down_proj
+```
+
+OK, now we will add more complexity to this function. 
+::: {.callout-tip}
+Note that all other parts are the same except the feedforward block.
+:::
+
+
+## Mathematical insights
+The FF model is actually the expert! For the llama2 model, we only have one expert, therefore, in the case of llama2, we have
+
+$$
+y = E(x),
+$$
+
+where $x, y$ are the value before and after the FF block. In the MoE, we actually prepare multiple trainable experts, so there are multiple `E` layers. A gating network is thus introduced to decide which network should be used. And now the expression becomes:
+
+$$
+y = \sum_{i=1}^n G(x)_i E_i(x).
+$$
+
+It is special to choose the network `G`. Here, we just introduce the found research work from the paper [Switch Transformer](https://arxiv.org/abs/2101.03961) which is also the famous [Mixtral-8x7B](https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1). 
+
+Specially for this model, `n=8`. Suppose the last dimension of `x` is `d`, we will include the dimension of each variables for following up explanation.
+
+The steps to construct the `G(x)` are:
+
+1. Set trainable linear layer $W_g$ of size `d*n`. 
+    $$
+    H(x)= x \cdot W_{\mathrm{g}}
+    $$
+and we know the dimension of $H(x)$ is $n=8$.
+2. Only pick the top K experts:
+    $$
+    \operatorname{KeepTopK}(v, k)_i= \begin{cases}v_i & \text { if } v_i \text { is in the top } k \text { elements of } v \\ -\infty & \text { otherwise. }\end{cases}
+    $$
+3. Apply the softmax to get the final `G(x)`
+    $$
+    G(x)=\operatorname{Norm}(\operatorname{Softmax}(\operatorname{KeepTopK}(H(x), k)))
+    $$
+
+
+::: {.callout-tip}
+Set to $-\infty$ so that it becomes zero during softmax. Thus, for the final output, we only have k experts which are really used.
+:::
