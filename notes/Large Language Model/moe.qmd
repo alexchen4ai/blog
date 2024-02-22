@@ -9,7 +9,7 @@ MoE means the mixture of expert. In this blog, we will introduce the type of MoE
 :::
 
 ::: {.callout-tip}
-📝 **Paper**: [https://arxiv.org/abs/2101.03961](https://arxiv.org/abs/2101.03961)
+📝 **Paper**: [Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)
 :::
 
 
