@@ -183,7 +183,20 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Set to <img src="https://latex.codecogs.com/png.latex?-%5Cinfty"> so that it becomes zero during softmax. Thus, for the final output, we only have k experts which are really used.</p>
+<p>Set to <img src="https://latex.codecogs.com/png.latex?-%5Cinfty"> so that it becomes zero during softmax. Thus, for the final output, we only have <img src="https://latex.codecogs.com/png.latex?k"> experts which are really used.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For different batch of tokens, they will choose different experts! For example the <code>batch[0]</code> will choose the expert 0 and 3, while the <code>batch[1]</code> will choose the expert 4 and 7.</p>
 </div>
 </div>
 
