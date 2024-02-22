@@ -84,3 +84,22 @@ Set to $-\infty$ so that it becomes zero during softmax. Thus, for the final out
 ::: {.callout-tip}
 For different batch of tokens, they will choose different experts! For example the `batch[0]` will choose the expert 0 and 3, while the `batch[1]` will choose the expert 4 and 7.
 :::
+
+## Load balancing loss
+Since different portion of total tokens will enter different experts, like the unbalanced dataset problem, we need to add a load balancing loss. Given $N$ experts indexed by $i=1$ to $N$ and a batch $\mathcal{B}$ with $T$ tokens, the auxiliary loss is computed as the scaled dot-product between vectors $f$ and $P$,
+$$
+\text { loss }=\alpha \cdot N \cdot \sum_{i=1}^N f_i \cdot P_i
+$$
+where $f_i$ is the fraction of tokens dispatched to expert $i$,
+$$
+f_i=\frac{1}{T} \sum_{x \in \mathcal{B}} \mathbb{1}\{\operatorname{argmax} p(x)=i\}
+$$
+and $P_i$ is the fraction of the router probability allocated for expert $i,{ }^2$
+$$
+P_i=\frac{1}{T} \sum_{x \in \mathcal{B}} p_i(x)
+$$
+
+We add this loss since we want to encourages uniform routing since the loss is minimized when 
+$$
+f_i = P_i = \frac{1}{N}.
+$$
