@@ -313,7 +313,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>📝 <strong>Paper</strong>: <a href="https://arxiv.org/abs/2101.03961">https://arxiv.org/abs/2101.03961</a></p>
+<p>📝 <strong>Paper</strong>: <a href="https://arxiv.org/abs/2101.03961">Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity</a></p>
 </div>
 </div>
 <section id="difference-from-the-llama2" class="level2">
@@ -396,6 +396,19 @@ Tip
 <p>For different batch of tokens, they will choose different experts! For example the <code>batch[0]</code> will choose the expert 0 and 3, while the <code>batch[1]</code> will choose the expert 4 and 7.</p>
 </div>
 </div>
+</section>
+<section id="load-balancing-loss" class="level2">
+<h2 class="anchored" data-anchor-id="load-balancing-loss">Load balancing loss</h2>
+<p>Since different portion of total tokens will enter different experts, like the unbalanced dataset problem, we need to add a load balancing loss. Given <span class="math inline">\(N\)</span> experts indexed by <span class="math inline">\(i=1\)</span> to <span class="math inline">\(N\)</span> and a batch <span class="math inline">\(\mathcal{B}\)</span> with <span class="math inline">\(T\)</span> tokens, the auxiliary loss is computed as the scaled dot-product between vectors <span class="math inline">\(f\)</span> and <span class="math inline">\(P\)</span>, <span class="math display">\[
+\text { loss }=\alpha \cdot N \cdot \sum_{i=1}^N f_i \cdot P_i
+\]</span> where <span class="math inline">\(f_i\)</span> is the fraction of tokens dispatched to expert <span class="math inline">\(i\)</span>, <span class="math display">\[
+f_i=\frac{1}{T} \sum_{x \in \mathcal{B}} \mathbb{1}\{\operatorname{argmax} p(x)=i\}
+\]</span> and <span class="math inline">\(P_i\)</span> is the fraction of the router probability allocated for expert <span class="math inline">\(i,{ }^2\)</span> <span class="math display">\[
+P_i=\frac{1}{T} \sum_{x \in \mathcal{B}} p_i(x)
+\]</span></p>
+<p>We add this loss since we want to encourages uniform routing since the loss is minimized when <span class="math display">\[
+f_i = P_i = \frac{1}{N}.
+\]</span></p>
 
 
 </section>
