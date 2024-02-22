@@ -1,0 +1,9 @@
+---
+title: "Large language model evaluation"
+categories: Large Language Models
+date: 02-22-2024
+---
+
+::: {.callout-tip}
+As to today, we have many different evaluation metrics for the large language models. In this blog, I will summarize the different metric used to evaluate a language model, and how we can get the metric after we run the language model. 
+:::
