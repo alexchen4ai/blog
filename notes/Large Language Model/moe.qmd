@@ -103,3 +103,5 @@ We add this loss since we want to encourages uniform routing since the loss is m
 $$
 f_i = P_i = \frac{1}{N}.
 $$
+
+You can prove it by [Cauchy-Schwarz inequality](https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality).
