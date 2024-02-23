@@ -2,6 +2,7 @@
   {
     "listing": "/notes.html",
     "items": [
+      "/notes/Large Language Model/llm_eval.html",
       "/notes/Large Language Model/moe.html",
       "/notes/Diffusion Model/sd.html",
       "/notes/Large Language Model/rl_llm.html"

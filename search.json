@@ -55,11 +55,78 @@
     ]
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About Wei Chen",
+    "objectID": "notes/Large Language Model/llm_eval.html",
+    "href": "notes/Large Language Model/llm_eval.html",
+    "title": "Large language model evaluation",
     "section": "",
-    "text": "I am inside a Hawaii cafe\n\n\n\n\n   \n\n\nGreetings! My name is Alex Chen, an AI researcher and startup founder in Silicon Valley. Previously, I pursued a PhD at Stanford University, delving into numerical simulation and artificial intelligence research.\nIn this space, I aim to share my journey in academia and industry, providing insights into cutting-edge research and practical applications of AI and machine learning.\n\nFeel free to connect with me:\n\nEmail: weichen6@stanford.edu\nCheck out my startup: AI Tools by Nexa"
+    "text": "Tip\n\n\n\nAs to today, we have many different evaluation metrics for the large language models. In this blog, I will summarize the different metric used to evaluate a language model, and how we can get the metric after we run the language model.",
+    "crumbs": [
+      "Home",
+      "🗣️ **Large language models**",
+      "Large language model evaluation"
+    ]
+  },
+  {
+    "objectID": "notes/Large Language Model/llm_eval.html#llm-leaderboard",
+    "href": "notes/Large Language Model/llm_eval.html#llm-leaderboard",
+    "title": "Large language model evaluation",
+    "section": "LLM leaderboard",
+    "text": "LLM leaderboard\nThere are many leaderboard for the LLM. The leaderboard is created based on the metric of the LLM. Thus, we can know what metric of LLM can be useful.\n\nHuggingface LLM Leaderboard;\nStreamlit Leaderboard;\nLMSYS Leaderboard;\nCan AI code leaderboard.\n\nAlso, we can get more metric from the papers for sure. 📝 Paper: Evaluating Large Language Models: A Comprehensive Survey can provide a full explanation about it.",
+    "crumbs": [
+      "Home",
+      "🗣️ **Large language models**",
+      "Large language model evaluation"
+    ]
+  },
+  {
+    "objectID": "notes/Large Language Model/llm_eval.html#classification-of-llm-evaluation",
+    "href": "notes/Large Language Model/llm_eval.html#classification-of-llm-evaluation",
+    "title": "Large language model evaluation",
+    "section": "Classification of LLM evaluation",
+    "text": "Classification of LLM evaluation\nThere are different metrics for the LLM evaluation. The general classification can be found in Figure 1.\n\n\n\n\n\n\n\n\nFigure 1: The classification of LLM evaluation.\n\n\n\nFor each aspect of the model, we will have different methods to evaluate it.\nThe knowledge and capability evaluation can be seen in Figure 2.\n\n\n\n\n\n\n\n\nFigure 2: The progress of the LLM knowledge capability evaluation.\n\n\n\nThe commonsense reasoning datasets can be seen below:\n\nThe details of commonsense reasoning datasets.\n\n\n\n\n\n\n\n\n\nDataset\nDomain\nSize\nSource\nTask\n\n\n\n\nARC\nscience\n7,787\na variety of sources\nmultiple-choice QA\n\n\nQASC\nscience\n9,980\nhuman-authored\nmultiple-choice QA\n\n\nMCTACO\ntemporal\n1,893\nMultiRC\nmultiple-choice QA\n\n\nTRACIE\ntemporal\n-\nROCStories, Wikipedia\nmultiple-choice QA\n\n\nTIMEDIAL\ntemporal\n1.1K\nDailyDialog\nmultiple-choice QA\n\n\nHellaSWAG\nevent\n20K\nActivityNet, WikiHow\nmultiple-choice QA\n\n\nPIQA\nphysical\n21K\nhuman-authored\n2-choice QA\n\n\nPep-3k\nphysical\n3,062\nhuman-authored\n2-choice QA\n\n\nSocial IQA\nsocial\n38K\nhuman-authored\nmultiple-choice QA\n\n\nCommonsenseQA\ngeneric\n12,247\nCONCEPTNET, human-authored\nmultiple-choice QA\n\n\nOpenBookQA\ngeneric\n6K\nWorldTree\nmultiple-choice QA\n\n\n\nAnd the multi-hop reasoning dataset is:\n\n\n\n\n\n\n\n\n\n\n\nDataset\nDomain\nSize\n# hops\nSource\nAnswer type\n\n\n\n\nHotpotQA\ngeneric\n112,779\n1/2/3\nWikipedia\nspan\n\n\nHybridQA\ngeneric\n69,611\n2/3\nWikitables, Wikipedia\nspan\n\n\nMultiRC\ngeneric\n9,872\n2.37\nMultiple\nMCQ\n\n\nNarrativeQA\nfiction\n46,765\n-\nMultiple\ngenerative\n\n\nMedhop\nmedline\n2,508\n-\nMedline\nMCQ\n\n\nWikihop\ngeneric\n51,318\n-\nWikipedia\nMCQ\n\n\n\nLike the knowledge and capability, there are datasets prepared for other metric as well.",
+    "crumbs": [
+      "Home",
+      "🗣️ **Large language models**",
+      "Large language model evaluation"
+    ]
+  },
+  {
+    "objectID": "notes/Large Language Model/llm_eval.html#benchmarks",
+    "href": "notes/Large Language Model/llm_eval.html#benchmarks",
+    "title": "Large language model evaluation",
+    "section": "Benchmarks",
+    "text": "Benchmarks\nAfter we have the dataset to evaluate the LLM, we will have a specific term called benchmark which can evaluate the LLM with a number! Next, we will discuss more about the benchmarks.\n\nBenchmarks for Knowledge and Reasoning\n\n\n\n\n\n\n\n\n\nBenchmarks\n# Tasks\nLanguage\n# Instances\nEvaluation Form\n\n\n\n\nMMLU\n57\nEnglish\n15,908\nLocal\n\n\nMMCU\n51\nChinese\n11,900\nLocal\n\n\nC-Eval\n52\nChinese\n13,948\nOnline\n\n\nAGIEval\n20\nEnglish, Chinese\n8,062\nLocal\n\n\nM3KE\n71\nChinese\n20,477\nLocal\n\n\nM3Exam\n4\nEnglish and others\n12,317\nLocal\n\n\nCMMLU\n67\nChinese\n11,528\nLocal\n\n\nLucyEval\n55\nChinese\n11,000\nOnline\n\n\n\nAlso, there are some benchmark for the holistic evaluation.\n\nHolistic benchmarks\n\n\n\n\n\n\n\n\n\nBenchmarks\nLanguage\nMetric\nEvaluation Form\nExpandability\n\n\n\n\nHELM\nEnglish\nAutomatic\nLocal\nSupported\n\n\nBIG-bench\nEnglish and others\nAutomatic\nLocal\nSupported\n\n\nOpenCompass\nEnglish and others\nAutomatic and LLMs-based\nLocal\nSupported\n\n\nHuggingface\nEnglish\nAutomatic\nLocal\nUnsupported\n\n\nFlagEval\nEnglish and others\nAutomatic and Manual\nLocal and Online\nUnsupported\n\n\nOpenEval\nChinese\nAutomatic\nLocal\nSupported\n\n\nChatbot Arena\nEnglish and others\nManual\nOnline\nSupported",
+    "crumbs": [
+      "Home",
+      "🗣️ **Large language models**",
+      "Large language model evaluation"
+    ]
+  },
+  {
+    "objectID": "notes/Large Language Model/llm_eval.html#how-to-calculate-the-benchmark",
+    "href": "notes/Large Language Model/llm_eval.html#how-to-calculate-the-benchmark",
+    "title": "Large language model evaluation",
+    "section": "How to calculate the benchmark",
+    "text": "How to calculate the benchmark\nSince the huggingface leaderboard is influential, we will study the metric listed in huggingface first. There are seven benchmarks as Average, ARC, HellaSwag, MMLU, TruthfulQA, Winogrande and GSM8K. For simplicity, we will choose one benchmark and demonstrate how we will get the result. Here, we use TruthfulQA as example. The truthfulQA dataset can be found from huggingface.\nThe good news is that we can use a unified framework for the above benchmarks! Checkout lm-evaluation-harness repo.\nThere are many different methods to implement the evaluation task. We need to be aware that we also need to consider different cases of zero-shot or few-shot learning. For example, if the few-shot learning is used, we may directly let the model to sameple the choice by using prompt as thus, the choice is: since it already know the expected result is like A, B, C. For zero-shot learning, we may need multiple round of prompt, the first prompt is to let it generate the result, and the same prompt says the final choice.",
+    "crumbs": [
+      "Home",
+      "🗣️ **Large language models**",
+      "Large language model evaluation"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Alex Chen",
+    "section": "",
+    "text": "👋 Greetings! My name is Alex Chen, an AI researcher and startup founder in Silicon Valley. Previously, I pursued a PhD at Stanford University, delving into numerical simulation and artificial intelligence research. Now, I am building an AI agent UGC platform.\nIn this space, I aim to share my journey in academia and industry, providing insights into cutting-edge research and practical applications of AI and machine learning.\nIf you want to contact me, feel free to send a mail at this address.\n\nCredits:\n\nEmojis used in figures are designed by OpenMoji, the open-source emoji and icon project. License: CC BY-SA 4.0.\nVector icons are provided by Streamline (https://streamlinehq.com). License: CC BY-SA 4.0."
+  },
+  {
+    "objectID": "notes.html",
+    "href": "notes.html",
+    "title": "Research notes",
+    "section": "",
+    "text": "Large language model evaluation\n\n\n\n\n\n\nLarge Language Models\n\n\n\n\n\n\n\n\n\n10 min\n\n\n\n\n\n\n\n\n\n\n\n\nMixture of expert\n\n\n\n\n\n\nLarge Language Models\n\n\n\n\n\n\n\n\n\n5 min\n\n\n\n\n\n\n\n\n\n\n\n\nScalable diffusion models with transformers\n\n\n\n\n\n\nDiffusion Model\n\n\n\n\n\n\n\n\n\n1 min\n\n\n\n\n\n\n\n\n\n\n\n\nReinforcement learning for large language model\n\n\n\n\n\n\nLarge Language Models\n\n\n\n\n\n\n\n\n\n19 min\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "chat_model.html",
@@ -76,18 +143,11 @@
     "text": "We can also fill the missing tokens in the middle of the sentence. We just need to tell the language model the content before and after the missing part. And the model will handle the missing part automatically.\n\nfrom transformers import AutoModelForCausalLM, AutoTokenizer\n\ntokenizer = AutoTokenizer.from_pretrained(\n    \"stabilityai/stable-code-3b\", trust_remote_code=True\n)\nmodel = AutoModelForCausalLM.from_pretrained(\n    \"stabilityai/stable-code-3b\",\n    trust_remote_code=True,\n    torch_dtype=\"auto\",\n    #   attn_implementation=\"flash_attention_2\",\n)\nmodel.cuda()\n\n# &lt;fim_prefix&gt; is the prefix code before the missiong part\n# &lt;fim_suffix&gt; is the suffix code after the missiong part\n# &lt;fim_middle&gt; is the missing part, and we add the token in the final part so that the model can predict it\ninputs = tokenizer(\n    \"&lt;fim_prefix&gt;def fib(n):&lt;fim_suffix&gt;    else:\\n        return fib(n - 2) + fib(n - 1)&lt;fim_middle&gt;\",\n    return_tensors=\"pt\",\n).to(model.device)\ntokens = model.generate(\n    **inputs,\n    max_new_tokens=48,\n    temperature=0.2,\n    do_sample=True,\n)\nprint(tokenizer.decode(tokens[0], skip_special_tokens=True))"
   },
   {
-    "objectID": "notes.html",
-    "href": "notes.html",
-    "title": "Research notes",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About Wei Chen",
     "section": "",
-    "text": "Mixture of expert\n\n\n\n\n\n\nLarge Language Models\n\n\n\n\n\n\n\n\n\n5 min\n\n\n\n\n\n\n\n\n\n\n\n\nScalable diffusion models with transformers\n\n\n\n\n\n\nDiffusion Model\n\n\n\n\n\n\n\n\n\n1 min\n\n\n\n\n\n\n\n\n\n\n\n\nReinforcement learning for large language model\n\n\n\n\n\n\nLarge Language Models\n\n\n\n\n\n\n\n\n\n19 min\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Alex Chen",
-    "section": "",
-    "text": "👋 Greetings! My name is Alex Chen, an AI researcher and startup founder in Silicon Valley. Previously, I pursued a PhD at Stanford University, delving into numerical simulation and artificial intelligence research. Now, I am building an AI agent UGC platform.\nIn this space, I aim to share my journey in academia and industry, providing insights into cutting-edge research and practical applications of AI and machine learning.\nIf you want to contact me, feel free to send a mail at this address.\n\nCredits:\n\nEmojis used in figures are designed by OpenMoji, the open-source emoji and icon project. License: CC BY-SA 4.0.\nVector icons are provided by Streamline (https://streamlinehq.com). License: CC BY-SA 4.0."
+    "text": "I am inside a Hawaii cafe\n\n\n\n\n   \n\n\nGreetings! My name is Alex Chen, an AI researcher and startup founder in Silicon Valley. Previously, I pursued a PhD at Stanford University, delving into numerical simulation and artificial intelligence research.\nIn this space, I aim to share my journey in academia and industry, providing insights into cutting-edge research and practical applications of AI and machine learning.\n\nFeel free to connect with me:\n\nEmail: weichen6@stanford.edu\nCheck out my startup: AI Tools by Nexa"
   },
   {
     "objectID": "notes/Large Language Model/rl_llm.html",

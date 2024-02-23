@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Chen">
-<meta name="dcterms.date" content="2024-02-19">
+<meta name="dcterms.date" content="2024-02-22">
 
-<title>Alex Chen’s Blog - Scalable diffusion models with transformers</title>
+<title>Alex Chen’s Blog - Large language model evaluation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -131,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">Scalable diffusion models with transformers</h1>
+          <h1 class="quarto-secondary-nav-title">Large language model evaluation</h1>
         </a>     
     </div>
   </nav>
@@ -140,9 +140,9 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title d-none d-lg-block">Scalable diffusion models with transformers</h1>
+      <h1 class="title d-none d-lg-block">Large language model evaluation</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Diffusion Model</div>
+                <div class="quarto-category">Large Language Models</div>
               </div>
                   </div>
   </div>
@@ -160,7 +160,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 19, 2024</p>
+        <p class="date">February 22, 2024</p>
       </div>
     </div>
     
@@ -184,7 +184,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../notes/Large Language Model/llm_eval.html" class="sidebar-item-text sidebar-link">
+  <a href="../../notes/Large Language Model/llm_eval.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Large language model evaluation</span></a>
   </div>
 </li>
@@ -214,7 +214,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../notes/Diffusion Model/sd.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../notes/Diffusion Model/sd.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Scalable diffusion models with transformers</span></a>
   </div>
 </li>
@@ -243,12 +243,394 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A text to image generation model from the diffusion architecture.</p>
+<p>As to today, we have many different evaluation metrics for the large language models. In this blog, I will summarize the different metric used to evaluate a language model, and how we can get the metric after we run the language model.</p>
 </div>
 </div>
-<p>📝 <strong>Paper</strong>: <a href="https://arxiv.org/abs/2212.09748">https://arxiv.org/abs/2212.09748</a></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are different kinds of metric. For example, the general metric, or special metric especially to evaluate the model in certain aspect like the Chinese language or the function call capability.</p>
+</div>
+</div>
+<section id="llm-leaderboard" class="level2">
+<h2 class="anchored" data-anchor-id="llm-leaderboard">LLM leaderboard</h2>
+<p>There are many leaderboard for the LLM. The leaderboard is created based on the metric of the LLM. Thus, we can know what metric of LLM can be useful.</p>
+<ol type="1">
+<li><a href="https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard">Huggingface LLM Leaderboard</a>;</li>
+<li><a href="https://llm-leaderboard.streamlit.app/">Streamlit Leaderboard</a>;</li>
+<li><a href="https://chat.lmsys.org/">LMSYS Leaderboard</a>;</li>
+<li><a href="https://huggingface.co/spaces/mike-ravkine/can-ai-code-results">Can AI code leaderboard</a>.</li>
+</ol>
+<p>Also, we can get more metric from the papers for sure. 📝 <strong>Paper</strong>: <a href="https://arxiv.org/pdf/2310.19736.pdf">Evaluating Large Language Models: A Comprehensive Survey</a> can provide a full explanation about it.</p>
+</section>
+<section id="classification-of-llm-evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="classification-of-llm-evaluation">Classification of LLM evaluation</h2>
+<p>There are different metrics for the LLM evaluation. The general classification can be found in <a href="#fig-classification" class="quarto-xref">Figure&nbsp;1</a>.</p>
+<div id="fig-classification" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p align="center">
+<img src="../../images/LLM_eval.png" width="80%" class="figure-img">
+</p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-classification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The classification of LLM evaluation.
+</figcaption>
+</figure>
+</div>
+<p>For each aspect of the model, we will have different methods to evaluate it.</p>
+<p>The knowledge and capability evaluation can be seen in <a href="#fig-knowledge-capability" class="quarto-xref">Figure&nbsp;2</a>.</p>
+<div id="fig-knowledge-capability" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-knowledge-capability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<p align="center">
+<img src="../../images/knowledge_capability_evaluation.png" width="100%" class="figure-img">
+</p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-knowledge-capability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The progress of the LLM knowledge capability evaluation.
+</figcaption>
+</figure>
+</div>
+<p>The commonsense reasoning datasets can be seen below:</p>
+<table class="table">
+<caption>The details of commonsense reasoning datasets.</caption>
+<colgroup>
+<col style="width: 19%">
+<col style="width: 12%">
+<col style="width: 8%">
+<col style="width: 37%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>Domain</th>
+<th>Size</th>
+<th>Source</th>
+<th>Task</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ARC</td>
+<td>science</td>
+<td>7,787</td>
+<td>a variety of sources</td>
+<td>multiple-choice QA</td>
+</tr>
+<tr class="even">
+<td>QASC</td>
+<td>science</td>
+<td>9,980</td>
+<td>human-authored</td>
+<td>multiple-choice QA</td>
+</tr>
+<tr class="odd">
+<td>MCTACO</td>
+<td>temporal</td>
+<td>1,893</td>
+<td>MultiRC</td>
+<td>multiple-choice QA</td>
+</tr>
+<tr class="even">
+<td>TRACIE</td>
+<td>temporal</td>
+<td>-</td>
+<td>ROCStories, Wikipedia</td>
+<td>multiple-choice QA</td>
+</tr>
+<tr class="odd">
+<td>TIMEDIAL</td>
+<td>temporal</td>
+<td>1.1K</td>
+<td>DailyDialog</td>
+<td>multiple-choice QA</td>
+</tr>
+<tr class="even">
+<td>HellaSWAG</td>
+<td>event</td>
+<td>20K</td>
+<td>ActivityNet, WikiHow</td>
+<td>multiple-choice QA</td>
+</tr>
+<tr class="odd">
+<td>PIQA</td>
+<td>physical</td>
+<td>21K</td>
+<td>human-authored</td>
+<td>2-choice QA</td>
+</tr>
+<tr class="even">
+<td>Pep-3k</td>
+<td>physical</td>
+<td>3,062</td>
+<td>human-authored</td>
+<td>2-choice QA</td>
+</tr>
+<tr class="odd">
+<td>Social IQA</td>
+<td>social</td>
+<td>38K</td>
+<td>human-authored</td>
+<td>multiple-choice QA</td>
+</tr>
+<tr class="even">
+<td>CommonsenseQA</td>
+<td>generic</td>
+<td>12,247</td>
+<td>CONCEPTNET, human-authored</td>
+<td>multiple-choice QA</td>
+</tr>
+<tr class="odd">
+<td>OpenBookQA</td>
+<td>generic</td>
+<td>6K</td>
+<td>WorldTree</td>
+<td>multiple-choice QA</td>
+</tr>
+</tbody>
+</table>
+<p>And the multi-hop reasoning dataset is:</p>
+<table class="table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 32%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dataset</th>
+<th>Domain</th>
+<th>Size</th>
+<th># hops</th>
+<th>Source</th>
+<th>Answer type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>HotpotQA</td>
+<td>generic</td>
+<td>112,779</td>
+<td>1/2/3</td>
+<td>Wikipedia</td>
+<td>span</td>
+</tr>
+<tr class="even">
+<td>HybridQA</td>
+<td>generic</td>
+<td>69,611</td>
+<td>2/3</td>
+<td>Wikitables, Wikipedia</td>
+<td>span</td>
+</tr>
+<tr class="odd">
+<td>MultiRC</td>
+<td>generic</td>
+<td>9,872</td>
+<td>2.37</td>
+<td>Multiple</td>
+<td>MCQ</td>
+</tr>
+<tr class="even">
+<td>NarrativeQA</td>
+<td>fiction</td>
+<td>46,765</td>
+<td>-</td>
+<td>Multiple</td>
+<td>generative</td>
+</tr>
+<tr class="odd">
+<td>Medhop</td>
+<td>medline</td>
+<td>2,508</td>
+<td>-</td>
+<td>Medline</td>
+<td>MCQ</td>
+</tr>
+<tr class="even">
+<td>Wikihop</td>
+<td>generic</td>
+<td>51,318</td>
+<td>-</td>
+<td>Wikipedia</td>
+<td>MCQ</td>
+</tr>
+</tbody>
+</table>
+<p>Like the knowledge and capability, there are datasets prepared for other metric as well.</p>
+</section>
+<section id="benchmarks" class="level2">
+<h2 class="anchored" data-anchor-id="benchmarks">Benchmarks</h2>
+<p>After we have the dataset to evaluate the LLM, we will have a specific term called <strong>benchmark</strong> which can evaluate the LLM with a number! Next, we will discuss more about the benchmarks.</p>
+<table class="table">
+<caption>Benchmarks for Knowledge and Reasoning</caption>
+<colgroup>
+<col style="width: 17%">
+<col style="width: 13%">
+<col style="width: 26%">
+<col style="width: 18%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Benchmarks</th>
+<th># Tasks</th>
+<th>Language</th>
+<th># Instances</th>
+<th>Evaluation Form</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MMLU</td>
+<td>57</td>
+<td>English</td>
+<td>15,908</td>
+<td>Local</td>
+</tr>
+<tr class="even">
+<td>MMCU</td>
+<td>51</td>
+<td>Chinese</td>
+<td>11,900</td>
+<td>Local</td>
+</tr>
+<tr class="odd">
+<td>C-Eval</td>
+<td>52</td>
+<td>Chinese</td>
+<td>13,948</td>
+<td>Online</td>
+</tr>
+<tr class="even">
+<td>AGIEval</td>
+<td>20</td>
+<td>English, Chinese</td>
+<td>8,062</td>
+<td>Local</td>
+</tr>
+<tr class="odd">
+<td>M3KE</td>
+<td>71</td>
+<td>Chinese</td>
+<td>20,477</td>
+<td>Local</td>
+</tr>
+<tr class="even">
+<td>M3Exam</td>
+<td>4</td>
+<td>English and others</td>
+<td>12,317</td>
+<td>Local</td>
+</tr>
+<tr class="odd">
+<td>CMMLU</td>
+<td>67</td>
+<td>Chinese</td>
+<td>11,528</td>
+<td>Local</td>
+</tr>
+<tr class="even">
+<td>LucyEval</td>
+<td>55</td>
+<td>Chinese</td>
+<td>11,000</td>
+<td>Online</td>
+</tr>
+</tbody>
+</table>
+<p>Also, there are some benchmark for the holistic evaluation.</p>
+<table class="table">
+<caption>Holistic benchmarks</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 18%">
+<col style="width: 29%">
+<col style="width: 20%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Benchmarks</th>
+<th>Language</th>
+<th>Metric</th>
+<th>Evaluation Form</th>
+<th>Expandability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>HELM</td>
+<td>English</td>
+<td>Automatic</td>
+<td>Local</td>
+<td>Supported</td>
+</tr>
+<tr class="even">
+<td>BIG-bench</td>
+<td>English and others</td>
+<td>Automatic</td>
+<td>Local</td>
+<td>Supported</td>
+</tr>
+<tr class="odd">
+<td>OpenCompass</td>
+<td>English and others</td>
+<td>Automatic and LLMs-based</td>
+<td>Local</td>
+<td>Supported</td>
+</tr>
+<tr class="even">
+<td>Huggingface</td>
+<td>English</td>
+<td>Automatic</td>
+<td>Local</td>
+<td>Unsupported</td>
+</tr>
+<tr class="odd">
+<td>FlagEval</td>
+<td>English and others</td>
+<td>Automatic and Manual</td>
+<td>Local and Online</td>
+<td>Unsupported</td>
+</tr>
+<tr class="even">
+<td>OpenEval</td>
+<td>Chinese</td>
+<td>Automatic</td>
+<td>Local</td>
+<td>Supported</td>
+</tr>
+<tr class="odd">
+<td>Chatbot Arena</td>
+<td>English and others</td>
+<td>Manual</td>
+<td>Online</td>
+<td>Supported</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="how-to-calculate-the-benchmark" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-calculate-the-benchmark">How to calculate the benchmark</h2>
+<p>Since the huggingface leaderboard is influential, we will study the metric listed in huggingface first. There are seven benchmarks as <em>Average</em>, <em>ARC</em>, <em>HellaSwag</em>, <em>MMLU</em>, <em>TruthfulQA</em>, <em>Winogrande</em> and <em>GSM8K</em>. For simplicity, we will choose one benchmark and demonstrate how we will get the result. Here, we use <strong>TruthfulQA</strong> as example. The <a href="https://huggingface.co/datasets/truthful_qa/viewer/multiple_choice">truthfulQA</a> dataset can be found from huggingface.</p>
+<p>The good news is that we can use a unified framework for the above benchmarks! Checkout <a href="https://github.com/EleutherAI/lm-evaluation-harness">lm-evaluation-harness</a> repo.</p>
+<p>There are many different methods to implement the evaluation task. We need to be aware that we also need to consider different cases of zero-shot or few-shot learning. For example, if the few-shot learning is used, we may directly let the model to sameple the choice by using prompt as <code>thus, the choice is:</code> since it already know the expected result is like <code>A, B, C</code>. For zero-shot learning, we may need multiple round of prompt, the first prompt is to let it generate the result, and the same prompt says the final choice.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
