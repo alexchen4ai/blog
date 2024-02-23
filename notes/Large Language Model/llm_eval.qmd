@@ -12,4 +12,17 @@ As to today, we have many different evaluation metrics for the large language mo
 There are different kinds of metric. For example, the general metric, or special metric especially to evaluate the model in certain aspect like the Chinese language or the function call capability.
 :::
 
+## LLM leaderboard
+
+There are many leaderboard for the LLM. The leaderboard is created based on the metric of the LLM. Thus, we can know what metric of LLM can be useful.
+
+1. [Huggingface LLM Leaderboard](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard);
+2. [Streamlit Leaderboard](https://llm-leaderboard.streamlit.app/);
+3. [LMSYS Leaderboard](https://chat.lmsys.org/);
+4. [Can AI code leaderboard](https://huggingface.co/spaces/mike-ravkine/can-ai-code-results).
+
+Also, we can get more metric from the papers for sure. 📝 **Paper**: [Evaluating Large Language Models: A
+Comprehensive Survey](https://arxiv.org/pdf/2310.19736.pdf) can provide a full explanation about it.
+
 ## General metric
+
