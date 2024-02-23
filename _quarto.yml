@@ -14,10 +14,8 @@ website:
     left:
       - text: "Home"
         href: index.qmd
-      - text: "Notes"
+      - text: "Articles"
         href: notes.qmd
-      - text: "LLM code example"
-        href: chat_model.ipynb
       - text: "Hello"
         href: hello.qmd
     right: 
@@ -37,6 +35,8 @@ website:
         - text: "---"
         - section: "💡 **Diffusion models**"
           contents: "notes/Diffusion Model/*"
+    
+    
 
 # comments:
 #   utterances:
