@@ -12,6 +12,10 @@ Today, the landscape of large language models (LLMs) is rich with diverse evalua
 Benchmarks for evaluating large language models come in various forms, each serving a unique purpose. They can be broadly categorized into general benchmarks, which assess overall performance, and specialized benchmarks, designed to evaluate the model's proficiency in specific areas such as understanding the Chinese language or its ability to perform function calls.
 :::
 
+::: {.callout-tip}
+Consider to learn Stanford CS224U if you want to learn more fundamental knowledge about the LLM evaluation.
+:::
+
 ## LLM leaderboard
 
 Numerous leaderboards exist for Large Language Models (LLMs), each compiled based on the benchmarks of these models. By examining these leaderboards, we can identify which benchmarks are particularly effective and informative for evaluating the capabilities of LLMs.
