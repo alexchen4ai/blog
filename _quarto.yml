@@ -16,8 +16,6 @@ website:
         href: index.qmd
       - text: "Articles"
         href: notes.qmd
-      - text: "Hello"
-        href: hello.qmd
     right: 
       - icon: github
         href: https://github.com/alexchen4ai
@@ -36,7 +34,7 @@ website:
         - section: "💡 **Diffusion models**"
           contents: "notes/Diffusion Model/*"
     
-    
+
 
 # comments:
 #   utterances:
