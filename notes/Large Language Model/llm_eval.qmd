@@ -115,4 +115,8 @@ Also, there are some benchmark for the holistic evaluation.
 
 ## How to calculate the benchmark
 
-Since the huggingface leaderboard is influential, we will study the metric listed in huggingface first. There are seven benchmarks as *Average*, *ARC*, *HellaSwag*, *MMLU*, *TruthfulQA*, *Winogrande* and *GSM8K*. For simplicity, we will choose one benchmark and demonstrate how we will get the result. Here, we use **TruthfulQA** as example. The [truthfulQA](https://huggingface.co/datasets/truthful_qa/viewer/multiple_choice) dataset can be found from huggingface.
+Since the huggingface leaderboard is influential, we will study the metric listed in huggingface first. There are seven benchmarks as *Average*, *ARC*, *HellaSwag*, *MMLU*, *TruthfulQA*, *Winogrande* and *GSM8K*. For simplicity, we will choose one benchmark and demonstrate how we will get the result. Here, we use **TruthfulQA** as example. The [truthfulQA](https://huggingface.co/datasets/truthful_qa/viewer/multiple_choice) dataset can be found from huggingface. 
+
+The good news is that we can use a unified framework for the above benchmarks! Checkout [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) repo.
+
+There are many different methods to implement the evaluation task. We need to be aware that we also need to consider different cases of zero-shot or few-shot learning. For example, if the few-shot learning is used, we may directly let the model to sameple the choice by using prompt as `thus, the choice is:` since it already know the expected result is like `A, B, C`. For zero-shot learning, we may need multiple round of prompt, the first prompt is to let it generate the result, and the same prompt says the final choice.
