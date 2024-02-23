@@ -24,5 +24,95 @@ There are many leaderboard for the LLM. The leaderboard is created based on the 
 Also, we can get more metric from the papers for sure. 📝 **Paper**: [Evaluating Large Language Models: A
 Comprehensive Survey](https://arxiv.org/pdf/2310.19736.pdf) can provide a full explanation about it.
 
-## General metric
+## Classification of LLM evaluation
 
+There are different metrics for the LLM evaluation. The general classification can be found in @fig-classification.
+
+::: {#fig-classification}
+
+<p align=center>
+    <img src="../../images/LLM_eval.png" width="80%"/>
+</p>
+
+The classification of LLM evaluation.
+:::
+
+For each aspect of the model, we will have different methods to evaluate it. 
+
+The knowledge and capability evaluation can be seen in @fig-knowledge-capability.
+
+::: {#fig-knowledge-capability}
+
+<p align=center>
+    <img src="../../images/knowledge_capability_evaluation.png" width="100%"/>
+</p>
+
+The progress of the LLM knowledge capability evaluation.
+:::
+
+The commonsense reasoning datasets can be seen below:
+
+| Dataset        | Domain   | Size  | Source                        | Task              |
+|----------------|----------|-------|-------------------------------|-------------------|
+| ARC            | science | 7,787 | a variety of sources          | multiple-choice QA |
+| QASC           | science | 9,980 | human-authored                 | multiple-choice QA |
+| MCTACO         | temporal| 1,893 | MultiRC                        | multiple-choice QA |
+| TRACIE         | temporal| -     | ROCStories, Wikipedia          | multiple-choice QA |
+| TIMEDIAL       | temporal| 1.1K  | DailyDialog                    | multiple-choice QA |
+| HellaSWAG      | event   | 20K   | ActivityNet, WikiHow           | multiple-choice QA |
+| PIQA           | physical| 21K   | human-authored                 | 2-choice QA        |
+| Pep-3k         | physical| 3,062 | human-authored                 | 2-choice QA        |
+| Social IQA     | social  | 38K   | human-authored                 | multiple-choice QA |
+| CommonsenseQA  | generic | 12,247| CONCEPTNET, human-authored     | multiple-choice QA |
+| OpenBookQA     | generic | 6K    | WorldTree                      | multiple-choice QA |
+
+: The details of commonsense reasoning datasets.
+
+
+And the multi-hop reasoning dataset is:
+
+| Dataset   | Domain  | Size  | # hops | Source                | Answer type |
+|-----------|---------|-------|--------|-----------------------|-------------|
+| HotpotQA  | generic |112,779| 1/2/3  | Wikipedia             | span        |
+| HybridQA  | generic | 69,611| 2/3    | Wikitables, Wikipedia | span        |
+| MultiRC   | generic | 9,872 | 2.37   | Multiple              | MCQ         |
+| NarrativeQA| fiction | 46,765| -      | Multiple              | generative  |
+| Medhop    | medline | 2,508 | -      | Medline               | MCQ         |
+| Wikihop   | generic | 51,318| -      | Wikipedia             | MCQ         |
+
+Like the knowledge and capability, there are datasets prepared for other metric as well. 
+
+
+## Benchmarks
+
+After we have the dataset to evaluate the LLM, we will have a specific term called **benchmark** which can evaluate the LLM with a number! Next, we will discuss more about the benchmarks.
+
+| Benchmarks | # Tasks | Language         | # Instances | Evaluation Form |
+|------------|---------|------------------|-------------|-----------------|
+| MMLU       | 57      | English          | 15,908      | Local           |
+| MMCU       | 51      | Chinese          | 11,900      | Local           |
+| C-Eval     | 52      | Chinese          | 13,948      | Online          |
+| AGIEval    | 20      | English, Chinese | 8,062       | Local           |
+| M3KE       | 71      | Chinese          | 20,477      | Local           |
+| M3Exam     | 4       | English and others | 12,317    | Local           |
+| CMMLU      | 67      | Chinese          | 11,528      | Local           |
+| LucyEval   | 55      | Chinese          | 11,000      | Online          |
+: Benchmarks for Knowledge and Reasoning
+
+Also, there are some benchmark for the holistic evaluation.
+
+| Benchmarks     | Language         | Metric                      | Evaluation Form    | Expandability |
+|----------------|------------------|-----------------------------|--------------------|---------------|
+| HELM           | English          | Automatic                   | Local              | Supported     |
+| BIG-bench      | English and others | Automatic                 | Local              | Supported     |
+| OpenCompass    | English and others | Automatic and LLMs-based | Local              | Supported     |
+| Huggingface    | English          | Automatic                   | Local              | Unsupported   |
+| FlagEval       | English and others | Automatic and Manual      | Local and Online   | Unsupported   |
+| OpenEval       | Chinese          | Automatic                   | Local              | Supported     |
+| Chatbot Arena  | English and others | Manual                    | Online             | Supported     |
+: Holistic benchmarks
+
+
+## How to calculate the benchmark
+
+Since the huggingface leaderboard is influential, we will study the metric listed in huggingface first. There are seven benchmarks as *Average*, *ARC*, *HellaSwag*, *MMLU*, *TruthfulQA*, *Winogrande* and *GSM8K*. For simplicity, we will choose one benchmark and demonstrate how we will get the result. Here, we use **TruthfulQA** as example. The [truthfulQA](https://huggingface.co/datasets/truthful_qa/viewer/multiple_choice) dataset can be found from huggingface.
