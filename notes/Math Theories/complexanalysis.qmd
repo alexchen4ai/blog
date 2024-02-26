@@ -5,5 +5,16 @@ date: 02-25-2024
 ---
 
 ::: {.callout-tip}
-The real functional analysis is used a lot in the ML. There is also the case where the complex analysis is used.
+The real functional analysis is used a lot in the ML. There is also the case where the complex analysis is used. We are not talking about the very detail of the complexy analysis, we just mention its application in the era of ML. 
 :::
+
+## Basics or formulas required.
+
+In this section, we just mention some critical formulas. In the case of complex number, we have
+
+$$
+e^{i \theta}=\cos \theta+i \sin \theta
+$$
+
+The equation can be proved if we use the Taylor series of $e^x$, $\operatorname{cos} x$ and $\operatorname{sin} x$ to prove it. This formula will be highlighted when we use complex analysis in the ML.
+
