@@ -82,7 +82,7 @@ Set to $-\infty$ so that it becomes zero during softmax. Thus, for the final out
 :::
 
 ::: {.callout-tip}
-For different batch of tokens, they will choose different experts! For example the `batch[0]` will choose the expert 0 and 3, while the `batch[1]` will choose the expert 4 and 7.
+For different tokens (tokens in the same sequence and batch could be routed to different experts), they will choose different experts! For example the `batch[0]` will choose the expert 0 and 3, while the `batch[1]` will choose the expert 4 and 7.
 :::
 
 ## Load balancing loss
