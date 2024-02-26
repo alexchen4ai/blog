@@ -10,7 +10,38 @@
 <atom:link href="https://alexchen4ai.github.io/blog/notes.xml" rel="self" type="application/rss+xml"/>
 <description>Personal summaries and insights gathered from reading various research papers and articles.</description>
 <generator>quarto-1.4.549</generator>
-<lastBuildDate>Thu, 22 Feb 2024 08:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 25 Feb 2024 08:00:00 GMT</lastBuildDate>
+<item>
+  <title>Complex analysis for machine learning</title>
+  <dc:creator>Alex Chen</dc:creator>
+  <link>https://alexchen4ai.github.io/blog/notes/Math Theories/complexanalysis.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The real functional analysis is used a lot in the ML. There is also the case where the complex analysis is used.</p>
+</div>
+</div>
+
+
+
+ ]]></description>
+  <category>Math Theories</category>
+  <guid>https://alexchen4ai.github.io/blog/notes/Math Theories/complexanalysis.html</guid>
+  <pubDate>Sun, 25 Feb 2024 08:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Large language model evaluation</title>
   <dc:creator>Alex Chen</dc:creator>
@@ -641,7 +672,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>For different batch of tokens, they will choose different experts! For example the <code>batch[0]</code> will choose the expert 0 and 3, while the <code>batch[1]</code> will choose the expert 4 and 7.</p>
+<p>For different tokens (tokens in the same sequence and batch could be routed to different experts), they will choose different experts! For example the <code>batch[0]</code> will choose the expert 0 and 3, while the <code>batch[1]</code> will choose the expert 4 and 7.</p>
 </div>
 </div>
 </section>
