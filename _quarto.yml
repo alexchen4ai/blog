@@ -33,7 +33,7 @@ website:
         - text: "---"
         - section: "💡 **Diffusion models**"
           contents: "notes/Diffusion Model/*"
-        - section: "💡 **Math Theories**"
+        - section: "♾ **Math Theories**"
           contents: "notes/Math Theories/*"
     
 
