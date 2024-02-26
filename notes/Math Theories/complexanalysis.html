@@ -70,6 +70,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -215,7 +244,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
- <span class="menu-text">💡 <strong>Math Theories</strong></span></a>
+ <span class="menu-text">♾ <strong>Math Theories</strong></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -252,11 +281,19 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The real functional analysis is used a lot in the ML. There is also the case where the complex analysis is used.</p>
+<p>The real functional analysis is used a lot in the ML. There is also the case where the complex analysis is used. We are not talking about the very detail of the complexy analysis, we just mention its application in the era of ML.</p>
 </div>
 </div>
+<section id="basics-or-formulas-required." class="level2">
+<h2 class="anchored" data-anchor-id="basics-or-formulas-required.">Basics or formulas required.</h2>
+<p>In this section, we just mention some critical formulas. In the case of complex number, we have</p>
+<p><span class="math display">\[
+e^{i \theta}=\cos \theta+i \sin \theta
+\]</span></p>
+<p>The equation can be proved if we use the Taylor series of <span class="math inline">\(e^x\)</span>, <span class="math inline">\(\operatorname{cos} x\)</span> and <span class="math inline">\(\operatorname{sin} x\)</span> to prove it. This formula will be highlighted when we use complex analysis in the ML.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

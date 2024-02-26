@@ -31,11 +31,17 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The real functional analysis is used a lot in the ML. There is also the case where the complex analysis is used.</p>
+<p>The real functional analysis is used a lot in the ML. There is also the case where the complex analysis is used. We are not talking about the very detail of the complexy analysis, we just mention its application in the era of ML.</p>
 </div>
 </div>
+<section id="basics-or-formulas-required." class="level2">
+<h2 class="anchored" data-anchor-id="basics-or-formulas-required.">Basics or formulas required.</h2>
+<p>In this section, we just mention some critical formulas. In the case of complex number, we have</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Ae%5E%7Bi%20%5Ctheta%7D=%5Ccos%20%5Ctheta+i%20%5Csin%20%5Ctheta%0A"></p>
+<p>The equation can be proved if we use the Taylor series of <img src="https://latex.codecogs.com/png.latex?e%5Ex">, <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7Bcos%7D%20x"> and <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7Bsin%7D%20x"> to prove it. This formula will be highlighted when we use complex analysis in the ML.</p>
 
 
+</section>
 
  ]]></description>
   <category>Math Theories</category>

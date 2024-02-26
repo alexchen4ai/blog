@@ -181,10 +181,22 @@
     "href": "notes/Math Theories/complexanalysis.html",
     "title": "Complex analysis for machine learning",
     "section": "",
-    "text": "Tip\n\n\n\nThe real functional analysis is used a lot in the ML. There is also the case where the complex analysis is used.",
+    "text": "Tip\n\n\n\nThe real functional analysis is used a lot in the ML. There is also the case where the complex analysis is used. We are not talking about the very detail of the complexy analysis, we just mention its application in the era of ML.",
     "crumbs": [
       "Home",
-      "💡 **Math Theories**",
+      "♾ **Math Theories**",
+      "Complex analysis for machine learning"
+    ]
+  },
+  {
+    "objectID": "notes/Math Theories/complexanalysis.html#basics-or-formulas-required.",
+    "href": "notes/Math Theories/complexanalysis.html#basics-or-formulas-required.",
+    "title": "Complex analysis for machine learning",
+    "section": "Basics or formulas required.",
+    "text": "Basics or formulas required.\nIn this section, we just mention some critical formulas. In the case of complex number, we have\n\\[\ne^{i \\theta}=\\cos \\theta+i \\sin \\theta\n\\]\nThe equation can be proved if we use the Taylor series of \\(e^x\\), \\(\\operatorname{cos} x\\) and \\(\\operatorname{sin} x\\) to prove it. This formula will be highlighted when we use complex analysis in the ML.",
+    "crumbs": [
+      "Home",
+      "♾ **Math Theories**",
       "Complex analysis for machine learning"
     ]
   }
