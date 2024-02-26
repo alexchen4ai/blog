@@ -1,0 +1,9 @@
+---
+title: "Complex analysis for machine learning"
+categories: Math Theories
+date: 02-25-2024
+---
+
+::: {.callout-tip}
+The real functional analysis is used a lot in the ML. There is also the case where the complex analysis is used.
+:::
