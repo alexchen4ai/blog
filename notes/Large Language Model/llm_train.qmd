@@ -142,3 +142,4 @@ torchrun
    YOUR_TRAINING_SCRIPT.py (--arg1 ... train script args...)
 ```
 
+For more complicated case, pytorch also provide some solution to use multiple container with communication by [docker example](https://github.com/pytorch/elastic/blob/master/examples/imagenet/main.py) or [k8s example](https://github.com/pytorch/elastic/tree/master/kubernetes).
