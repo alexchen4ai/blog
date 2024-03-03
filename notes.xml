@@ -10,7 +10,346 @@
 <atom:link href="https://alexchen4ai.github.io/blog/notes.xml" rel="self" type="application/rss+xml"/>
 <description>Personal summaries and insights gathered from reading various research papers and articles.</description>
 <generator>quarto-1.4.549</generator>
-<lastBuildDate>Sun, 25 Feb 2024 08:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 02 Mar 2024 08:00:00 GMT</lastBuildDate>
+<item>
+  <title>Large language model distributed training</title>
+  <dc:creator>Alex Chen</dc:creator>
+  <link>https://alexchen4ai.github.io/blog/notes/Large Language Model/llm_train.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The AWS sagemaker is a service to support the automatic training for the models. And the price is 1.5x of the normal elastic container. Thus, the distributed learning is important and expensive.</p>
+</div>
+</div>
+<section id="distributed-learning-introduction-in-pytorch" class="level2">
+<h2 class="anchored" data-anchor-id="distributed-learning-introduction-in-pytorch">Distributed learning introduction in <code>Pytorch</code></h2>
+<p>We need to be aware of what kind of distributed learning we can use, and there are <code>DDP</code>, <code>RPC</code> and <code>Collective communication</code> from the <a href="https://pytorch.org/tutorials/beginner/dist_overview.html">pytorch documentation</a> (read the documentation for the detail).</p>
+<section id="data-parallel" class="level3">
+<h3 class="anchored" data-anchor-id="data-parallel">Data Parallel</h3>
+<p>DistributedDataParallel is better than the DataParallel (DP), since DP is limited by the <a href="https://wiki.python.org/moin/GlobalInterpreterLock">GIL</a>. For <code>DP</code>, it is to split the dataset into multiple machine, and compute them then reduce them. Suppose you have a forward computation with batch size as 16, and the number of the GPU is 4. Then, you basically calculate batch size 4 in each GPU. To apply it, we just need to add a few code:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> torch.cuda.device_count() <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>:</span>
+<span id="cb1-2">    model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> nn.DataParallel(model)</span></code></pre></div>
+<p>We don’t need to do any other operation to let it run.</p>
+</section>
+<section id="distributed-data-parallel-ddp" class="level3">
+<h3 class="anchored" data-anchor-id="distributed-data-parallel-ddp">Distributed Data Parallel (DDP)</h3>
+<p>We need to use the specific module to let it work. This trick can overcome the <code>GIL</code>. A code example can be</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> torch</span>
+<span id="cb2-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> torch.distributed <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> dist</span>
+<span id="cb2-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> torch.multiprocessing <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> mp</span>
+<span id="cb2-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> torch.nn <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> nn</span>
+<span id="cb2-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> torch.optim <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> optim</span>
+<span id="cb2-6"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> os</span>
+<span id="cb2-7"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> torch.nn.parallel <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> DistributedDataParallel <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> DDP</span>
+<span id="cb2-8"></span>
+<span id="cb2-9"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">class</span> SimpleCNN(nn.Module):</span>
+<span id="cb2-10">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">pass</span> </span>
+<span id="cb2-11"></span>
+<span id="cb2-12"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> example(rank, world_size):</span>
+<span id="cb2-13">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># create default process group, nccl means running on GPU</span></span>
+<span id="cb2-14">    dist.init_process_group(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"nccl"</span>, rank<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>rank, world_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>world_size)</span>
+<span id="cb2-15">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># create local model and move it to the current device (GPU/CPU)</span></span>
+<span id="cb2-16">    model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> SimpleCNN().to(rank)</span>
+<span id="cb2-17">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># construct DDP model</span></span>
+<span id="cb2-18">    ddp_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> DDP(model, device_ids<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[rank])</span>
+<span id="cb2-19">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># define loss function and optimizer</span></span>
+<span id="cb2-20">    loss_fn <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> nn.CrossEntropyLoss()</span>
+<span id="cb2-21">    optimizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> optim.SGD(ddp_model.parameters(), lr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.001</span>)</span>
+<span id="cb2-22"></span>
+<span id="cb2-23">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># forward pass</span></span>
+<span id="cb2-24">    outputs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ddp_model(torch.randn(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">64</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">28</span>).to(rank))  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Example input size for MNIST</span></span>
+<span id="cb2-25">    labels <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.randint(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">64</span>,)).to(rank)  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Example labels for 64 samples</span></span>
+<span id="cb2-26">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># backward pass</span></span>
+<span id="cb2-27">    loss_fn(outputs, labels).backward()</span>
+<span id="cb2-28">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># update parameters</span></span>
+<span id="cb2-29">    optimizer.step()</span>
+<span id="cb2-30"></span>
+<span id="cb2-31"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">def</span> main():</span>
+<span id="cb2-32">    world_size <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb2-33">    mp.spawn(example,</span>
+<span id="cb2-34">             args<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(world_size,),</span>
+<span id="cb2-35">             nprocs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>world_size,</span>
+<span id="cb2-36">             join<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb2-37"></span>
+<span id="cb2-38"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">__name__</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"__main__"</span>:</span>
+<span id="cb2-39">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Environment variables for distributed training</span></span>
+<span id="cb2-40">    os.environ[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"MASTER_ADDR"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"localhost"</span></span>
+<span id="cb2-41">    os.environ[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"MASTER_PORT"</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"29500"</span></span>
+<span id="cb2-42">    main()</span></code></pre></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>rank</code> and <code>world_size</code> are two special concept in the distributed learning. When we launch multiple processes to learn the model, the total number of processes is <code>world_size</code>. For each process, we can define it as <code>rank</code>. You can imagine <code>rank</code> is like a small device, so we put the model or data to the <code>rank</code> like we put them in <code>cuda</code>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We still need to define the env value for the distributed learning code, since the framework needs to setup a communication network.</p>
+</div>
+</div>
+</section>
+<section id="use-the-zeroredundancyoptimizer" class="level3">
+<h3 class="anchored" data-anchor-id="use-the-zeroredundancyoptimizer">Use the ZeroRedundancyOptimizer</h3>
+<p>Since some optimizer like <code>Adam</code> will keep many states, usually twice the model size, OOM error can occur. Therefore, we consider to deepspeed optimizer. In pytorch, it is already implemented!</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> torch.distributed.optim <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> ZeroRedundancyOptimizer</span></code></pre></div>
+<p>If we want to use it, just add a flag called <code>use_zero</code>:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">if</span> use_zero:</span>
+<span id="cb4-2">    optimizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ZeroRedundancyOptimizer(</span>
+<span id="cb4-3">        ddp_model.parameters(),</span>
+<span id="cb4-4">        optimizer_class<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>torch.optim.Adam,</span>
+<span id="cb4-5">        lr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01</span></span>
+<span id="cb4-6">    )</span>
+<span id="cb4-7"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">else</span>:</span>
+<span id="cb4-8">    optimizer <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.optim.Adam(ddp_model.parameters(), lr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01</span>)</span></code></pre></div>
+<p>This technique is mainly used to distribute the optimizer to multiple machine to avoid the OOM. All other code is similar to the DDP part.</p>
+</section>
+<section id="fully-sharded-data-parallel" class="level3">
+<h3 class="anchored" data-anchor-id="fully-sharded-data-parallel">Fully sharded data parallel</h3>
+<p>This FSDP will distribute the model and data across all process, and it is good especially for the model that can’t be fitted to one GPU. For the example script, refer to this <a href="https://pytorch.org/tutorials/intermediate/FSDP_tutorial.html">code example</a>.</p>
+</section>
+<section id="torchrun" class="level3">
+<h3 class="anchored" data-anchor-id="torchrun">torchrun</h3>
+<p><code>torchrun</code> is a method to execute the distributed learning in a way of elastic running. It can deal with the case that some node may fail. And it can handle the restart automatically.</p>
+<p>We should set the checkpoint so that we will at most lose one epoch of training. The code is like</p>
+<pre><code>def main():
+     args = parse_args(sys.argv[1:])
+     state = load_checkpoint(args.checkpoint_path)
+     initialize(state)
+
+     # torch.distributed.run ensures that this will work
+     # by exporting all the env vars needed to initialize the process group
+     torch.distributed.init_process_group(backend=args.backend)
+
+     for i in range(state.epoch, state.total_num_epochs)
+          for batch in iter(state.dataset)
+              train(batch, state.model)
+
+          state.epoch += 1
+          save_checkpoint(state)</code></pre>
+<p>For more usage about the <code>torchrun</code>, refer to <a href="https://pytorch.org/docs/stable/elastic/train_script.html">this page</a>. Here is another script that can be runned by the <a href="https://github.com/pytorch/elastic/blob/master/examples/imagenet/main.py">torchrun command</a>. If we want to run the <code>torchrun</code>, we should firstly make sure the script can adapt to the <code>torchrun</code>. The code is to run it is:</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">torchrun</span></span>
+<span id="cb6-2">   <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">--nnodes=NUM_NODES</span></span>
+<span id="cb6-3">   <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">--nproc-per-node=TRAINERS_PER_NODE</span></span>
+<span id="cb6-4">   <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">--max-restarts=NUM_ALLOWED_FAILURES</span></span>
+<span id="cb6-5">   <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">--rdzv-id=JOB_ID</span></span>
+<span id="cb6-6">   <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">--rdzv-backend=c10d</span></span>
+<span id="cb6-7">   <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">--rdzv-endpoint=HOST_NODE_ADDR</span></span>
+<span id="cb6-8">   <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">YOUR_TRAINING_SCRIPT.py</span> <span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">--arg1</span> ... train script args...<span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<p>For more complicated case, pytorch also provide some solution to use multiple container with communication by <a href="https://github.com/pytorch/elastic/blob/master/examples/imagenet/main.py">docker example</a> or <a href="https://github.com/pytorch/elastic/tree/master/kubernetes">k8s example</a>.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Large Language Models</category>
+  <guid>https://alexchen4ai.github.io/blog/notes/Large Language Model/llm_train.html</guid>
+  <pubDate>Sat, 02 Mar 2024 08:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Complex analysis for machine learning</title>
   <dc:creator>Alex Chen</dc:creator>
