@@ -1,5 +1,12 @@
 [
   {
+    "listing": "/news.html",
+    "items": [
+      "/news/Research news/researchnews.html",
+      "/news/Personal thoughts/myread.html"
+    ]
+  },
+  {
     "listing": "/notes.html",
     "items": [
       "/notes/Large Language Model/llm_train.html",

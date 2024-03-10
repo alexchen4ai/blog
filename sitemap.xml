@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://alexchen4ai.github.io/blog/news/Personal thoughts/myread.html</loc>
+    <lastmod>2024-03-10T05:48:42.927Z</lastmod>
+  </url>
+  <url>
     <loc>https://alexchen4ai.github.io/blog/notes/Diffusion Model/sd.html</loc>
     <lastmod>2024-02-19T08:11:23.513Z</lastmod>
   </url>
@@ -15,6 +19,10 @@
   <url>
     <loc>https://alexchen4ai.github.io/blog/about.html</loc>
     <lastmod>2024-02-09T08:17:04.643Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexchen4ai.github.io/blog/news.html</loc>
+    <lastmod>2024-03-10T05:17:23.389Z</lastmod>
   </url>
   <url>
     <loc>https://alexchen4ai.github.io/blog/notes.html</loc>
@@ -35,5 +43,9 @@
   <url>
     <loc>https://alexchen4ai.github.io/blog/notes/Math Theories/complexanalysis.html</loc>
     <lastmod>2024-02-26T07:42:54.067Z</lastmod>
+  </url>
+  <url>
+    <loc>https://alexchen4ai.github.io/blog/news/Research news/researchnews.html</loc>
+    <lastmod>2024-03-10T05:54:21.224Z</lastmod>
   </url>
 </urlset>

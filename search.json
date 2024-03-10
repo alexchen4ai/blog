@@ -1,5 +1,53 @@
 [
   {
+    "objectID": "news/Personal thoughts/myread.html",
+    "href": "news/Personal thoughts/myread.html",
+    "title": "Reading list",
+    "section": "",
+    "text": "Tip\n\n\n\nA text to image generation model from the diffusion architecture.",
+    "crumbs": [
+      "Home",
+      "**Personal thoughts**",
+      "Reading list"
+    ]
+  },
+  {
+    "objectID": "news/Personal thoughts/myread.html#latest-generative-ai-research",
+    "href": "news/Personal thoughts/myread.html#latest-generative-ai-research",
+    "title": "Reading list",
+    "section": "Latest generative AI research",
+    "text": "Latest generative AI research\nThe latest AI research can be found in the different sources. I would like to classify them into the original source or the secondary source. The original source is the place where the research is published. The secondary source is the place where the research is summarized and explained.\n\nSummarized sources\nFor the original source, we should visit some famous researcher’s work. Now, I will list the useful sources for reading check every day.\n\nThe twitter of huggingface;\nThe wechat plaform called “新智元” and “AI 前线”;\nThe foundation model daily edited by “Miracle Plus”;",
+    "crumbs": [
+      "Home",
+      "**Personal thoughts**",
+      "Reading list"
+    ]
+  },
+  {
+    "objectID": "news/Personal thoughts/myread.html#latest-generative-ai-product",
+    "href": "news/Personal thoughts/myread.html#latest-generative-ai-product",
+    "title": "Reading list",
+    "section": "Latest generative AI product",
+    "text": "Latest generative AI product\nWe can mainly get the new products launched from the following three different sources.\n\nProduct hunt: This website is a good place to find the latest products. The products are classified into different categories. We can find the latest AI products in the AI category;\nNexa AI: The most comprehensive AI tools and products are listed in this website. Users can get access to various APIs for AI agent creation as well. We can basically check the daily new products from the Nexa AI website to know the latest progress.",
+    "crumbs": [
+      "Home",
+      "**Personal thoughts**",
+      "Reading list"
+    ]
+  },
+  {
+    "objectID": "news/Personal thoughts/myread.html#last",
+    "href": "news/Personal thoughts/myread.html#last",
+    "title": "Reading list",
+    "section": "Last",
+    "text": "Last\nIt is very important to keep reading the latest news to know the most recent research progress.",
+    "crumbs": [
+      "Home",
+      "**Personal thoughts**",
+      "Reading list"
+    ]
+  },
+  {
     "objectID": "notes/Diffusion Model/sd.html",
     "href": "notes/Diffusion Model/sd.html",
     "title": "Scalable diffusion models with transformers",
@@ -101,6 +149,13 @@
     "title": "About Wei Chen",
     "section": "",
     "text": "I am inside a Hawaii cafe\n\n\n\n\n   \n\n\nGreetings! My name is Alex Chen, an AI researcher and startup founder in Silicon Valley. Previously, I pursued a PhD at Stanford University, delving into numerical simulation and artificial intelligence research.\nIn this space, I aim to share my journey in academia and industry, providing insights into cutting-edge research and practical applications of AI and machine learning.\n\nFeel free to connect with me:\n\nEmail: weichen6@stanford.edu\nCheck out my startup: AI Tools by Nexa"
+  },
+  {
+    "objectID": "news.html",
+    "href": "news.html",
+    "title": "The latest news about the research and product about generative.",
+    "section": "",
+    "text": "Hot topic\n\n\n\n\n\n\nResearch news\n\n\n\n\n\n\n\n\n\n1 min\n\n\n\n\n\n\n\n\n\n\n\n\nReading list\n\n\n\n\n\n\nPersonal thoughts\n\n\n\n\n\n\n\n\n\n2 min\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "notes.html",
@@ -222,6 +277,18 @@
       "Home",
       "♾ **Math Theories**",
       "Complex analysis for machine learning"
+    ]
+  },
+  {
+    "objectID": "news/Research news/researchnews.html",
+    "href": "news/Research news/researchnews.html",
+    "title": "Hot topic",
+    "section": "",
+    "text": "Tip\n\n\n\nToday, we’ve seen the release of a new paper on the topic of hotness. This is a hot topic, and we’re excited to see what the community thinks about it.",
+    "crumbs": [
+      "Home",
+      "**Research news**",
+      "Hot topic"
     ]
   }
 ]

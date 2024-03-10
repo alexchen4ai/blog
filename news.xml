@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Alex Chen&#39;s Blog</title>
+<link>https://alexchen4ai.github.io/blog/news.html</link>
+<atom:link href="https://alexchen4ai.github.io/blog/news.xml" rel="self" type="application/rss+xml"/>
+<description>My reading from the latest research and product about generative ai. I will write the interesting part of them.</description>
+<generator>quarto-1.4.549</generator>
+<lastBuildDate>Sat, 09 Mar 2024 08:00:00 GMT</lastBuildDate>
+<item>
+  <title>Hot topic</title>
+  <dc:creator>Alex Chen</dc:creator>
+  <link>https://alexchen4ai.github.io/blog/news/Research news/researchnews.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Today, we’ve seen the release of a new paper on the topic of hotness. This is a hot topic, and we’re excited to see what the community thinks about it.</p>
+</div>
+</div>
+
+
+
+ ]]></description>
+  <category>Research news</category>
+  <guid>https://alexchen4ai.github.io/blog/news/Research news/researchnews.html</guid>
+  <pubDate>Sat, 09 Mar 2024 08:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Reading list</title>
+  <dc:creator>Alex Chen</dc:creator>
+  <link>https://alexchen4ai.github.io/blog/news/Personal thoughts/myread.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A text to image generation model from the diffusion architecture.</p>
+</div>
+</div>
+<section id="latest-generative-ai-research" class="level2">
+<h2 class="anchored" data-anchor-id="latest-generative-ai-research">Latest generative AI research</h2>
+<p>The latest AI research can be found in the different sources. I would like to classify them into the original source or the secondary source. The original source is the place where the research is published. The secondary source is the place where the research is summarized and explained.</p>
+<section id="summarized-sources" class="level3">
+<h3 class="anchored" data-anchor-id="summarized-sources">Summarized sources</h3>
+<p>For the original source, we should visit some famous researcher’s work. Now, I will list the useful sources for reading check every day.</p>
+<ol type="1">
+<li>The <a href="https://twitter.com/huggingface">twitter of huggingface</a>;</li>
+<li>The wechat plaform called “新智元” and “AI 前线”;</li>
+<li>The foundation model daily edited by “Miracle Plus”;</li>
+</ol>
+</section>
+</section>
+<section id="latest-generative-ai-product" class="level2">
+<h2 class="anchored" data-anchor-id="latest-generative-ai-product">Latest generative AI product</h2>
+<p>We can mainly get the new products launched from the following three different sources.</p>
+<ol type="1">
+<li><p><a href="https://www.producthunt.com/">Product hunt</a>: This website is a good place to find the latest products. The products are classified into different categories. We can find the latest AI products in the AI category;</p></li>
+<li><p><a href="https://www.nexa4ai.com/ai-tools">Nexa AI</a>: The most comprehensive AI tools and products are listed in this website. Users can get access to various APIs for AI agent creation as well. We can basically check the daily new products from the Nexa AI website to know the latest progress.</p>
+<iframe src="https://www.nexa4ai.com/" width="600" height="400"></iframe></li>
+</ol>
+</section>
+<section id="last" class="level2">
+<h2 class="anchored" data-anchor-id="last">Last</h2>
+<p>It is very important to keep reading the latest news to know the most recent research progress.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Personal thoughts</category>
+  <guid>https://alexchen4ai.github.io/blog/news/Personal thoughts/myread.html</guid>
+  <pubDate>Sat, 09 Mar 2024 08:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
