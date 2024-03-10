@@ -1,0 +1,4 @@
+# Enable banner style title blocks
+title-block-banner: true
+sidebar: news
+author: "Alex Chen"

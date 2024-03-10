@@ -1,0 +1,12 @@
+---
+title: "Hot topic"
+categories: Research news
+date: 03-9-2024
+---
+
+::: {.callout-tip}
+Today, we've seen the release of a new paper on the topic of hotness. This is a hot topic, and we're excited to see what the community thinks about it.
+:::
+
+
+
