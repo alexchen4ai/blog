@@ -16,6 +16,8 @@ website:
         href: index.qmd
       - text: "Articles"
         href: notes.qmd
+      - text: "News"
+        href: news.qmd
     right: 
       - icon: github
         href: https://github.com/alexchen4ai
@@ -35,6 +37,17 @@ website:
           contents: "notes/Diffusion Model/*"
         - section: "♾ **Math Theories**"
           contents: "notes/Math Theories/*"
+    
+    - id: news
+      title: "News"
+      style: "floating"
+      align: left
+      contents:
+        - section: "**Personal thoughts**"
+          contents: "news/Personal thoughts/*"
+        - text: "---"
+        - section: "**Research news**"
+          contents: "news/Research news/*"
     
 
 

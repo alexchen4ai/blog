@@ -1,0 +1,16 @@
+---
+title: "The latest news about the research and product about generative."
+description: "My reading from the latest research and product about generative ai. I will write the interesting part of them."
+listing:
+  contents: news
+  sort: "date desc"
+  type: default
+  feed: true
+  sort-ui: false
+  filter-ui: false
+  max-description-length: 110
+  fields: [image, title, description, categories, reading-time]
+page-layout: full
+sidebar: false
+title-block-banner: true
+---
