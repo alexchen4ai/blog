@@ -16,5 +16,11 @@ $$
 e^{i \theta}=\cos \theta+i \sin \theta
 $$
 
-The equation can be proved if we use the Taylor series of $e^x$, $\operatorname{cos} x$ and $\operatorname{sin} x$ to prove it. This formula will be highlighted when we use complex analysis in the ML.
+The equation can be proved if we use the Taylor series of $e^x$, $\operatorname{cos} x$ and $\operatorname{sin} x$ to prove it. This formula will be highlighted when we use complex analysis in the ML. 
 
+Additionally, we note that the complex number can be viewed as a special dimension so that we have $i^2=-1$. This $i$ will be helpful for many special computation.
+
+
+## Consider the rotary embedding using complex analysis
+
+The token positional embedding is used to capture the features of token because of its position in the sequence. To put it simple, the token in the position 0 has different contribution from the token to the position 10. 
