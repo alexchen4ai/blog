@@ -85,19 +85,22 @@ $$
 \begin{aligned}
 f_q\left(\boldsymbol{x}_m, m\right) & =\left(\boldsymbol{W}_q \boldsymbol{x}_m\right) e^{i m \theta} \\
 f_k\left(\boldsymbol{x}_n, n\right) & =\left(\boldsymbol{W}_k \boldsymbol{x}_n\right) e^{i n \theta} \\
-g\left(\boldsymbol{x}_m, \boldsymbol{x}_n, m-n\right) & =\left(\boldsymbol{W}_q \boldsymbol{x}_m\right)\left(\boldsymbol{W}_k \boldsymbol{x}_n\right)^T e^{i(m-n) \theta}
+g\left(\boldsymbol{x}_m, \boldsymbol{x}_n, m-n\right) & =\operatorname{Re}\left[\left(\boldsymbol{W}_q \boldsymbol{x}_m\right)\left(\boldsymbol{W}_k \boldsymbol{x}_n\right)^* e^{i(m-n) \theta}\right]
 \end{aligned}
 $$
 
-The derivation is as the following:
+The derivation is as the following (**This is not shown in the paper, you can use the derivation below to understand the paper better**):
+
+Note that if we express two vectors as $z_1 = a + bi$ and $z_2 = c + di$, the inner product is $ac + bd$. How would this be related to the multiplication of the two vectors? We actually have: $ac-bd = \operatorname{Re}(z_1 * \overline{z_2})$.
 
 $$
 \begin{aligned}
-\langle f_q, f_k\rangle &= f_q^* f_k \\
-      &= \left(\boldsymbol{W}_q \boldsymbol{x}_m\right)^* e^{-i m \theta} \left(\boldsymbol{W}_k \boldsymbol{x}_n\right) e^{i n \theta} \\
-      &= \left(\boldsymbol{W}_q \boldsymbol{x}_m\right)^* \left(\boldsymbol{W}_k \boldsymbol{x}_n\right) e^{i(n-m) \theta} \\
-      &= \left(\boldsymbol{W}_q \boldsymbol{x}_m\right)^T \left(\boldsymbol{W}_k \boldsymbol{x}_n\right) e^{i(n-m) \theta}.
+\langle f_q, f_k\rangle &= \operatorname{Re}(f_q * \overline{f_k}) \\
+      &= \left(\boldsymbol{W}_q \boldsymbol{x}_m\right) e^{i m \theta} \overline{\left(\boldsymbol{W}_k \boldsymbol{x}_n\right) e^{i n \theta}} \\
+      &= \left(\boldsymbol{W}_q \boldsymbol{x}_m\right) \overline{\left(\boldsymbol{W}_k \boldsymbol{x}_n\right)} e^{i(n-m) \theta} 
 \end{aligned}
 $$
 
-From the expression of $\left(\boldsymbol{W}_q \boldsymbol{x}_m\right)^T e^{-i m \theta}$, we can design the rotary embedding setup in the llama2.
+From the expression of $f_q\left(\boldsymbol{x}_m, m\right) =\left(\boldsymbol{W}_q \boldsymbol{x}_m\right) e^{i m \theta}$, we can design the rotary embedding setup in the llama2. It is important to note here that we introduce the complex number since we wish to integrate the meaning of the magnitude and the angle. The embedding itself represents the magnitude, and the angle is from the position. In real matrix multiplication, we can only do the real calculation, thus, we need the mapping above.
+
+We can put it another way. The real and imaginary part of the complex number are useful information for us. We can express the vectors using complex theory, so that we can incorporate the angle or phase information from the vectors. Finally, we still need to map back to the real operations and proceed it with useful information. It is like a auxiliary method to help process information using some intermediate state.
