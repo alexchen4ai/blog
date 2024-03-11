@@ -91,7 +91,7 @@ $$
 
 The derivation is as the following (**This is not shown in the paper, you can use the derivation below to understand the paper better**):
 
-Note that if we express two vectors as $z_1 = a + bi$ and $z_2 = c + di$, the inner product is $ac + bd$. How would this be related to the multiplication of the two vectors? We actually have: $ac-bd = \operatorname{Re}(z_1 * \overline{z_2})$.
+Note that if we express two vectors as $z_1 = a + bi$ and $z_2 = c + di$, the inner product is $ac + bd$. How would this be related to the multiplication of the two vectors? We actually have: $ac+bd = \operatorname{Re}(z_1 * \overline{z_2})$.
 
 $$
 \begin{aligned}
