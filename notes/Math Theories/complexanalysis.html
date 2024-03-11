@@ -301,6 +301,78 @@ Tip
 e^{i \theta}=\cos \theta+i \sin \theta
 \]</span></p>
 <p>The equation can be proved if we use the Taylor series of <span class="math inline">\(e^x\)</span>, <span class="math inline">\(\operatorname{cos} x\)</span> and <span class="math inline">\(\operatorname{sin} x\)</span> to prove it. This formula will be highlighted when we use complex analysis in the ML.</p>
+<p>Additionally, we note that the complex number can be viewed as a special dimension so that we have <span class="math inline">\(i^2=-1\)</span>. This <span class="math inline">\(i\)</span> will be helpful for many special computation.</p>
+</section>
+<section id="consider-the-rotary-embedding-using-complex-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="consider-the-rotary-embedding-using-complex-analysis">Consider the rotary embedding using complex analysis</h2>
+<p>The token positional embedding is used to capture the features of token because of its position in the sequence. To put it simple, the token in the position 0 has different contribution from the token to the position 10.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>📝 <strong>Paper</strong>: <a href="https://arxiv.org/pdf/2104.09864.pdf">ROFORMER: ENHANCED TRANSFORMER WITH ROTARY POSITION EMBEDDING</a></p>
+</div>
+</div>
+<p>The present research indicate that we wish to add the absolute embedding and the relative embedding to the token based on its position. The absolute embedding is just decided by the position of the token. And the relative embedding is decided by the relative position of the token. Note that for the embedding computation, we need to compute the attendence score between the token at the position of <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\boldsymbol{q}_m &amp; =f_q\left(\boldsymbol{x}_m, m\right) \\
+\boldsymbol{k}_n &amp; =f_k\left(\boldsymbol{x}_n, n\right) \\
+\boldsymbol{v}_n &amp; =f_v\left(\boldsymbol{x}_n, n\right).
+\end{aligned}
+\]</span></p>
+<p>When you consider this problem, try to simulate the LLM inference (not training). The query is the new token to be predicted, and the key and value are the existing tokens. Now, we also need to consider the position info between them. The original transformer paper uses the absolute position embedding:</p>
+<p><span class="math display">\[
+f_{t: t \in\{q, k, v\}}\left(\boldsymbol{x}_i, i\right):=\boldsymbol{W}_{t: t \in\{q, k, v\}}\left(\boldsymbol{x}_i+\boldsymbol{p}_i\right),
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\begin{cases}\boldsymbol{p}_{i, 2 t} &amp; =\sin \left(k / 10000^{2 t / d}\right) \\ \boldsymbol{p}_{i, 2 t+1} &amp; =\cos \left(k / 10000^{2 t / d}\right)\end{cases}
+\]</span></p>
+<p>If we think about this structure further, we found that the <code>sin</code> and <code>cos</code> function is the periodic functions, which means for the same relative distance, we could observe similar embedding.</p>
+<p>Another relative positional embedding is to note that the relative position between the token <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span> is <span class="math inline">\(m-n\)</span>, and the embedding is dependent on the <span class="math inline">\(m-n\)</span>, the difference. Note that we need to use <span class="math inline">\(\boldsymbol{q}_m^T\boldsymbol{k}_n\)</span>, and this should be able to reflect the relative position information between the two tokens. And the <strong>current research indicates that the relative position embedding is important for the positional information</strong>. We wish the inner product encodes position information by:</p>
+<p><span class="math display">\[
+\left\langle f_q\left(\boldsymbol{x}_m, m\right), f_k\left(\boldsymbol{x}_n, n\right)\right\rangle=g\left(\boldsymbol{x}_m, \boldsymbol{x}_n, m-n\right) .
+\]</span></p>
+<p>The idea here is that we express the relative position as the information of angle rather than the position in a linear segment. And we can use complex analysis for it. It is like the signal processing where each signal has the frequency and the magnitude. Suppose <span class="math inline">\(d=2\)</span>, and we can assume the embedding information as:</p>
+<p><span class="math display">\[
+\begin{aligned}
+f_q\left(\boldsymbol{x}_q, m\right) &amp; =R_q\left(\boldsymbol{x}_q, m\right) e^{i \Theta_q\left(\boldsymbol{x}_q, m\right)} \\
+f_k\left(\boldsymbol{x}_k, n\right) &amp; =R_k\left(\boldsymbol{x}_k, n\right) e^{i \Theta_k\left(\boldsymbol{x}_k, n\right)} \\
+g\left(\boldsymbol{x}_q, \boldsymbol{x}_k, n-m\right) &amp; =R_g\left(\boldsymbol{x}_q, \boldsymbol{x}_k, n-m\right) e^{i \Theta_g\left(\boldsymbol{x}_q, \boldsymbol{x}_k, n-m\right)}
+\end{aligned}
+\]</span></p>
+<p>Thus, using this information, we have</p>
+<p><span class="math display">\[
+\begin{aligned}
+R_q\left(\boldsymbol{x}_q, m\right) R_k\left(\boldsymbol{x}_k, n\right) &amp; =R_g\left(\boldsymbol{x}_q, \boldsymbol{x}_k, n-m\right), \\
+\Theta_k\left(\boldsymbol{x}_k, n\right)-\Theta_q\left(\boldsymbol{x}_q, m\right) &amp; =\Theta_g\left(\boldsymbol{x}_q, \boldsymbol{x}_k, n-m\right),
+\end{aligned}
+\]</span></p>
+<p>After derivation, we found that if we choose the following expression, we can satisfy the condition above:</p>
+<p><span class="math display">\[
+\begin{aligned}
+f_q\left(\boldsymbol{x}_m, m\right) &amp; =\left(\boldsymbol{W}_q \boldsymbol{x}_m\right) e^{i m \theta} \\
+f_k\left(\boldsymbol{x}_n, n\right) &amp; =\left(\boldsymbol{W}_k \boldsymbol{x}_n\right) e^{i n \theta} \\
+g\left(\boldsymbol{x}_m, \boldsymbol{x}_n, m-n\right) &amp; =\left(\boldsymbol{W}_q \boldsymbol{x}_m\right)\left(\boldsymbol{W}_k \boldsymbol{x}_n\right)^T e^{i(m-n) \theta}
+\end{aligned}
+\]</span></p>
+<p>The derivation is as the following:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\langle f_q, f_k\rangle &amp;= f_q^* f_k \\
+      &amp;= \left(\boldsymbol{W}_q \boldsymbol{x}_m\right)^* e^{-i m \theta} \left(\boldsymbol{W}_k \boldsymbol{x}_n\right) e^{i n \theta} \\
+      &amp;= \left(\boldsymbol{W}_q \boldsymbol{x}_m\right)^* \left(\boldsymbol{W}_k \boldsymbol{x}_n\right) e^{i(n-m) \theta} \\
+      &amp;= \left(\boldsymbol{W}_q \boldsymbol{x}_m\right)^T \left(\boldsymbol{W}_k \boldsymbol{x}_n\right) e^{i(n-m) \theta}.
+\end{aligned}
+\]</span></p>
+<p>From the expression of <span class="math inline">\(\left(\boldsymbol{W}_q \boldsymbol{x}_m\right)^T e^{-i m \theta}\)</span>, we can design the rotary embedding setup in the llama2.</p>
 
 
 </section>
