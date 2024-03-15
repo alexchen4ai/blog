@@ -1,0 +1,13 @@
+---
+title: "Complex analysis for machine learning"
+categories: Math Theories
+date: 02-25-2024
+---
+
+::: {.callout-tip}
+In this paper, we will give a thorough of optimizer used in the machine learning. Specially, the pytorch model will be used to illustrate the code implementation of the optimizer. 
+:::
+
+## Heuristic for the optimization
+
+The machine learning training starts from the convex optimization problems. In deep learning, we usually deal with the tensor operations. Thus, the optimization is about the multivariate calculus. For this problem, we know that the derivative is in terms of the vector and matrix. To know about the concept of the optimization, we starts with the 1D optimization.
