@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Chen">
-<meta name="dcterms.date" content="2024-02-21">
+<meta name="dcterms.date" content="2024-02-25">
 
-<title>Alex Chen’s Blog - Mixture of expert</title>
+<title>Alex Chen’s Blog - Complex analysis for machine learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -104,35 +70,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -190,7 +127,7 @@ window.Quarto = {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">Mixture of expert</h1>
+          <h1 class="quarto-secondary-nav-title">Complex analysis for machine learning</h1>
         </a>     
     </div>
   </nav>
@@ -199,9 +136,9 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title d-none d-lg-block">Mixture of expert</h1>
+      <h1 class="title d-none d-lg-block">Complex analysis for machine learning</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">Large Language Models</div>
+                <div class="quarto-category">Math Theories</div>
               </div>
                   </div>
   </div>
@@ -219,7 +156,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 21, 2024</p>
+        <p class="date">February 25, 2024</p>
       </div>
     </div>
     
@@ -255,7 +192,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../notes/Large Language Model/moe.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../notes/Large Language Model/moe.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Mixture of expert</span></a>
   </div>
 </li>
@@ -302,7 +239,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../notes/Math Theories/ml_optimizer.html" class="sidebar-item-text sidebar-link">
+  <a href="../../notes/Math Theories/ml_optimizer.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Complex analysis for machine learning</span></a>
   </div>
 </li>
@@ -331,141 +268,12 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>MoE means the mixture of expert. In this blog, we will introduce the type of MoE used in the <code>mixtral8x7B</code> model. The blog will assume that you already understand the llama2 model. Thus, we will not revisit any knowledge already inside the llama2 model. Another focus of this blog will combine the code implementation to delve into the arc of MoE.</p>
+<p>In this paper, we will give a thorough of optimizer used in the machine learning. Specially, the pytorch model will be used to illustrate the code implementation of the optimizer.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>📝 <strong>Paper</strong>: <a href="https://arxiv.org/abs/2101.03961">Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity</a></p>
-</div>
-</div>
-<section id="difference-from-the-llama2" class="level2">
-<h2 class="anchored" data-anchor-id="difference-from-the-llama2">Difference from the llama2</h2>
-<p>In causal LM, we know that the decoder model can be decomposed into multiple small parts. Let’s visit the architecture of the llama2 in the <a href="#fig-llama2" class="quarto-xref">Figure&nbsp;1</a>.</p>
-<div id="fig-llama2" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-llama2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../../images/llama2.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-llama2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: The architecture of the llama2 model
-</figcaption>
-</figure>
-</div>
-<p>There are many components inside the llama2 architecure, like the attention layer, positional embedding, RMS norm, FC etc. The only difference here is the block of <strong>FF SwiGLU</strong> (<code>FF</code> is the feedforward network and the implementation is add the hidden embedding dimension first, through the activation function and finally decrease the dimension). Instead of using only one FF function, we use the mixture of expert, which export is the actually a <strong>FF</strong>. In llama2, the code implementation would be as simple as:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LlamaMLP(nn.Module):</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, config):</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.config <span class="op">=</span> config</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.hidden_size <span class="op">=</span> config.hidden_size</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.intermediate_size <span class="op">=</span> config.intermediate_size</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.gate_proj <span class="op">=</span> nn.Linear(<span class="va">self</span>.hidden_size, <span class="va">self</span>.intermediate_size, bias<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.up_proj <span class="op">=</span> nn.Linear(<span class="va">self</span>.hidden_size, <span class="va">self</span>.intermediate_size, bias<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.down_proj <span class="op">=</span> nn.Linear(<span class="va">self</span>.intermediate_size, <span class="va">self</span>.hidden_size, bias<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.act_fn <span class="op">=</span> ACT2FN[config.hidden_act]</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        down_proj <span class="op">=</span> <span class="va">self</span>.down_proj(<span class="va">self</span>.act_fn(<span class="va">self</span>.gate_proj(x)) <span class="op">*</span> <span class="va">self</span>.up_proj(x))</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> down_proj</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>OK, now we will add more complexity to this function. ::: {.callout-tip} Note that all other parts are the same except the feedforward block. :::</p>
-</section>
-<section id="mathematical-insights" class="level2">
-<h2 class="anchored" data-anchor-id="mathematical-insights">Mathematical insights</h2>
-<p>The FF model is actually the expert! For the llama2 model, we only have one expert, therefore, in the case of llama2, we have</p>
-<p><span class="math display">\[
-y = E(x),
-\]</span></p>
-<p>where <span class="math inline">\(x, y\)</span> are the value before and after the FF block. In the MoE, we actually prepare multiple trainable experts, so there are multiple <code>E</code> layers. A gating network is thus introduced to decide which network should be used. And now the expression becomes:</p>
-<p><span class="math display">\[
-y = \sum_{i=1}^n G(x)_i E_i(x).
-\]</span></p>
-<p>It is special to choose the network <code>G</code>. Here, we just introduce the found research work from the paper <a href="https://arxiv.org/abs/2101.03961">Switch Transformer</a> which is also the famous <a href="https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1">Mixtral-8x7B</a>.</p>
-<p>Specially for this model, <code>n=8</code>. Suppose the last dimension of <code>x</code> is <code>d</code>, we will include the dimension of each variables for following up explanation.</p>
-<p>The steps to construct the <code>G(x)</code> are:</p>
-<ol type="1">
-<li>Set trainable linear layer <span class="math inline">\(W_g\)</span> of size <code>d*n</code>. <span class="math display">\[
-H(x)= x \cdot W_{\mathrm{g}}
-\]</span> and we know the dimension of <span class="math inline">\(H(x)\)</span> is <span class="math inline">\(n=8\)</span>.</li>
-<li>Only pick the top K experts: <span class="math display">\[
-\operatorname{KeepTopK}(v, k)_i= \begin{cases}v_i &amp; \text { if } v_i \text { is in the top } k \text { elements of } v \\ -\infty &amp; \text { otherwise. }\end{cases}
-\]</span></li>
-<li>Apply the softmax to get the final <code>G(x)</code> <span class="math display">\[
-G(x)=\operatorname{Norm}(\operatorname{Softmax}(\operatorname{KeepTopK}(H(x), k)))
-\]</span></li>
-</ol>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Set to <span class="math inline">\(-\infty\)</span> so that it becomes zero during softmax. Thus, for the final output, we only have <span class="math inline">\(k\)</span> experts which are really used.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>For different tokens (tokens in the same sequence and batch could be routed to different experts), they will choose different experts! For example the <code>batch[0]</code> will choose the expert 0 and 3, while the <code>batch[1]</code> will choose the expert 4 and 7.</p>
-</div>
-</div>
-</section>
-<section id="load-balancing-loss" class="level2">
-<h2 class="anchored" data-anchor-id="load-balancing-loss">Load balancing loss</h2>
-<p>Since different portion of total tokens will enter different experts, like the unbalanced dataset problem, we need to add a load balancing loss. Given <span class="math inline">\(N\)</span> experts indexed by <span class="math inline">\(i=1\)</span> to <span class="math inline">\(N\)</span> and a batch <span class="math inline">\(\mathcal{B}\)</span> with <span class="math inline">\(T\)</span> tokens, the auxiliary loss is computed as the scaled dot-product between vectors <span class="math inline">\(f\)</span> and <span class="math inline">\(P\)</span>, <span class="math display">\[
-\text { loss }=\alpha \cdot N \cdot \sum_{i=1}^N f_i \cdot P_i
-\]</span> where <span class="math inline">\(f_i\)</span> is the fraction of tokens dispatched to expert <span class="math inline">\(i\)</span>, <span class="math display">\[
-f_i=\frac{1}{T} \sum_{x \in \mathcal{B}} \mathbb{1}\{\operatorname{argmax} p(x)=i\}
-\]</span> and <span class="math inline">\(P_i\)</span> is the fraction of the router probability allocated for expert <span class="math inline">\(i,{ }^2\)</span> <span class="math display">\[
-P_i=\frac{1}{T} \sum_{x \in \mathcal{B}} p_i(x)
-\]</span></p>
-<p>We add this loss since we want to encourages uniform routing since the loss is minimized when <span class="math display">\[
-f_i = P_i = \frac{1}{N}.
-\]</span></p>
-<div id="thm-policy-gradient-theorem" class="theorem">
-<p><span class="theorem-title"><strong>Theorem 1</strong></span> To prove that the minimum of the objective function <span class="math inline">\(\mathbf{a} \cdot \mathbf{b}=\sum_{i=1}^N a_i b_i\)</span> is achieved when <span class="math inline">\(a_i=\)</span> <span class="math inline">\(b_i=\frac{1}{N}\)</span> under the given constraints, we use the method of Lagrange multipliers for the constraints:</p>
-<p>Given constraints:</p>
-<ol type="1">
-<li><span class="math inline">\(\sum_{i=1}^N a_i=1, a_i \geq 0\)</span>.</li>
-<li><span class="math inline">\(\sum_{i=1}^N b_i=1, b_i \geq 0\)</span>.</li>
-</ol>
-<p>Objective Function to minimize:</p>
-<ul>
-<li><span class="math inline">\(L=\mathbf{a} \cdot \mathbf{b}-\lambda\left(\sum_{i=1}^N a_i-1\right)-\mu\left(\sum_{i=1}^N b_i-1\right)\)</span>, where <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\mu\)</span> are Lagrange multipliers.</li>
-</ul>
-<p>Taking partial derivatives of <span class="math inline">\(L\)</span> with respect to <span class="math inline">\(a_i, b_i, \lambda\)</span>, and <span class="math inline">\(\mu\)</span> and setting them to zero gives:</p>
-<ol type="1">
-<li><span class="math inline">\(\frac{\partial L}{\partial a_i}=b_i-\lambda=0 \Rightarrow b_i=\lambda\)</span>.</li>
-<li><span class="math inline">\(\frac{\partial L}{\partial b_i}=a_i-\mu=0 \Rightarrow a_i=\mu\)</span>.</li>
-<li><span class="math inline">\(\frac{\partial L}{\partial \lambda}=\sum_{i=1}^N a_i-1=0\)</span>.</li>
-<li><span class="math inline">\(\frac{\partial L}{\partial \mu}=\sum_{i=1}^N b_i-1=0\)</span>.</li>
-</ol>
-<p>From equations 1 and 2 , all <span class="math inline">\(a_i\)</span> and <span class="math inline">\(b_i\)</span> must be constant for all <span class="math inline">\(i\)</span>, because they equal the respective Lagrange multipliers <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\mu\)</span>, which are constants. Thus, <span class="math inline">\(a_i=a\)</span> and <span class="math inline">\(b_i=b\)</span> for some constants <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> for all <span class="math inline">\(i\)</span>.</p>
-<p>Given the constraints <span class="math inline">\(\sum_{i=1}^N a_i=1\)</span> and <span class="math inline">\(\sum_{i=1}^N b_i=1\)</span>, and knowing that <span class="math inline">\(a_i=a\)</span> and <span class="math inline">\(b_i=b\)</span> for all <span class="math inline">\(i\)</span>, we have:</p>
-<ul>
-<li><span class="math inline">\(\sum_{i=1}^N a=N \cdot a=1 \Rightarrow a=\frac{1}{N}\)</span>.</li>
-<li><span class="math inline">\(\sum_{i=1}^N b=N \cdot b=1 \Rightarrow b=\frac{1}{N}\)</span>.</li>
-</ul>
-<p>Therefore, setting <span class="math inline">\(a_i=b_i=\frac{1}{N}\)</span> for all <span class="math inline">\(i\)</span> satisfies the constraints and minimizes the objective function <span class="math inline">\(\mathbf{a} \cdot \mathbf{b}=\sum_{i=1}^N a_i b_i\)</span>, as any local minimum in a convex function over a convex set is a global minimum.</p>
-</div>
+<section id="heuristic-for-the-optimization" class="level2">
+<h2 class="anchored" data-anchor-id="heuristic-for-the-optimization">Heuristic for the optimization</h2>
+<p>The machine learning training starts from the convex optimization problems. In deep learning, we usually deal with the tensor operations. Thus, the optimization is about the multivariate calculus. For this problem, we know that the derivative is in terms of the vector and matrix. To know about the concept of the optimization, we starts with the 1D optimization.</p>
 
 
 </section>
