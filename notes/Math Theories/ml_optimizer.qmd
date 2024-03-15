@@ -11,3 +11,22 @@ In this paper, we will give a thorough of optimizer used in the machine learning
 ## Heuristic for the optimization
 
 The machine learning training starts from the convex optimization problems. In deep learning, we usually deal with the tensor operations. Thus, the optimization is about the multivariate calculus. For this problem, we know that the derivative is in terms of the vector and matrix. To know about the concept of the optimization, we starts with the 1D optimization.
+
+### 1D optimization
+
+Suppose we have a nonlinear function to be solved:
+$$
+f(x) = 0
+$$
+
+Now, we need to find the solution. And we can use the tangent line to approximate the solution and then use the Newton's method to solve the problem. The Newton's method is given by:
+
+$$
+x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)},\quad f'(x_n) \neq 0
+$$
+
+After some iterations, we can get close to our solution. In terms of the convex optimization problem, the local minimum has the properties of $f'(x) = 0$ and $f''(x) > 0$. Thus, we can use the Newton's method to solve the optimization problem:
+
+$$
+x_{n+1} = x_n - \frac{f'(x_n)}{f''(x_n)}
+$$
