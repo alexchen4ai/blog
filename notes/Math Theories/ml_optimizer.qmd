@@ -1,11 +1,11 @@
 ---
-title: "Complex analysis for machine learning"
+title: "Optimization in machine learning"
 categories: Math Theories
-date: 02-25-2024
+date: 03-15-2024
 ---
 
 ::: {.callout-tip}
-In this paper, we will give a thorough of optimizer used in the machine learning. Specially, the pytorch model will be used to illustrate the code implementation of the optimizer. 
+In this paper, we will give a thorough of optimizer used in the machine learning. Specially, the pytorch model will be used to illustrate the code implementation of the optimizer. We will also explain some latest optimizer effort related to the large language model.
 :::
 
 ## Heuristic for the optimization
@@ -28,5 +28,68 @@ $$
 After some iterations, we can get close to our solution. In terms of the convex optimization problem, the local minimum has the properties of $f'(x) = 0$ and $f''(x) > 0$. Thus, we can use the Newton's method to solve the optimization problem:
 
 $$
-x_{n+1} = x_n - \frac{f'(x_n)}{f''(x_n)}
+x_{n+1} = x_n - \alpha\frac{f'(x_n)}{f''(x_n)}
 $$
+
+Here, we have two important concepts. The path is defined by the path $\{x_0,x_1,...\}$. The magnitude of the step from $x_n$ to $x_{n+1}$ is defined by the value of 
+
+$$
+\left|\alpha \frac{f'(x)}{f''(x)}\right|.
+$$
+
+### Tensor optimization
+
+In the case of tensors, the variables becomes the tensors and matrices, and we can note the gradient and the Hessian matrix. The gradient is the first order derivative and the Hessian matrix is the second order derivative. Suppose that we need to solve the following optimization problems:
+
+$$
+\min_{\boldsymbol\theta} F(\boldsymbol\theta).
+$$
+
+Then, the gradient is given by:
+
+$$
+\nabla_\boldsymbol{\theta} F(\boldsymbol\theta) = \left[\frac{\partial F(\boldsymbol\theta)}{\partial \theta_1},\frac{\partial F(\boldsymbol\theta)}{\partial \theta_2},...,\frac{\partial F(\boldsymbol\theta)}{\partial \theta_n}\right].
+$$
+
+If the $\boldsymbol\theta$ is a matrix of size $m\times n$, then the gradient is a matrix of size $m\times n$. And we have
+
+$$
+\nabla_\boldsymbol{\theta} F(\boldsymbol\theta) =
+\begin{bmatrix}
+\frac{\partial F(\boldsymbol\theta)}{\partial \theta_{11}} & \frac{\partial F(\boldsymbol\theta)}{\partial \theta_{12}} & \cdots & \frac{\partial F(\boldsymbol\theta)}{\partial \theta_{1n}}\\
+\frac{\partial F(\boldsymbol\theta)}{\partial \theta_{21}} & \frac{\partial F(\boldsymbol\theta)}{\partial \theta_{22}} & \cdots & \frac{\partial F(\boldsymbol\theta)}{\partial \theta_{2n}}\\
+\vdots & \vdots & \ddots & \vdots\\
+\frac{\partial F(\boldsymbol\theta)}{\partial \theta_{m1}} & \frac{\partial F(\boldsymbol\theta)}{\partial \theta_{m2}} & \cdots & \frac{\partial F(\boldsymbol\theta)}{\partial \theta_{mn}}
+\end{bmatrix}.
+$$
+
+After we construct the loss function, we can begin to search for the optimal solution. The most popular optimizer is the gradient descent. The gradient descent is given by:
+
+$$
+\boldsymbol\theta_{n+1} = \boldsymbol\theta_n - \alpha \nabla_\boldsymbol{\theta} F(\boldsymbol\theta_n).
+$$
+
+Here, we have $\alpha$ as the learning rate. Note that what we use here is the first order derivative. It is not directly originated from the Newton's method. The gradient descent is a first order optimization method. The second order optimization method is the Newton's method. The Newton's method is given by:
+
+$$
+\boldsymbol{\theta}_{n+1}=\boldsymbol{\theta}_n-\alpha\left[\nabla^2 F\left(\boldsymbol{\theta}_n\right)\right]^{-1} \nabla F\left(\boldsymbol{\theta}_n\right).
+$$
+
+It is usually faster for the convergence, but it is more expensive for the computation in each step. Thus, we need to have a tradeoff. We can also consider to use quasi-Newton's method, and there are algorithms like BFGS and L-BFGS. The BFGS is the Broyden-Fletcher-Goldfarb-Shanno algorithm. The L-BFGS is the limited memory BFGS. 
+
+
+### Pytorch optimizer
+
+To learn how the pytorch optimizer works, we should be aware that the pytorch can use the automatic differentiation to compute the gradient. The automatic differentiation is given by the backpropagation. Thus, we don't need bother to calculate the gradient, analytically. Note that all the optimizers uses this technique. A very simple example would be:
+
+```python
+import torch
+
+x = torch.tensor([1.0, 2.0, 3.0], requires_grad=True)
+y = x * 2
+z = y * y * 3
+out = z.mean()
+
+out.backward()
+print(x.grad)
+```
