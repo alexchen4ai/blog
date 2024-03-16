@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alex Chen">
-<meta name="dcterms.date" content="2024-02-25">
+<meta name="dcterms.date" content="2024-03-15">
 
-<title>Alex Chen’s Blog - Complex analysis for machine learning</title>
+<title>Alex Chen’s Blog - Optimization in machine learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -70,6 +104,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -127,7 +190,7 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">Complex analysis for machine learning</h1>
+          <h1 class="quarto-secondary-nav-title">Optimization in machine learning</h1>
         </a>     
     </div>
   </nav>
@@ -136,7 +199,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title d-none d-lg-block">Complex analysis for machine learning</h1>
+      <h1 class="title d-none d-lg-block">Optimization in machine learning</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Math Theories</div>
               </div>
@@ -156,7 +219,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 25, 2024</p>
+        <p class="date">March 15, 2024</p>
       </div>
     </div>
     
@@ -240,7 +303,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../notes/Math Theories/ml_optimizer.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Complex analysis for machine learning</span></a>
+ <span class="menu-text">Optimization in machine learning</span></a>
   </div>
 </li>
       </ul>
@@ -268,14 +331,203 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In this paper, we will give a thorough of optimizer used in the machine learning. Specially, the pytorch model will be used to illustrate the code implementation of the optimizer.</p>
+<p>In this paper, we will give a thorough of optimizer used in the machine learning. Specially, the pytorch model will be used to illustrate the code implementation of the optimizer. We will also explain some latest optimizer effort related to the large language model.</p>
 </div>
 </div>
 <section id="heuristic-for-the-optimization" class="level2">
 <h2 class="anchored" data-anchor-id="heuristic-for-the-optimization">Heuristic for the optimization</h2>
 <p>The machine learning training starts from the convex optimization problems. In deep learning, we usually deal with the tensor operations. Thus, the optimization is about the multivariate calculus. For this problem, we know that the derivative is in terms of the vector and matrix. To know about the concept of the optimization, we starts with the 1D optimization.</p>
+<section id="d-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="d-optimization">1D optimization</h3>
+<p>Suppose we have a nonlinear function to be solved: <span class="math display">\[
+f(x) = 0
+\]</span></p>
+<p>Now, we need to find the solution. And we can use the tangent line to approximate the solution and then use the Newton’s method to solve the problem. The Newton’s method is given by:</p>
+<p><span class="math display">\[
+x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)},\quad f'(x_n) \neq 0
+\]</span></p>
+<p>After some iterations, we can get close to our solution. In terms of the convex optimization problem, the local minimum has the properties of <span class="math inline">\(f'(x) = 0\)</span> and <span class="math inline">\(f''(x) &gt; 0\)</span>. Thus, we can use the Newton’s method to solve the optimization problem:</p>
+<p><span class="math display">\[
+x_{n+1} = x_n - \alpha\frac{f'(x_n)}{f''(x_n)}
+\]</span></p>
+<p>Here, we have two important concepts. The path is defined by the path <span class="math inline">\(\{x_0,x_1,...\}\)</span>. The magnitude of the step from <span class="math inline">\(x_n\)</span> to <span class="math inline">\(x_{n+1}\)</span> is defined by the value of</p>
+<p><span class="math display">\[
+\left|\alpha \frac{f'(x)}{f''(x)}\right|.
+\]</span></p>
+</section>
+<section id="tensor-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="tensor-optimization">Tensor optimization</h3>
+<p>In the case of tensors, the variables becomes the tensors and matrices, and we can note the gradient and the Hessian matrix. The gradient is the first order derivative and the Hessian matrix is the second order derivative. Suppose that we need to solve the following optimization problems:</p>
+<p><span class="math display">\[
+\min_{\boldsymbol\theta} F(\boldsymbol\theta).
+\]</span></p>
+<p>Then, the gradient is given by:</p>
+<p><span class="math display">\[
+\nabla_\boldsymbol{\theta} F(\boldsymbol\theta) = \left[\frac{\partial F(\boldsymbol\theta)}{\partial \theta_1},\frac{\partial F(\boldsymbol\theta)}{\partial \theta_2},...,\frac{\partial F(\boldsymbol\theta)}{\partial \theta_n}\right].
+\]</span></p>
+<p>If the <span class="math inline">\(\boldsymbol\theta\)</span> is a matrix of size <span class="math inline">\(m\times n\)</span>, then the gradient is a matrix of size <span class="math inline">\(m\times n\)</span>. And we have</p>
+<p><span class="math display">\[
+\nabla_\boldsymbol{\theta} F(\boldsymbol\theta) =
+\begin{bmatrix}
+\frac{\partial F(\boldsymbol\theta)}{\partial \theta_{11}} &amp; \frac{\partial F(\boldsymbol\theta)}{\partial \theta_{12}} &amp; \cdots &amp; \frac{\partial F(\boldsymbol\theta)}{\partial \theta_{1n}}\\
+\frac{\partial F(\boldsymbol\theta)}{\partial \theta_{21}} &amp; \frac{\partial F(\boldsymbol\theta)}{\partial \theta_{22}} &amp; \cdots &amp; \frac{\partial F(\boldsymbol\theta)}{\partial \theta_{2n}}\\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
+\frac{\partial F(\boldsymbol\theta)}{\partial \theta_{m1}} &amp; \frac{\partial F(\boldsymbol\theta)}{\partial \theta_{m2}} &amp; \cdots &amp; \frac{\partial F(\boldsymbol\theta)}{\partial \theta_{mn}}
+\end{bmatrix}.
+\]</span></p>
+<p>After we construct the loss function, we can begin to search for the optimal solution. The most popular optimizer is the gradient descent. The gradient descent is given by:</p>
+<p><span class="math display">\[
+\boldsymbol\theta_{n+1} = \boldsymbol\theta_n - \alpha \nabla_\boldsymbol{\theta} F(\boldsymbol\theta_n).
+\]</span></p>
+<p>Here, we have <span class="math inline">\(\alpha\)</span> as the learning rate. Note that what we use here is the first order derivative. It is not directly originated from the Newton’s method. The gradient descent is a first order optimization method. The second order optimization method is the Newton’s method. The Newton’s method is given by:</p>
+<p><span class="math display">\[
+\boldsymbol{\theta}_{n+1}=\boldsymbol{\theta}_n-\alpha\left[\nabla^2 F\left(\boldsymbol{\theta}_n\right)\right]^{-1} \nabla F\left(\boldsymbol{\theta}_n\right).
+\]</span></p>
+<p>It is usually faster for the convergence, but it is more expensive for the computation in each step. Thus, we need to have a tradeoff. We can also consider to use quasi-Newton’s method, and there are algorithms like BFGS and L-BFGS. The BFGS is the Broyden-Fletcher-Goldfarb-Shanno algorithm. The L-BFGS is the limited memory BFGS.</p>
+</section>
+</section>
+<section id="the-adam-optimizer" class="level2">
+<h2 class="anchored" data-anchor-id="the-adam-optimizer">The Adam optimizer</h2>
+<p>There are many important concept of the Adam optimizer. We first introduce the concepts:</p>
+<ul>
+<li>First momentum: This is the mean of the gradients. Instead of using the current gradient, we choose to use the mean of the gradients. And we use the exponential moving average to calculate the mean;</li>
+<li>Second momentum: This is the variance of the gradients. The second moment in Adam captures the variance of the gradients, providing information about their variability. This is used to adaptively adjust the learning rate for each parameter, allowing parameters with large gradients to have smaller updates and vice versa. This adaptive learning rate mechanism helps in stabilizing the optimization process, especially in the presence of noisy gradients or sparse data.</li>
+</ul>
+<p>Now for one step of the Adam optimizer, we have the following steps: 1. Compute the gradient, and this can be done by pytorch autograd already; 2. First momentum: <span class="math display">\[
+    m_t = \beta_1 m_{t-1} + (1-\beta_1)g_t
+    \]</span> 3. Second momentum: <span class="math display">\[
+    v_t = \beta_2 v_{t-1} + (1-\beta_2)g_t^2
+    \]</span> 4. Bias correction: <span class="math display">\[
+    \hat{m}_t = \frac{m_t}{1-\beta_1^t}
+    \]</span> <span class="math display">\[
+    \hat{v}_t = \frac{v_t}{1-\beta_2^t}
+    \]</span> 5. Update the parameters: <span class="math display">\[
+    \theta_{t+1} = \theta_t - \alpha \frac{\hat{m}_t}{\sqrt{\hat{v}_t}+\epsilon}
+    \]</span></p>
+<p>And here the hyperparameters are:</p>
+<ul>
+<li><span class="math inline">\(\alpha\)</span>: the learning rate;</li>
+<li><span class="math inline">\(\beta_1\)</span>: the parameter for the first momentum;</li>
+<li><span class="math inline">\(\beta_2\)</span>: the parameter for the second momentum;</li>
+<li><span class="math inline">\(\epsilon\)</span>: the small value to avoid the division by zero.</li>
+</ul>
+</section>
+<section id="pytorch-implementation" class="level2">
+<h2 class="anchored" data-anchor-id="pytorch-implementation">Pytorch implementation</h2>
+<section id="the-autograd-in-pytorch" class="level3">
+<h3 class="anchored" data-anchor-id="the-autograd-in-pytorch">The autograd in pytorch</h3>
+<p>To learn how the pytorch optimizer works, we should be aware that the pytorch can use the automatic differentiation to compute the gradient. The automatic differentiation is given by the backpropagation. Thus, we don’t need bother to calculate the gradient, analytically. Note that all the optimizers uses this technique. A very simple example would be:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.tensor([<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span>], requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> x <span class="op">*</span> <span class="dv">2</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> y <span class="op">*</span> y <span class="op">*</span> <span class="dv">3</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>out <span class="op">=</span> z.mean()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>out.backward()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x.grad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="the-adam-optimizer-in-pytorch" class="level3">
+<h3 class="anchored" data-anchor-id="the-adam-optimizer-in-pytorch">The Adam optimizer in pytorch</h3>
+<p>Refer to the <a href="https://pytorch.org/docs/stable/generated/torch.optim.Adam.html">official documentation</a>. The math formulas to be implemented are:</p>
+<span class="math display">\[\begin{aligned}
+    &amp;\rule{110mm}{0.4pt}                                                                 \\
+    &amp;\textbf{input}      : \gamma \text{(lr)}, \: \beta_1, \beta_2
+        \text{(betas)}, \: \theta_0 \text{(params)}, \: f(\theta) \text{(objective)},
+        \: \epsilon \text{ (epsilon)}                                                    \\
+    &amp;\hspace{13mm}      \lambda \text{(weight decay)},  \: \textit{amsgrad},
+        \: \textit{maximize}                                                             \\
+    &amp;\textbf{initialize} : m_0 \leftarrow 0 \text{ (first moment)}, v_0 \leftarrow 0
+        \text{ ( second moment)}, \: \widehat{v_0}^{max}\leftarrow 0              \\[-1.ex]
+    &amp;\rule{110mm}{0.4pt}                                                                 \\
+    &amp;\textbf{for} \: t=1 \: \textbf{to} \: \ldots \: \textbf{do}                         \\
+
+    &amp;\hspace{5mm}\textbf{if} \: \textit{maximize}:                                       \\
+    &amp;\hspace{10mm}g_t           \leftarrow   -\nabla_{\theta} f_t (\theta_{t-1})          \\
+    &amp;\hspace{5mm}\textbf{else}                                                           \\
+    &amp;\hspace{10mm}g_t           \leftarrow   \nabla_{\theta} f_t (\theta_{t-1})           \\
+    &amp;\hspace{5mm} \theta_t \leftarrow \theta_{t-1} - \gamma \lambda \theta_{t-1}         \\
+    &amp;\hspace{5mm}m_t           \leftarrow   \beta_1 m_{t-1} + (1 - \beta_1) g_t          \\
+    &amp;\hspace{5mm}v_t           \leftarrow   \beta_2 v_{t-1} + (1-\beta_2) g^2_t          \\
+    &amp;\hspace{5mm}\widehat{m_t} \leftarrow   m_t/\big(1-\beta_1^t \big)                   \\
+    &amp;\hspace{5mm}\widehat{v_t} \leftarrow   v_t/\big(1-\beta_2^t \big)                   \\
+    &amp;\hspace{5mm}\textbf{if} \: amsgrad                                                  \\
+    &amp;\hspace{10mm}\widehat{v_t}^{max} \leftarrow \mathrm{max}(\widehat{v_t}^{max},
+        \widehat{v_t})                                                                   \\
+    &amp;\hspace{10mm}\theta_t \leftarrow \theta_t - \gamma \widehat{m_t}/
+        \big(\sqrt{\widehat{v_t}^{max}} + \epsilon \big)                                 \\
+    &amp;\hspace{5mm}\textbf{else}                                                           \\
+    &amp;\hspace{10mm}\theta_t \leftarrow \theta_t - \gamma \widehat{m_t}/
+        \big(\sqrt{\widehat{v_t}} + \epsilon \big)                                       \\
+    &amp;\rule{110mm}{0.4pt}                                                          \\[-1.ex]
+    &amp;\bf{return} \:  \theta_t                                                     \\[-1.ex]
+    &amp;\rule{110mm}{0.4pt}                                                          \\[-1.ex]
+\end{aligned}\]</span>
+<p>The associated code implementation without special setup would be:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _single_tensor_adamw(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    params: List[Tensor],</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    grads: List[Tensor],</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    exp_avgs: List[Tensor],</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    exp_avg_sqs: List[Tensor],</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    max_exp_avg_sqs: List[Tensor],</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    state_steps: List[Tensor],</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    grad_scale: Optional[Tensor],</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    found_inf: Optional[Tensor],</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    amsgrad: <span class="bu">bool</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    beta1: <span class="bu">float</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    beta2: <span class="bu">float</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    lr: Union[Tensor, <span class="bu">float</span>],</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    weight_decay: <span class="bu">float</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    eps: <span class="bu">float</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> grad_scale <span class="kw">is</span> <span class="va">None</span> <span class="kw">and</span> found_inf <span class="kw">is</span> <span class="va">None</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> torch.jit.is_scripting():</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="co"># this assert is due to JIT being dumb and not realizing that the ops below</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># have overloads to handle both float and Tensor lrs, so we just assert it's</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># a float since most people using JIT are using floats</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> <span class="bu">isinstance</span>(lr, <span class="bu">float</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, param <span class="kw">in</span> <span class="bu">enumerate</span>(params):</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        grad <span class="op">=</span> grads[i] <span class="cf">if</span> <span class="kw">not</span> maximize <span class="cf">else</span> <span class="op">-</span>grads[i]</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        exp_avg <span class="op">=</span> exp_avgs[i]</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        exp_avg_sq <span class="op">=</span> exp_avg_sqs[i]</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>        step_t <span class="op">=</span> state_steps[i]</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        <span class="co"># update step</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        step_t <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Perform stepweight decay</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        param.mul_(<span class="dv">1</span> <span class="op">-</span> lr <span class="op">*</span> weight_decay)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Decay the first and second moment running average coefficient</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>        exp_avg.lerp_(grad, <span class="dv">1</span> <span class="op">-</span> beta1)</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        exp_avg_sq.mul_(beta2).addcmul_(grad, grad, value<span class="op">=</span><span class="dv">1</span> <span class="op">-</span> beta2)</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        step <span class="op">=</span> _get_value(step_t)</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        bias_correction1 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> beta1 <span class="op">**</span> step</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>        bias_correction2 <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> beta2 <span class="op">**</span> step</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        step_size <span class="op">=</span> lr <span class="op">/</span> bias_correction1</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>        bias_correction2_sqrt <span class="op">=</span> _dispatch_sqrt(bias_correction2)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> amsgrad:</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Maintains the maximum of all 2nd moment running avg. till now</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>            torch.maximum(max_exp_avg_sqs[i], exp_avg_sq, out<span class="op">=</span>max_exp_avg_sqs[i])</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Use the max. for normalizing running avg. of gradient</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>            denom <span class="op">=</span> (max_exp_avg_sqs[i].sqrt() <span class="op">/</span> bias_correction2_sqrt).add_(eps)</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>            denom <span class="op">=</span> (exp_avg_sq.sqrt() <span class="op">/</span> bias_correction2_sqrt).add_(eps)</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>        param.addcdiv_(exp_avg, denom, value<span class="op">=-</span>step_size)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
