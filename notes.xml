@@ -137,7 +137,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>AdamW and Adam are different, since they have different weight decay procedure. AdamW’s weight decay is not scaled by learning rate.</p>
+<p>AdamW and Adam are different, since they have different weight decay procedure. AdamW’s weight decay is not scaled by adaptative learning rate.</p>
 </div>
 </div>
 <p>Refer to the <a href="https://pytorch.org/docs/stable/generated/torch.optim.Adam.html">official documentation</a>. The math formulas to be implemented are:</p>
