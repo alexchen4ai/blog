@@ -427,8 +427,8 @@ x_{n+1} = x_n - \alpha\frac{f'(x_n)}{f''(x_n)}
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>out.backward()</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x.grad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="the-adam-optimizer-in-pytorch" class="level3">
-<h3 class="anchored" data-anchor-id="the-adam-optimizer-in-pytorch">The Adam optimizer in pytorch</h3>
+<section id="the-adamw-optimizer-in-pytorch" class="level3">
+<h3 class="anchored" data-anchor-id="the-adamw-optimizer-in-pytorch">The AdamW optimizer in pytorch</h3>
 <p>Refer to the <a href="https://pytorch.org/docs/stable/generated/torch.optim.Adam.html">official documentation</a>. The math formulas to be implemented are:</p>
 <span class="math display">\[\begin{aligned}
     &amp;\rule{110mm}{0.4pt}                                                                 \\
@@ -463,6 +463,20 @@ x_{n+1} = x_n - \alpha\frac{f'(x_n)}{f''(x_n)}
     &amp;\bf{return} \:  \theta_t                                                     \\[-1.ex]
     &amp;\rule{110mm}{0.4pt}                                                          \\[-1.ex]
 \end{aligned}\]</span>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The momentum is like the momentum in Physics, if we look at the directional arrow between different solution points. This first momentum will be served as the direction, and magnitude of the difference. The second momentum is like the variance of the gradients. It is used to adjust the learning rate for each parameter. When the gradient variance is large (this is suddenly a large variance, we decrease the learning rate, vice versa). The <span class="math inline">\(\epsilon\)</span> is used to avoid the division by zero.</p>
+<p>Bias corrections are needed for <span class="math inline">\(m_t\)</span> and <span class="math inline">\(v_t\)</span> in the Adam optimizer because they are initialized at 0, and they use exponential moving averages which are biased towards 0 at the start of training. This can cause the estimates to be too low at the beginning of optimization. Note that <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_2\)</span> are usually selected as very close to 1, in pytorch the default values are 0.9 and 0.999. The <span class="math inline">\(\epsilon\)</span> is usually set to a small value like <span class="math inline">\(10^{-8}\)</span>.</p>
+</div>
+</div>
 <p>The associated code implementation without special setup would be:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _single_tensor_adamw(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    params: List[Tensor],</span>
