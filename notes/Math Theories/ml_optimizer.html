@@ -429,39 +429,43 @@ x_{n+1} = x_n - \alpha\frac{f'(x_n)}{f''(x_n)}
 </section>
 <section id="the-adamw-optimizer-in-pytorch" class="level3">
 <h3 class="anchored" data-anchor-id="the-adamw-optimizer-in-pytorch">The AdamW optimizer in pytorch</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>AdamW and Adam are different, since they have different weight decay procedure. AdamW’s weight decay is not scaled by learning rate.</p>
+</div>
+</div>
 <p>Refer to the <a href="https://pytorch.org/docs/stable/generated/torch.optim.Adam.html">official documentation</a>. The math formulas to be implemented are:</p>
 <span class="math display">\[\begin{aligned}
-    &amp;\rule{110mm}{0.4pt}                                                                 \\
+    &amp;\rule{180mm}{0.4pt}                                                                 \\
     &amp;\textbf{input}      : \gamma \text{(lr)}, \: \beta_1, \beta_2
         \text{(betas)}, \: \theta_0 \text{(params)}, \: f(\theta) \text{(objective)},
         \: \epsilon \text{ (epsilon)}                                                    \\
-    &amp;\hspace{13mm}      \lambda \text{(weight decay)},  \: \textit{amsgrad},
-        \: \textit{maximize}                                                             \\
+    &amp;\hspace{13mm}      \lambda \text{(weight decay)}                                                           \\
     &amp;\textbf{initialize} : m_0 \leftarrow 0 \text{ (first moment)}, v_0 \leftarrow 0
-        \text{ ( second moment)}, \: \widehat{v_0}^{max}\leftarrow 0              \\[-1.ex]
-    &amp;\rule{110mm}{0.4pt}                                                                 \\
+        \text{ ( second moment)}
+                      \\[-1.ex]
+    &amp;\rule{180mm}{0.4pt}                                                                 \\
     &amp;\textbf{for} \: t=1 \: \textbf{to} \: \ldots \: \textbf{do}                         \\
-
-    &amp;\hspace{5mm}\textbf{if} \: \textit{maximize}:                                       \\
-    &amp;\hspace{10mm}g_t           \leftarrow   -\nabla_{\theta} f_t (\theta_{t-1})          \\
-    &amp;\hspace{5mm}\textbf{else}                                                           \\
-    &amp;\hspace{10mm}g_t           \leftarrow   \nabla_{\theta} f_t (\theta_{t-1})           \\
-    &amp;\hspace{5mm} \theta_t \leftarrow \theta_{t-1} - \gamma \lambda \theta_{t-1}         \\
+    &amp;\hspace{5mm}\text{Get a minibatch and calculate the loss $f_t(\theta_{t-1})$}           \\
+    &amp;\hspace{5mm}g_t           \leftarrow   \nabla_{\theta} f_t (\theta_{t-1})           \\
+    &amp;\hspace{5mm} \theta_t \leftarrow \theta_{t-1} - \gamma \lambda \theta_{t-1} \quad \textit{weight decay}       \\
     &amp;\hspace{5mm}m_t           \leftarrow   \beta_1 m_{t-1} + (1 - \beta_1) g_t          \\
     &amp;\hspace{5mm}v_t           \leftarrow   \beta_2 v_{t-1} + (1-\beta_2) g^2_t          \\
     &amp;\hspace{5mm}\widehat{m_t} \leftarrow   m_t/\big(1-\beta_1^t \big)                   \\
-    &amp;\hspace{5mm}\widehat{v_t} \leftarrow   v_t/\big(1-\beta_2^t \big)                   \\
-    &amp;\hspace{5mm}\textbf{if} \: amsgrad                                                  \\
-    &amp;\hspace{10mm}\widehat{v_t}^{max} \leftarrow \mathrm{max}(\widehat{v_t}^{max},
-        \widehat{v_t})                                                                   \\
-    &amp;\hspace{10mm}\theta_t \leftarrow \theta_t - \gamma \widehat{m_t}/
-        \big(\sqrt{\widehat{v_t}^{max}} + \epsilon \big)                                 \\
-    &amp;\hspace{5mm}\textbf{else}                                                           \\
-    &amp;\hspace{10mm}\theta_t \leftarrow \theta_t - \gamma \widehat{m_t}/
+    &amp;\hspace{5mm}\widehat{v_t} \leftarrow   v_t/\big(1-\beta_2^t \big)                                                      \\
+    &amp;\hspace{5mm}\theta_t \leftarrow \theta_t - \gamma \widehat{m_t}/
         \big(\sqrt{\widehat{v_t}} + \epsilon \big)                                       \\
-    &amp;\rule{110mm}{0.4pt}                                                          \\[-1.ex]
+    &amp;\rule{180mm}{0.4pt}                                                          \\[-1.ex]
     &amp;\bf{return} \:  \theta_t                                                     \\[-1.ex]
-    &amp;\rule{110mm}{0.4pt}                                                          \\[-1.ex]
+    &amp;\rule{180mm}{0.4pt}                                                          \\[-1.ex]
 \end{aligned}\]</span>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
