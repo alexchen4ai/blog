@@ -135,7 +135,7 @@ print(x.grad)
 ```
 
 
-### The Adam optimizer in pytorch
+### The AdamW optimizer in pytorch
 
 Refer to the [official documentation](https://pytorch.org/docs/stable/generated/torch.optim.Adam.html). The math formulas to be implemented are:
 
@@ -175,6 +175,9 @@ Refer to the [official documentation](https://pytorch.org/docs/stable/generated/
 
 ::: {.callout-tip}
 The momentum is like the momentum in Physics, if we look at the directional arrow between different solution points. This first momentum will be served as the direction, and magnitude of the difference. The second momentum is like the variance of the gradients. It is used to adjust the learning rate for each parameter. When the gradient variance is large (this is suddenly a large variance, we decrease the learning rate, vice versa). The $\epsilon$ is used to avoid the division by zero. 
+
+
+Bias corrections are needed for $m_t$ and $v_t$ in the Adam optimizer because they are initialized at 0, and they use exponential moving averages which are biased towards 0 at the start of training. This can cause the estimates to be too low at the beginning of optimization. Note that $\beta_1$ and $\beta_2$ are usually selected as very close to 1, in pytorch the default values are 0.9 and 0.999. The $\epsilon$ is usually set to a small value like $10^{-8}$.
 :::
 
 
