@@ -173,6 +173,12 @@ Refer to the [official documentation](https://pytorch.org/docs/stable/generated/
     &\rule{110mm}{0.4pt}                                                          \\[-1.ex]
 \end{aligned}
 
+::: {.callout-tip}
+The momentum is like the momentum in Physics, if we look at the directional arrow between different solution points. This first momentum will be served as the direction, and magnitude of the difference. The second momentum is like the variance of the gradients. It is used to adjust the learning rate for each parameter. When the gradient variance is large (this is suddenly a large variance, we decrease the learning rate, vice versa). The $\epsilon$ is used to avoid the division by zero. 
+:::
+
+
+
 
 The associated code implementation without special setup would be:
 ```python
