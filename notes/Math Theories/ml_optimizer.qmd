@@ -137,6 +137,11 @@ print(x.grad)
 
 ### The AdamW optimizer in pytorch
 
+
+::: {.callout-tip}
+AdamW and Adam are different, since they have different weight decay procedure. AdamW's weight decay is not scaled by learning rate. 
+:::
+
 Refer to the [official documentation](https://pytorch.org/docs/stable/generated/torch.optim.Adam.html). The math formulas to be implemented are:
 
 \begin{aligned}
