@@ -26,10 +26,5 @@ We can mainly get the new products launched from the following three different s
 
 1. [Product hunt](https://www.producthunt.com/): This website is a good place to find the latest products. The products are classified into different categories. We can find the latest AI products in the AI category;
 
-2. [Nexa AI](https://www.nexa4ai.com/ai-tools): The most comprehensive AI tools and products are listed in this website. Users can get access to various APIs for AI agent creation as well. We can basically check the daily new products from the Nexa AI website to know the latest progress.
-    ```{=html}
-    <iframe src="https://www.nexa4ai.com/" width="600" height="400"></iframe>
-    ```
-
 ## Last
 It is very important to keep reading the latest news to know the most recent research progress. For myself, I would keep reading at least the above content in the morning.
