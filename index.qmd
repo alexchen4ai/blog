@@ -17,7 +17,7 @@ about:
       href: https://github.com/alexchen4ai
 ---
 
-👋 **Greetings!** My name is **Alex Chen**, an **AI researcher and startup founder** in Silicon Valley. Previously, I pursued a PhD at Stanford University, delving into numerical simulation and artificial intelligence research. Now, I am building an AI agent UGC platform.
+👋 **Greetings!** My name is **Alex Chen**, an **AI researcher and startup founder** in Silicon Valley. Previously, I pursued a PhD at Stanford University, delving into numerical simulation and artificial intelligence research. Now, I am building an AI agent company called Nexa AI.
 
 In this space, I aim to share my journey in academia and industry, providing insights into cutting-edge research and practical applications of AI and machine learning.
 
