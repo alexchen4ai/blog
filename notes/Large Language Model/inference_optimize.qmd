@@ -48,5 +48,5 @@ Usually, we will set multiple blocks to quantize the model. It means that we nee
 
 For LLM quantization, we have two different methods called post-training quantization and quantization-aware training. If we finally use the quantization model, quantization-aware training is better. 
 
-## Exisiting solutions
+### Exisiting solutions
 We can use quantization library provied in huggingface transformers. For more foundamental optimization, we should consider to use `GGML` (GPT-Generated Model Language) and `GGUF` (GPT-Generated Unified Format). For on-device deployment, we should consider the usage of `GGUF` since it is more efficient. Refer to [github](https://github.com/ggerganov/llama.cpp) to use it. We can consider another library called [ollama](https://github.com/ollama/ollama) which is built based on the llama cpp. 
