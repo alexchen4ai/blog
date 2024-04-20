@@ -16,3 +16,18 @@ To optimize the inference for language model, we mainly have the following metho
 3. **Lower level implementation**: Implementing the model in a lower level language like C++ or Rust can increase the speed of the model.
 4. **KV Cache**: Key-Value cache is a technique to cache the intermediate results of the model. This reduces the computation and increases the speed of the model. For some certain devices, we may need to support the KV cache specially. 
 5. **Optimization based on hardware**: Like the flash attention for NVIDIA GPU, we can optimize the model based on the hardware. The main method would be to use the memory-access pattern method to optimize the model.
+
+
+## Quantization
+
+::: {.callout-tip}
+Quantization is a model compression technique that converts the weights and activations within an LLM from a high-precision data representation to a lower-precision data representation, i.e., from a data type that can hold more information to one that holds less. A typical example of this is the conversion of data from a 32-bit floating-point number (FP32) to an 8-bit or 4-bit integer (INT4 or INT8). 
+:::
+
+Let's first revisit the representation of data in computer. We mainly study the `float32`, `float16` and `bfloat16` type. 
+
+- **float32**: 32 bits. We have 1 bit for the sign, 8 bits for the exponent and 23 bits for the mantissa. To form a float number in computer, we need the sign, the number before the exponent and the exponent number over 2. For example, we have $6.75=+1.1011\times 2^2$. Thus, we can conclude that the range of the representation is between $1e^{-38}$ and $3e^{38}$ (you can add sign freely, though).
+- **float16**: 16 bits. We have 1 bit for the sign, 5 bits for the exponent and 10 bits for the mantissa. The range of the representation is between $6e^{-8}$ and $6e^{4}$.
+- **bfloat16**: 16 bits. We have 1 bit for the sign, 8 bits for the exponent and 7 bits for the mantissa. The range of the representation is between $1e^{-38}$ and $3e^{38}$.
+
+We can see that `float16` and `bfloat16` take up the same memory space. But they are different in the bits allocation. The `float16` has better precision than `bfloat16`, but the `bfloat16` has better range than `float16`. For deep neural network, we may need to consider the use of the `bfloat16` type since the range is more important than the precision for the deep neural network. The common quantization type are `INT8` and `INT4`. Note that `INT8` and `INT4` can only represent the integer numbers, not for the float numbers.
