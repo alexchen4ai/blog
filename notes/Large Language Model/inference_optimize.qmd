@@ -15,4 +15,4 @@ To optimize the inference for language model, we mainly have the following metho
 2. **Pruning**: Pruning is the process of removing the weights that are close to zero. This reduces the number of parameters in the model and increases the speed of the model.
 3. **Lower level implementation**: Implementing the model in a lower level language like C++ or Rust can increase the speed of the model.
 4. **KV Cache**: Key-Value cache is a technique to cache the intermediate results of the model. This reduces the computation and increases the speed of the model. For some certain devices, we may need to support the KV cache specially. 
-5. 
+5. **Optimization based on hardware**: Like the flash attention for NVIDIA GPU, we can optimize the model based on the hardware. The main method would be to use the memory-access pattern method to optimize the model.
