@@ -1,0 +1,9 @@
+---
+title: "The optimization of language model"
+categories: Large Language Models
+date: 04-20-2024
+---
+
+::: {.callout-tip}
+To run the language model faster and especially on the edge devices, we need to optimize the model. This optimization can be done in different ways. In this article, we will discuss some of the optimization techniques.
+:::
