@@ -9,3 +9,6 @@ A text to image generation model from the diffusion architecture.
 :::
 
 📝 **Paper**: [https://arxiv.org/abs/2212.09748](https://arxiv.org/abs/2212.09748)
+
+## Introduction
+Coming soom
