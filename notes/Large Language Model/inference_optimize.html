@@ -6,9 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Personal summaries and insights gathered from reading various research papers and articles.">
+<meta name="author" content="Alex Chen">
+<meta name="dcterms.date" content="2024-04-20">
 
-<title>Alex Chen’s Blog - Research notes</title>
+<title>Alex Chen’s Blog - The inference optimization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,25 +25,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./images/favicon.ico" rel="icon">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,35 +69,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-image','listing-title','listing-description','listing-categories','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -130,17 +100,17 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="Alex Chen's Blog" href="notes.xml" data-external="1"></head>
+<link rel="stylesheet" href="../../styles.css">
+</head>
 
-<body class="nav-fixed">
+<body class="nav-sidebar floating nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Alex Chen’s Blog</span>
     </a>
   </div>
@@ -151,15 +121,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./notes.html" aria-current="page"> 
+    <a class="nav-link" href="../../notes.html"> 
 <span class="menu-text">Articles</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./news.html"> 
+    <a class="nav-link" href="../../news.html"> 
 <span class="menu-text">News</span></a>
   </li>  
 </ul>
@@ -180,291 +150,211 @@ window.Quarto = {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">The inference optimization</h1>
+        </a>     
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
-      <h1 class="title">Research notes</h1>
-                  <div>
-        <div class="description">
-          Personal summaries and insights gathered from reading various research papers and articles.
-        </div>
-      </div>
-                </div>
+    <div class="quarto-title column-body">
+      <h1 class="title d-none d-lg-block">The inference optimization</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Large Language Models</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Alex Chen </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 20, 2024</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">🗣️ <strong>Large language models</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/Large Language Model/inference_optimize.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">The inference optimization</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/Large Language Model/llm_eval.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Large language model evaluation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/Large Language Model/llm_train.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Large language model distributed training</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/Large Language Model/moe.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mixture of expert</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/Large Language Model/rl_llm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reinforcement learning for large language model</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">💡 <strong>Diffusion models</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/Diffusion Model/sd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scalable diffusion models with transformers</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">♾ <strong>Math Theories</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/Math Theories/complexanalysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complex analysis for machine learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../notes/Math Theories/ml_optimizer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Optimization in machine learning</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To run the language model faster and especially on the edge devices, we need to optimize the model. This optimization can be done in different ways. In this article, we will discuss some of the optimization techniques. In this blog, I will introduce different methods and the existing solutions to enable the language model to run faster. Note that my focus is for the on-device language model.</p>
+</div>
+</div>
+<section id="overview-of-the-optimization" class="level2">
+<h2 class="anchored" data-anchor-id="overview-of-the-optimization">Overview of the optimization</h2>
+<p>To optimize the inference for language model, we mainly have the following methods:</p>
+<ol type="1">
+<li><strong>Quantization</strong>: Quantization is the process of reducing the precision of the weights and activations of the model. This reduces the memory footprint and increases the speed of the model.</li>
+<li><strong>Pruning</strong>: Pruning is the process of removing the weights that are close to zero. This reduces the number of parameters in the model and increases the speed of the model.</li>
+<li><strong>Lower level implementation</strong>: Implementing the model in a lower level language like C++ or Rust can increase the speed of the model.</li>
+<li><strong>KV Cache</strong>: Key-Value cache is a technique to cache the intermediate results of the model. This reduces the computation and increases the speed of the model. For some certain devices, we may need to support the KV cache specially.</li>
+<li><strong>Optimization based on hardware</strong>: Like the flash attention for NVIDIA GPU, we can optimize the model based on the hardware. The main method would be to use the memory-access pattern method to optimize the model.</li>
+</ol>
+</section>
+<section id="quantization" class="level2">
+<h2 class="anchored" data-anchor-id="quantization">Quantization</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quantization is a model compression technique that converts the weights and activations within an LLM from a high-precision data representation to a lower-precision data representation, i.e., from a data type that can hold more information to one that holds less. A typical example of this is the conversion of data from a 32-bit floating-point number (FP32) to an 8-bit or 4-bit integer (INT4 or INT8). A good blog from internet is <a href="https://symbl.ai/developers/blog/a-guide-to-quantization-in-llms/">here</a>.</p>
+</div>
+</div>
+<p>Let’s first revisit the representation of data in computer. We mainly study the <code>float32</code>, <code>float16</code> and <code>bfloat16</code> type.</p>
+<ul>
+<li><strong>float32</strong>: 32 bits. We have 1 bit for the sign, 8 bits for the exponent and 23 bits for the mantissa. To form a float number in computer, we need the sign, the number before the exponent and the exponent number over 2. For example, we have <span class="math inline">\(6.75=+1.1011\times 2^2\)</span>. Thus, we can conclude that the range of the representation is between <span class="math inline">\(1e^{-38}\)</span> and <span class="math inline">\(3e^{38}\)</span> (you can add sign freely, though).</li>
+<li><strong>float16</strong>: 16 bits. We have 1 bit for the sign, 5 bits for the exponent and 10 bits for the mantissa. The range of the representation is between <span class="math inline">\(6e^{-8}\)</span> and <span class="math inline">\(6e^{4}\)</span>.</li>
+<li><strong>bfloat16</strong>: 16 bits. We have 1 bit for the sign, 8 bits for the exponent and 7 bits for the mantissa. The range of the representation is between <span class="math inline">\(1e^{-38}\)</span> and <span class="math inline">\(3e^{38}\)</span>.</li>
+</ul>
+<p>We can see that <code>float16</code> and <code>bfloat16</code> take up the same memory space. But they are different in the bits allocation. The <code>float16</code> has better precision than <code>bfloat16</code>, but the <code>bfloat16</code> has better range than <code>float16</code>. For deep neural network, we may need to consider the use of the <code>bfloat16</code> type since the range is more important than the precision for the deep neural network. The common quantization type are <code>INT8</code> and <code>INT4</code>. Note that <code>INT8</code> and <code>INT4</code> can only represent the integer numbers, not for the float numbers. Thus, <code>INT8</code> can only represent the numbers between <span class="math inline">\(-128\)</span> and <span class="math inline">\(127\)</span>, and <code>INT4</code> can only represent the numbers between <span class="math inline">\(-8\)</span> and <span class="math inline">\(7\)</span>.</p>
+<p>We use the <em>affine quantization scheme</em> to convert the model:</p>
+<p><span class="math display">\[
+x_q = \operatorname{round}\left(x/S + Z\right)
+\]</span></p>
+<p>where we have: - <span class="math inline">\(x_q\)</span>: the quantized value - <span class="math inline">\(x\)</span>: the original value - <span class="math inline">\(S\)</span>: the scale factor - <span class="math inline">\(Z\)</span>: the zero point - <span class="math inline">\(\operatorname{round}\)</span>: the rounding function.</p>
+<p>Usually, we will set multiple blocks to quantize the model. It means that we need multiple scale factors and zero points. Note that not all layers are quantized. For some important layers, we still consider the use of the float32 type.</p>
+<p>For LLM quantization, we have two different methods called post-training quantization and quantization-aware training. If we finally use the quantization model, quantization-aware training is better.</p>
+<section id="exisiting-solutions" class="level3">
+<h3 class="anchored" data-anchor-id="exisiting-solutions">Exisiting solutions</h3>
+<p>We can use quantization library provied in huggingface transformers. For more foundamental optimization, we should consider to use <code>GGML</code> (GPT-Generated Model Language) and <code>GGUF</code> (GPT-Generated Unified Format). For on-device deployment, we should consider the usage of <code>GGUF</code> since it is more efficient. Refer to <a href="https://github.com/ggerganov/llama.cpp">github</a> to use it. We can consider another library called <a href="https://github.com/ollama/ollama">ollama</a> which is built based on the llama cpp.</p>
 
 
+</section>
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Large Language Models" data-listing-date-sort="1713596400000" data-listing-file-modified-sort="1713637598695" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="734">
-<div class="thumbnail">
-<p><a href="./notes/Large Language Model/inference_optimize.html" class="no-external"></a></p><a href="./notes/Large Language Model/inference_optimize.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./notes/Large Language Model/inference_optimize.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./notes/Large Language Model/inference_optimize.html" class="no-external">The inference optimization</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./notes/Large Language Model/inference_optimize.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Large Language Models'); return false;">
-Large Language Models
-</div>
-</div>
-<div class="listing-description">
-<a href="./notes/Large Language Model/inference_optimize.html" class="no-external">To run the language model faster and especially on the edge devices, we need to optimize the model. This…</a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="./notes/Large Language Model/inference_optimize.html" class="no-external"></a></p><a href="./notes/Large Language Model/inference_optimize.html" class="no-external">
-<div class="listing-reading-time">
-4 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="Math Theories" data-listing-date-sort="1710486000000" data-listing-file-modified-sort="1710739348216" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2402">
-<div class="thumbnail">
-<p><a href="./notes/Math Theories/ml_optimizer.html" class="no-external"></a></p><a href="./notes/Math Theories/ml_optimizer.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./notes/Math Theories/ml_optimizer.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./notes/Math Theories/ml_optimizer.html" class="no-external">Optimization in machine learning</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./notes/Math Theories/ml_optimizer.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Math Theories'); return false;">
-Math Theories
-</div>
-</div>
-<div class="listing-description">
-<a href="./notes/Math Theories/ml_optimizer.html" class="no-external">In this paper, we will give a thorough of optimizer used in the machine learning. Specially, the pytorch…</a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="./notes/Math Theories/ml_optimizer.html" class="no-external"></a></p><a href="./notes/Math Theories/ml_optimizer.html" class="no-external">
-<div class="listing-reading-time">
-13 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="Large Language Models" data-listing-date-sort="1709366400000" data-listing-file-modified-sort="1709442246902" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="911">
-<div class="thumbnail">
-<p><a href="./notes/Large Language Model/llm_train.html" class="no-external"></a></p><a href="./notes/Large Language Model/llm_train.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./notes/Large Language Model/llm_train.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./notes/Large Language Model/llm_train.html" class="no-external">Large language model distributed training</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./notes/Large Language Model/llm_train.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Large Language Models'); return false;">
-Large Language Models
-</div>
-</div>
-<div class="listing-description">
-<a href="./notes/Large Language Model/llm_train.html" class="no-external">The AWS sagemaker is a service to support the automatic training for the models. And the price is 1.5x of…</a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="./notes/Large Language Model/llm_train.html" class="no-external"></a></p><a href="./notes/Large Language Model/llm_train.html" class="no-external">
-<div class="listing-reading-time">
-5 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="Math Theories" data-listing-date-sort="1708848000000" data-listing-file-modified-sort="1710200821871" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="849">
-<div class="thumbnail">
-<p><a href="./notes/Math Theories/complexanalysis.html" class="no-external"></a></p><a href="./notes/Math Theories/complexanalysis.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./notes/Math Theories/complexanalysis.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./notes/Math Theories/complexanalysis.html" class="no-external">Complex analysis for machine learning</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./notes/Math Theories/complexanalysis.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Math Theories'); return false;">
-Math Theories
-</div>
-</div>
-<div class="listing-description">
-<a href="./notes/Math Theories/complexanalysis.html" class="no-external">The real functional analysis is used a lot in the ML. There is also the case where the complex analysis is…</a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="./notes/Math Theories/complexanalysis.html" class="no-external"></a></p><a href="./notes/Math Theories/complexanalysis.html" class="no-external">
-<div class="listing-reading-time">
-5 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="Large Language Models" data-listing-date-sort="1708588800000" data-listing-file-modified-sort="1709437533641" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2127">
-<div class="thumbnail">
-<p><a href="./notes/Large Language Model/llm_eval.html" class="no-external"></a></p><a href="./notes/Large Language Model/llm_eval.html" class="no-external">
-<p class="card-img-top"><img src="images/LLM_eval.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./notes/Large Language Model/llm_eval.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./notes/Large Language Model/llm_eval.html" class="no-external">Large language model evaluation</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./notes/Large Language Model/llm_eval.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Large Language Models'); return false;">
-Large Language Models
-</div>
-</div>
-<div class="listing-description">
-<a href="./notes/Large Language Model/llm_eval.html" class="no-external">Today, the landscape of large language models (LLMs) is rich with diverse evaluation benchmarks. In this…</a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="./notes/Large Language Model/llm_eval.html" class="no-external"></a></p><a href="./notes/Large Language Model/llm_eval.html" class="no-external">
-<div class="listing-reading-time">
-11 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="Large Language Models" data-listing-date-sort="1708502400000" data-listing-file-modified-sort="1708927783466" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="942">
-<div class="thumbnail">
-<p><a href="./notes/Large Language Model/moe.html" class="no-external"></a></p><a href="./notes/Large Language Model/moe.html" class="no-external">
-<p class="card-img-top"><img src="images/llama2.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./notes/Large Language Model/moe.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./notes/Large Language Model/moe.html" class="no-external">Mixture of expert</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./notes/Large Language Model/moe.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Large Language Models'); return false;">
-Large Language Models
-</div>
-</div>
-<div class="listing-description">
-<a href="./notes/Large Language Model/moe.html" class="no-external">MoE means the mixture of expert. In this blog, we will introduce the type of MoE used in the <code>mixtral8x7B</code> mode…</a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="./notes/Large Language Model/moe.html" class="no-external"></a></p><a href="./notes/Large Language Model/moe.html" class="no-external">
-<div class="listing-reading-time">
-5 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="Diffusion Model" data-listing-date-sort="1708329600000" data-listing-file-modified-sort="1713632215422" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="14">
-<div class="thumbnail">
-<p><a href="./notes/Diffusion Model/sd.html" class="no-external"></a></p><a href="./notes/Diffusion Model/sd.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./notes/Diffusion Model/sd.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./notes/Diffusion Model/sd.html" class="no-external">Scalable diffusion models with transformers</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./notes/Diffusion Model/sd.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Diffusion Model'); return false;">
-Diffusion Model
-</div>
-</div>
-<div class="listing-description">
-<a href="./notes/Diffusion Model/sd.html" class="no-external">A text to image generation model from the diffusion architecture.</a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="./notes/Diffusion Model/sd.html" class="no-external"></a></p><a href="./notes/Diffusion Model/sd.html" class="no-external">
-<div class="listing-reading-time">
-1 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="Large Language Models" data-listing-date-sort="1707984000000" data-listing-file-modified-sort="1708587186166" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="19" data-listing-word-count-sort="3751">
-<div class="thumbnail">
-<p><a href="./notes/Large Language Model/rl_llm.html" class="no-external"></a></p><a href="./notes/Large Language Model/rl_llm.html" class="no-external">
-<p class="card-img-top"><img src="images/RL_basic.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./notes/Large Language Model/rl_llm.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./notes/Large Language Model/rl_llm.html" class="no-external">Reinforcement learning for large language model</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./notes/Large Language Model/rl_llm.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Large Language Models'); return false;">
-Large Language Models
-</div>
-</div>
-<div class="listing-description">
-<a href="./notes/Large Language Model/rl_llm.html" class="no-external">Reinforment is a common technique, which can be applied to the large language model area.</a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="./notes/Large Language Model/rl_llm.html" class="no-external"></a></p><a href="./notes/Large Language Model/rl_llm.html" class="no-external">
-<div class="listing-reading-time">
-19 min
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
