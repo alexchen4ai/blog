@@ -21,7 +21,7 @@ about:
 
 In this space, I aim to share my journey in academia and industry, providing insights into cutting-edge research and practical applications of AI and machine learning.
 
-If you want to contact me, feel free to send a mail at <a href="mailto:alexchen@nexa4ai.com">this address</a>.
+If you want to contact me, feel free to send a mail at <a href="mailto:alexchen@nexa.ai">this address</a>.
 
 <hr>
 

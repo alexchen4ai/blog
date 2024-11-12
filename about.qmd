@@ -17,7 +17,7 @@ format: html
 </div>
 
 <div id="content" style="flex: 1;">
-Greetings! My name is **Alex Chen**, an **AI researcher and startup founder** in Silicon Valley. Previously, I pursued a PhD at Stanford University, delving into numerical simulation and artificial intelligence research.
+Greetings! My name is **Alex Chen**, an **AI researcher and startup founder** in Silicon Valley. Previously, I got my PhD at Stanford University, delving into numerical simulation and artificial intelligence research.
 
 In this space, I aim to share my journey in academia and industry, providing insights into cutting-edge research and practical applications of AI and machine learning.
 
@@ -25,6 +25,6 @@ In this space, I aim to share my journey in academia and industry, providing ins
 Feel free to connect with me:
 
 - Email: [weichen6@stanford.edu](mailto:weichen6@stanford.edu)
-- Check out my startup: [AI Tools by Nexa](https://www.nexa4ai.com/ai-tools)
+- Check out my startup: [Nexa AI](https://nexa.ai)
 </div>
 </div>
