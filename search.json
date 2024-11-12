@@ -110,37 +110,37 @@
   {
     "objectID": "notes/Large Language Model/inference_optimize.html",
     "href": "notes/Large Language Model/inference_optimize.html",
-    "title": "The inference optimization",
+    "title": "Optimization for Inference of Large Language Model",
     "section": "",
     "text": "Tip\n\n\n\nTo run the language model faster and especially on the edge devices, we need to optimize the model. This optimization can be done in different ways. In this article, we will discuss some of the optimization techniques. In this blog, I will introduce different methods and the existing solutions to enable the language model to run faster. Note that my focus is for the on-device language model.",
     "crumbs": [
       "Home",
       "🗣️ **Large language models**",
-      "The inference optimization"
+      "Optimization for Inference of Large Language Model"
     ]
   },
   {
     "objectID": "notes/Large Language Model/inference_optimize.html#overview-of-the-optimization",
     "href": "notes/Large Language Model/inference_optimize.html#overview-of-the-optimization",
-    "title": "The inference optimization",
+    "title": "Optimization for Inference of Large Language Model",
     "section": "Overview of the optimization",
     "text": "Overview of the optimization\nTo optimize the inference for language model, we mainly have the following methods:\n\nQuantization: Quantization is the process of reducing the precision of the weights and activations of the model. This reduces the memory footprint and increases the speed of the model.\nPruning: Pruning is the process of removing the weights that are close to zero. This reduces the number of parameters in the model and increases the speed of the model.\nLower level implementation: Implementing the model in a lower level language like C++ or Rust can increase the speed of the model.\nKV Cache: Key-Value cache is a technique to cache the intermediate results of the model. This reduces the computation and increases the speed of the model. For some certain devices, we may need to support the KV cache specially.\nOptimization based on hardware: Like the flash attention for NVIDIA GPU, we can optimize the model based on the hardware. The main method would be to use the memory-access pattern method to optimize the model.",
     "crumbs": [
       "Home",
       "🗣️ **Large language models**",
-      "The inference optimization"
+      "Optimization for Inference of Large Language Model"
     ]
   },
   {
     "objectID": "notes/Large Language Model/inference_optimize.html#quantization",
     "href": "notes/Large Language Model/inference_optimize.html#quantization",
-    "title": "The inference optimization",
+    "title": "Optimization for Inference of Large Language Model",
     "section": "Quantization",
     "text": "Quantization\n\n\n\n\n\n\nTip\n\n\n\nQuantization is a model compression technique that converts the weights and activations within an LLM from a high-precision data representation to a lower-precision data representation, i.e., from a data type that can hold more information to one that holds less. A typical example of this is the conversion of data from a 32-bit floating-point number (FP32) to an 8-bit or 4-bit integer (INT4 or INT8). A good blog from internet is here.\n\n\nLet’s first revisit the representation of data in computer. We mainly study the float32, float16 and bfloat16 type.\n\nfloat32: 32 bits. We have 1 bit for the sign, 8 bits for the exponent and 23 bits for the mantissa. To form a float number in computer, we need the sign, the number before the exponent and the exponent number over 2. For example, we have \\(6.75=+1.1011\\times 2^2\\). Thus, we can conclude that the range of the representation is between \\(1e^{-38}\\) and \\(3e^{38}\\) (you can add sign freely, though).\nfloat16: 16 bits. We have 1 bit for the sign, 5 bits for the exponent and 10 bits for the mantissa. The range of the representation is between \\(6e^{-8}\\) and \\(6e^{4}\\).\nbfloat16: 16 bits. We have 1 bit for the sign, 8 bits for the exponent and 7 bits for the mantissa. The range of the representation is between \\(1e^{-38}\\) and \\(3e^{38}\\).\n\nWe can see that float16 and bfloat16 take up the same memory space. But they are different in the bits allocation. The float16 has better precision than bfloat16, but the bfloat16 has better range than float16. For deep neural network, we may need to consider the use of the bfloat16 type since the range is more important than the precision for the deep neural network. The common quantization type are INT8 and INT4. Note that INT8 and INT4 can only represent the integer numbers, not for the float numbers. Thus, INT8 can only represent the numbers between \\(-128\\) and \\(127\\), and INT4 can only represent the numbers between \\(-8\\) and \\(7\\).\nWe use the affine quantization scheme to convert the model:\n\\[\nx_q = \\operatorname{round}\\left(x/S + Z\\right)\n\\]\nwhere we have: - \\(x_q\\): the quantized value - \\(x\\): the original value - \\(S\\): the scale factor - \\(Z\\): the zero point - \\(\\operatorname{round}\\): the rounding function.\nUsually, we will set multiple blocks to quantize the model. It means that we need multiple scale factors and zero points. Note that not all layers are quantized. For some important layers, we still consider the use of the float32 type.\nFor LLM quantization, we have two different methods called post-training quantization and quantization-aware training. If we finally use the quantization model, quantization-aware training is better.\n\nExisiting solutions\nWe can use quantization library provied in huggingface transformers. For more foundamental optimization, we should consider to use GGML (GPT-Generated Model Language) and GGUF (GPT-Generated Unified Format). For on-device deployment, we should consider the usage of GGUF since it is more efficient. Refer to github to use it. We can consider another library called ollama which is built based on the llama cpp.",
     "crumbs": [
       "Home",
       "🗣️ **Large language models**",
-      "The inference optimization"
+      "Optimization for Inference of Large Language Model"
     ]
   },
   {
@@ -184,7 +184,7 @@
     "href": "about.html",
     "title": "About Wei Chen",
     "section": "",
-    "text": "I am inside a Hawaii cafe\n\n\n\n\n   \n\n\nGreetings! My name is Alex Chen, an AI researcher and startup founder in Silicon Valley. Previously, I pursued a PhD at Stanford University, delving into numerical simulation and artificial intelligence research.\nIn this space, I aim to share my journey in academia and industry, providing insights into cutting-edge research and practical applications of AI and machine learning.\n\nFeel free to connect with me:\n\nEmail: weichen6@stanford.edu\nCheck out my startup: AI Tools by Nexa"
+    "text": "I am inside a Hawaii cafe\n\n\n\n\n   \n\n\nGreetings! My name is Alex Chen, an AI researcher and startup founder in Silicon Valley. Previously, I got my PhD at Stanford University, delving into numerical simulation and artificial intelligence research.\nIn this space, I aim to share my journey in academia and industry, providing insights into cutting-edge research and practical applications of AI and machine learning.\n\nFeel free to connect with me:\n\nEmail: weichen6@stanford.edu\nCheck out my startup: Nexa AI"
   },
   {
     "objectID": "news.html",
@@ -198,7 +198,7 @@
     "href": "notes.html",
     "title": "Research notes",
     "section": "",
-    "text": "The inference optimization\n\n\n\n\n\n\nLarge Language Models\n\n\n\n\n\n\n\n\n\n4 min\n\n\n\n\n\n\n\n\n\n\n\n\nOptimization in machine learning\n\n\n\n\n\n\nMath Theories\n\n\n\n\n\n\n\n\n\n13 min\n\n\n\n\n\n\n\n\n\n\n\n\nLarge language model distributed training\n\n\n\n\n\n\nLarge Language Models\n\n\n\n\n\n\n\n\n\n5 min\n\n\n\n\n\n\n\n\n\n\n\n\nComplex analysis for machine learning\n\n\n\n\n\n\nMath Theories\n\n\n\n\n\n\n\n\n\n5 min\n\n\n\n\n\n\n\n\n\n\n\n\nLarge language model evaluation\n\n\n\n\n\n\nLarge Language Models\n\n\n\n\n\n\n\n\n\n11 min\n\n\n\n\n\n\n\n\n\n\n\n\nMixture of expert\n\n\n\n\n\n\nLarge Language Models\n\n\n\n\n\n\n\n\n\n5 min\n\n\n\n\n\n\n\n\n\n\n\n\nScalable diffusion models with transformers\n\n\n\n\n\n\nDiffusion Model\n\n\n\n\n\n\n\n\n\n1 min\n\n\n\n\n\n\n\n\n\n\n\n\nReinforcement learning for large language model\n\n\n\n\n\n\nLarge Language Models\n\n\n\n\n\n\n\n\n\n19 min\n\n\n\n\n\n\nNo matching items"
+    "text": "Optimization for Inference of Large Language Model\n\n\n\n\n\n\nLarge Language Models\n\n\n\n\n\n\n\n\n\n4 min\n\n\n\n\n\n\n\n\n\n\n\n\nOptimization in machine learning\n\n\n\n\n\n\nMath Theories\n\n\n\n\n\n\n\n\n\n13 min\n\n\n\n\n\n\n\n\n\n\n\n\nLarge language model distributed training\n\n\n\n\n\n\nLarge Language Models\n\n\n\n\n\n\n\n\n\n5 min\n\n\n\n\n\n\n\n\n\n\n\n\nComplex analysis for machine learning\n\n\n\n\n\n\nMath Theories\n\n\n\n\n\n\n\n\n\n5 min\n\n\n\n\n\n\n\n\n\n\n\n\nLarge language model evaluation\n\n\n\n\n\n\nLarge Language Models\n\n\n\n\n\n\n\n\n\n11 min\n\n\n\n\n\n\n\n\n\n\n\n\nMixture of expert\n\n\n\n\n\n\nLarge Language Models\n\n\n\n\n\n\n\n\n\n5 min\n\n\n\n\n\n\n\n\n\n\n\n\nScalable diffusion models with transformers\n\n\n\n\n\n\nDiffusion Model\n\n\n\n\n\n\n\n\n\n1 min\n\n\n\n\n\n\n\n\n\n\n\n\nReinforcement learning for large language model\n\n\n\n\n\n\nLarge Language Models\n\n\n\n\n\n\n\n\n\n19 min\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
