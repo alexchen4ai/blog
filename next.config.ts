@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const siteBasePath = "/person";
+const siteBasePath = "/blog";
 
 const nextConfig: NextConfig = {
   output: "export",
