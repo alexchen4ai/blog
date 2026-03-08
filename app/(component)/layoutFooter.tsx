@@ -65,7 +65,7 @@ export const LayoutFooter = () => {
               <IconBounce>
                 <Image
                   className="cursor-pointer"
-                  src={assetPath("/home/icon_twitter.svg")}
+                  src="/home/icon_twitter.svg"
                   width={20}
                   height={20}
                   alt="twitter"
@@ -74,7 +74,7 @@ export const LayoutFooter = () => {
               <IconBounce>
                 <Image
                   className="cursor-pointer"
-                  src={assetPath("/home/icon_linkedin.svg")}
+                  src="/home/icon_linkedin.svg"
                   width={20}
                   height={20}
                   alt="linkedin"
@@ -83,7 +83,7 @@ export const LayoutFooter = () => {
               <IconBounce>
                 <Image
                   className="cursor-pointer"
-                  src={assetPath("/home/icon_github.svg")}
+                  src="/home/icon_github.svg"
                   width={20}
                   height={20}
                   alt="github"

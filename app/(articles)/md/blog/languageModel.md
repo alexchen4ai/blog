@@ -9,7 +9,7 @@
 
 In the first section, we will review the fundamental concept of the reinforcement learning. The fundamental part of the reinforcement learning includes the **agent** and **environment**. The process is as the following:
 
-![The basic of reinforcement learning](https://alexchen.ai/images/RL_basic.png)
+![The basic of reinforcement learning](/images/RL_basic.png)
 
 At each iteration step, we have the state of the environment marked as $S$, the action $A$ and the reward $R$. Below, we list the step at the time step $t$:
 
@@ -32,7 +32,7 @@ These are some basic concepts in the reinforcement learning! We will introduce m
 
 To solve the RL problem, we have various methods! The detailed is concluded in the figure below. We will study more about the policy based method, the value based method. And for SOTA, the LLM usually use a combined method. When we consider how to train the RL, we should first think about how to use the pretrained model. We wish the model to guide us to get the best action to take at every step! Thus, we need a great policy $\pi^*$!
 
-![The classification of RL](https://alexchen.ai/images/RL_classification.png)
+![The classification of RL](/images/RL_classification.png)
 
 ### The Value Based Method
 

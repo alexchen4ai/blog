@@ -3,7 +3,6 @@
 import { Button, Col, Row, Typography } from "antd";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import { assetPath } from "@/lib/assetPath";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { motion } from "framer-motion";
@@ -73,7 +72,7 @@ export const ProjectItem = () => {
                                                     whileHover={{ scale: 1.05 }}
                                                     transition={{ duration: 0.4, ease }}
                                                 >
-                                                    <Image src={assetPath("/home/image_project.png")} width={600} height={400} alt="project" />
+                                                    <Image src="/home/image_project.png" width={600} height={400} alt="project" />
                                                 </motion.div>
                                             </div>
                                             <div className="flex flex-col gap-[6px]">

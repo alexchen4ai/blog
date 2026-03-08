@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { assetPath } from "@/lib/assetPath";
 import { Tag, Typography } from "antd";
 import { motion } from "framer-motion";
 import type { IArticleInfo } from "../../(articles)/list";
@@ -81,7 +80,7 @@ export const ArticleItem = ({ article }: ArticleItemProps) => {
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.4, ease }}
           >
-            <Image src={assetPath(article.cover)} width={200} height={100} alt={article.title} className="w-full md:w-[200px] h-auto" />
+            <Image src={article.cover} width={200} height={100} alt={article.title} className="w-full md:w-[200px] h-auto" />
           </motion.div>
         </div>
       )}

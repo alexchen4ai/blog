@@ -2,7 +2,6 @@
 
 import { Typography } from "antd";
 import Image from "next/image";
-import { assetPath } from "@/lib/assetPath";
 import cn from "classnames";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, useMotionValueEvent, useScroll, AnimatePresence } from "framer-motion";
@@ -86,7 +85,7 @@ const LayoutHeader = () => {
           whileTap={{ scale: 0.98 }}
         >
           <div className="flex items-center gap-[4px]">
-            <Image src={assetPath("/home/icon.svg")} width={37} height={37} alt="logo" />
+            <Image src="/home/icon.svg" width={37} height={37} alt="logo" />
           </div>
           <Typography className={cn("!text-[14px] md:!text-[16px] font-[600] transition-colors duration-500", useLightText ? "!text-white" : "!text-black")}>
             ALEX CHEN&apos;S BLOG

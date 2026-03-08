@@ -163,7 +163,7 @@ const LandingPage = () => {
               >
                 <div className="person_avatar overflow-hidden p-2">
                   <Image
-                    src={assetPath("/home/person_avatar.png")}
+                    src="/home/person_avatar.png"
                     alt=""
                     width={500}
                     height={500}
@@ -273,21 +273,21 @@ const LandingPage = () => {
             >
               <Image
                 className="cursor-pointer"
-                src={assetPath("/home/icon_twitter.svg")}
+                src="/home/icon_twitter.svg"
                 width={20}
                 height={20}
                 alt="twitter"
               />
               <Image
                 className="cursor-pointer"
-                src={assetPath("/home/icon_linkedin.svg")}
+                src="/home/icon_linkedin.svg"
                 width={20}
                 height={20}
                 alt="linkedin"
               />
               <Image
                 className="cursor-pointer"
-                src={assetPath("/home/icon_github.svg")}
+                src="/home/icon_github.svg"
                 width={20}
                 height={20}
                 alt="github"

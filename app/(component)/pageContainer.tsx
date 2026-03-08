@@ -2,7 +2,6 @@
 
 import { Typography } from "antd";
 import Image from "next/image";
-import { assetPath } from "@/lib/assetPath";
 import { motion } from "framer-motion";
 
 interface PageContainerProps extends React.PropsWithChildren {
@@ -52,21 +51,21 @@ const PageContainer = (props: PageContainerProps) => {
                                     animate={{ rotate: 0, opacity: 1 }}
                                     transition={{ duration: 0.6, delay: 0.5, ease }}
                                 >
-                                    <Image src={assetPath("/project/polygon.svg")} width={7} height={6} alt="polygon" />
+                                    <Image src="/project/polygon.svg" width={7} height={6} alt="polygon" />
                                 </motion.div>
                                 <motion.div
                                     initial={{ rotate: -180, opacity: 0 }}
                                     animate={{ rotate: 0, opacity: 1 }}
                                     transition={{ duration: 0.6, delay: 0.6, ease }}
                                 >
-                                    <Image src={assetPath("/project/polygon.svg")} width={7} height={6} alt="polygon" />
+                                    <Image src="/project/polygon.svg" width={7} height={6} alt="polygon" />
                                 </motion.div>
                                 <motion.div
                                     initial={{ rotate: -180, opacity: 0 }}
                                     animate={{ rotate: 0, opacity: 1 }}
                                     transition={{ duration: 0.6, delay: 0.7, ease }}
                                 >
-                                    <Image src={assetPath("/project/polygon.svg")} width={7} height={6} alt="polygon" />
+                                    <Image src="/project/polygon.svg" width={7} height={6} alt="polygon" />
                                 </motion.div>
                                 <div className="bg-[#EEEEEE] flex-1 h-[1px]"></div>
                             </motion.div>

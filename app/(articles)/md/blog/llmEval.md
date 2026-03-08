@@ -28,14 +28,14 @@ Also, we can get more benchmark from the papers for sure. 📝 Paper: [Evaluatin
 
 There are different benchmarks for the LLM evaluation. The general classification can be found in Figure 1.
 
-![The classification of LLM evaluation](https://alexchen.ai/images/LLM_eval.png)
+![The classification of LLM evaluation](/images/LLM_eval.png)
 *Figure 1: The classification of LLM evaluation.*
 
 For each aspect of the model, we will have different methods to evaluate it.
 
 The knowledge and capability evaluation can be seen in Figure 2.
 
-![The progress of the LLM knowledge capability evaluation](https://alexchen.ai/images/knowledge_capability_evaluation.png)
+![The progress of the LLM knowledge capability evaluation](/images/knowledge_capability_evaluation.png)
 *Figure 2: The progress of the LLM knowledge capability evaluation.*
 
 The commonsense reasoning datasets can be seen below:
