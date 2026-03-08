@@ -1,0 +1,10 @@
+/* Frosted glass (毛玻璃) effect: semi-transparent bg + backdrop blur */
+.person_avatar {
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.5));
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-radius: 0 0 40% 40%;
+    padding: 0;
+    padding-right: 24px;
+    padding-bottom: 40px;
+}
