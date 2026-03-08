@@ -1,0 +1,390 @@
+@import "katex/dist/katex.min.css";
+
+/* Block-level math formula centering */
+.markdown-render .katex-display {
+    text-align: center !important;
+    margin: 24px 0 !important;
+}
+
+.markdown-render .katex-display > .katex {
+    text-align: center !important;
+}
+
+.markdown-render h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+.markdown-render h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+.markdown-render h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+.markdown-render h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+.markdown-render h5 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+.markdown-render h6 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 24px;
+}
+
+.markdown-render p {
+    margin-bottom: 16px;
+    line-height: 1.8;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.markdown-render ul {
+    list-style-type: disc;
+    list-style-position: outside;
+    padding-left: 24px;
+    margin-bottom: 16px;
+}
+
+.markdown-render ul li::marker {
+    color: #F0CCB8;
+}
+
+.markdown-render ol {
+    list-style-type: decimal;
+    list-style-position: outside;
+    padding-left: 24px;
+    margin-bottom: 16px;
+}
+
+.markdown-render li {
+    margin-bottom: 8px;
+    line-height: 1.8;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.markdown-render table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+    font-size: 18px;
+}
+
+.markdown-render th,
+.markdown-render td {
+    border: 1px solid #e0e0e0;
+    padding: 12px 16px;
+    text-align: left;
+}
+
+.markdown-render th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+}
+
+.markdown-render tr:nth-child(even) td {
+    background-color: #fafafa;
+}
+
+/* inline code (not inside pre/code block) */
+.markdown-render :not(pre)>code {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 4px;
+    background-color: #FCF5F0;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.markdown-render pre {
+    border-radius: 4px;
+    border: 1px solid var(--gray-3, #C8C8C8);
+    padding: 14px;
+    margin: 24px 0;
+    overflow-x: auto;
+}
+
+.markdown-render a {
+    text-decoration: underline;
+    color: #D25F3D;
+}
+
+/* images and media */
+.markdown-render img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 16px 0;
+}
+
+.markdown-render video {
+    width: 100% !important;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    margin: 16px 0;
+}
+
+.markdown-render iframe {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 8px;
+    margin: 16px 0;
+}
+
+.markdown-render .markdown-blockquote {
+    padding: 14px 16px;
+    border-radius: 4px;
+    border-top: 1px solid var(--gray-2, #E7E7E7);
+    border-right: 1px solid var(--gray-2, #E7E7E7);
+    border-bottom: 1px solid var(--gray-2, #E7E7E7);
+    border-left: 4px solid var(--gray-2, #E7E7E7);
+    margin-bottom: 24px;
+}
+
+/* Obsidian-style callout (> [!tip]) - inline styles stripped, customize via CSS */
+.markdown-render .callout {
+    margin-bottom: 24px;
+    padding: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border-left: 4px solid #00bfa6;
+    background: #f2f3f5;
+}
+
+.markdown-render .callout-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    font-weight: 600;
+}
+
+.markdown-render .callout-title strong {
+    font-weight: 600;
+}
+
+.markdown-render .callout-title p {
+    margin: 0;
+}
+
+.markdown-render .callout-icon {
+    flex-shrink: 0;
+}
+
+.markdown-render .callout-content {
+    padding: 12px 16px 16px;
+}
+
+/* Type-specific colors - customize these */
+.markdown-render .callout-title.tip {
+    background-color: rgba(0, 191, 166, 0.1);
+}
+
+.markdown-render blockquote.callout:has(.callout-title.tip) {
+    border-left-color: #00bfa6;
+}
+
+.markdown-render .callout-title.note {
+    background-color: rgba(68, 138, 255, 0.1);
+}
+
+.markdown-render blockquote.callout:has(.callout-title.note) {
+    border-left-color: #448aff;
+}
+
+.markdown-render .callout-title.warning {
+    background-color: rgba(255, 145, 0, 0.1);
+}
+
+.markdown-render blockquote.callout:has(.callout-title.warning) {
+    border-left-color: #ff9100;
+}
+
+.markdown-render .callout-title.info {
+    background-color: rgba(0, 184, 212, 0.1);
+}
+
+.markdown-render blockquote.callout:has(.callout-title.info) {
+    border-left-color: #00b8d4;
+}
+
+.markdown-render .callout-title.danger {
+    background-color: rgba(255, 23, 69, 0.1);
+}
+
+.markdown-render blockquote.callout:has(.callout-title.danger) {
+    border-left-color: #ff1745;
+}
+
+.markdown-render .callout-title.success {
+    background-color: rgba(0, 200, 83, 0.1);
+}
+
+.markdown-render blockquote.callout:has(.callout-title.success) {
+    border-left-color: #00c853;
+}
+
+/* Icon colors match border */
+.markdown-render .callout-title.tip .callout-icon {
+    color: #00bfa6;
+}
+
+.markdown-render .callout-title.note .callout-icon {
+    color: #448aff;
+}
+
+.markdown-render .callout-title.warning .callout-icon {
+    color: #ff9100;
+}
+
+.markdown-render .callout-title.info .callout-icon {
+    color: #00b8d4;
+}
+
+.markdown-render .callout-title.danger .callout-icon {
+    color: #ff1745;
+}
+
+.markdown-render .callout-title.success .callout-icon {
+    color: #00c853;
+}
+
+/* ::: tip / note / warning (VitePress style) - customizable via these classes */
+.markdown-render .markdown-callout {
+    margin: 16px 0;
+    padding: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border-left: 4px solid #C8C8C8;
+}
+
+.markdown-render .markdown-callout-title {
+    padding: 8px 16px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.markdown-render .markdown-callout-content {
+    padding: 12px 16px 16px;
+}
+
+.markdown-render .markdown-callout-tip {
+    border-left-color: #67c23a;
+    background: #f0f9eb;
+}
+
+.markdown-render .markdown-callout-tip .markdown-callout-title {
+    background: rgba(103, 194, 58, 0.1);
+}
+
+.markdown-render .markdown-callout-note {
+    border-left-color: #409eff;
+    background: #ecf5ff;
+}
+
+.markdown-render .markdown-callout-note .markdown-callout-title {
+    background: rgba(64, 158, 255, 0.1);
+}
+
+.markdown-render .markdown-callout-warning {
+    border-left-color: #e6a23c;
+    background: #fdf6ec;
+}
+
+.markdown-render .markdown-callout-warning .markdown-callout-title {
+    background: rgba(230, 162, 60, 0.1);
+}
+
+.markdown-render .markdown-callout-danger {
+    border-left-color: #f56c6c;
+    background: #fef0f0;
+}
+
+.markdown-render .markdown-callout-danger .markdown-callout-title {
+    background: rgba(245, 108, 108, 0.1);
+}
+
+.markdown-render .markdown-callout-info {
+    border-left-color: #909399;
+    background: #f4f4f5;
+}
+
+.markdown-render .markdown-callout-info .markdown-callout-title {
+    background: rgba(144, 147, 153, 0.1);
+}
+
+.markdown-render .markdown-callout-success {
+    border-left-color: #67c23a;
+    background: #f0f9eb;
+}
+
+.markdown-render .markdown-callout-success .markdown-callout-title {
+    background: rgba(103, 194, 58, 0.1);
+}
+
+.markdown-render .blockquote>p {
+    margin-bottom: 0;
+}
+
+/* ── Mobile responsive ── */
+@media (max-width: 768px) {
+    .markdown-render h1 {
+        font-size: 22px;
+        margin-bottom: 16px;
+    }
+
+    .markdown-render h2 {
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+
+    .markdown-render h3 {
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+
+    .markdown-render p,
+    .markdown-render li {
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .markdown-render table {
+        font-size: 14px;
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .markdown-render th,
+    .markdown-render td {
+        padding: 8px 10px;
+        white-space: nowrap;
+    }
+
+    .markdown-render pre {
+        padding: 10px;
+        margin: 16px 0;
+        overflow-x: auto;
+        font-size: 13px;
+    }
+}
