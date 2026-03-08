@@ -1,7 +1,7 @@
 'use client'
 
 import { FileText } from "lucide-react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { articleList, type IArticleInfo } from "../(articles)/list";
 
 // Group articles by tag, only include Article group
@@ -23,6 +23,7 @@ interface ArticleSideMenuProps {
 
 export function ArticleSideMenu({ activeId }: ArticleSideMenuProps) {
   const grouped = groupByTag(articleList);
+  const router = useRouter();
 
   return (
     <aside
@@ -37,12 +38,12 @@ export function ArticleSideMenu({ activeId }: ArticleSideMenuProps) {
               {articles.map((article) => {
                 const isActive = article.id === activeId;
                 return (
-                  <Link
+                  <button
                     key={article.id}
-                    href={`/details?id=${article.id}`}
+                    onClick={() => router.push(`/details?id=${article.id}`)}
                     className={`
                       group/item flex items-center gap-[8px] text-[14px] font-[400] py-[4px] px-0
-                      transition-colors duration-200 rounded-[4px] -mx-[4px] px-[4px]
+                      transition-colors duration-200 rounded-[4px] -mx-[4px] px-[4px] text-left cursor-pointer
                       ${isActive
                         ? "text-[#DB805F]"
                         : "text-[#676767] hover:text-[#333]"
@@ -59,7 +60,7 @@ export function ArticleSideMenu({ activeId }: ArticleSideMenuProps) {
                     >
                       {article.title}
                     </span>
-                  </Link>
+                  </button>
                 );
               })}
             </div>
