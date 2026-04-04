@@ -161,14 +161,15 @@ const LandingPage = () => {
                   ease: [0.25, 0.1, 0.25, 1],
                 }}
               >
-                <div className="person_avatar overflow-hidden p-2">
-                  <Image
-                    src="/home/person_avatar.png"
-                    alt=""
-                    width={500}
-                    height={500}
-                    className="w-full rounded-xl"
-                  />
+                <div className="overflow-hidden">
+                  <div className="relative w-full aspect-[3/4] rounded-xl overflow-hidden">
+                    <Image
+                      src="/images/profile.jpeg"
+                      alt="Profile"
+                      fill
+                      className="object-cover object-top"
+                    />
+                  </div>
                 </div>
                 {/* <TiltedCard
                   imageSrc="/home/person_avatar.png"
