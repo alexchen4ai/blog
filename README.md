@@ -50,19 +50,35 @@ For the development of site, I follow the steps below:
 
 ## Deployment
 
-The site is automatically deployed to GitHub Pages on every push to `main` (or `master`) that touches content files (posts, assets, config, templates, scripts, etc.). Pure documentation changes like `README.md` do not trigger a deploy.
+Push to `main` and the site is live in ~2 minutes. That's it.
 
-The workflow builds the site, purges unused CSS, then pushes the output to the `gh-pages` branch. PRs against `main`/`master` also run the build as a check, but do not deploy.
+The **Deploy site** GitHub Actions workflow runs automatically on every push to `main` that touches content files (posts, assets, config, templates, scripts, etc.) and:
 
-### Setup (one-time)
+1. Builds the Jekyll site with `JEKYLL_ENV=production`
+2. Purges unused CSS
+3. Deploys to GitHub Pages via the official `actions/deploy-pages` action
 
-1. In your GitHub repo, go to **Settings → Actions → General → Workflow permissions** and enable **Read and write permissions**.
-2. Push to `main` — the **Deploy site** workflow builds the site and pushes to the `gh-pages` branch automatically.
-3. Go to **Settings → Pages** and set the source branch to `gh-pages`.
+PRs against `main` run the build as a check but do not deploy. Pure documentation changes (`README.md`, etc.) do not trigger a deploy.
+
+### Before pushing
+
+Run Prettier to avoid a failing CI check:
+
+```bash
+npx prettier . --write
+git add .
+git commit -m "your message"
+git push
+```
 
 ### Manual deploy trigger
 
-Go to **Actions → Deploy site → Run workflow** to trigger a deployment manually without pushing a commit.
+Go to **Actions → Deploy site → Run workflow** to trigger a deployment without a commit.
+
+### One-time setup (new repo)
+
+1. Go to **Settings → Pages** and set source to **GitHub Actions**.
+2. Go to **Settings → Actions → General → Workflow permissions** and enable **Read and write permissions**.
 
 ---
 
