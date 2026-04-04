@@ -7,9 +7,9 @@ first_name: Alex
 middle_name:
 last_name: Chen
 contact_note: >
-  Feel free to reach out via email for research collaborations, speaking invitations, or just to chat about on-device AI.
+  Feel free to reach out via email for research collaborations, speaking invitations, or just to chat about AI systems, generative AI inference infrastructure, and robotics.
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Personal site of Wei (Alex) Chen — on-device AI researcher, founder, and engineer.
+  Personal site of Wei (Alex) Chen — AI systems researcher, founder, and engineer.
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
