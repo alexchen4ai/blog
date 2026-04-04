@@ -30,7 +30,7 @@ latest_posts:
 
 I am **Alex (Wei) Chen** <span style="font-family: 'Ma Shan Zheng', cursive; font-size: 1.15em; color: var(--global-theme-color);">陈伟</span>, a Director of Engineering (Principal Engineer/Manager) at [Qualcomm](https://www.qualcomm.com). I joined Qualcomm following the acquisition of [Nexa AI](https://nexa.ai), the company I founded.
 
-Previously, I was the **Founder, CEO, and Chief Scientist** of Nexa AI, where I built the **NexaML engine** and **NexaSDK** (7.6K+ GitHub stars) for efficient generative AI model deployment. Our solutions were trusted by **Geely, HP, Lenovo**, and **İşbank**. I was also the principal architect of **Octopus V1–V4**, **OmniVLM**, **OmniAudio**, **AutoNeural**, and **NexaQuant**, with Octopus V2 representing ~2% of total HuggingFace downloads since 2022.
+Previously, I was the **Founder, CEO, and Chief Scientist** of Nexa AI, where I raised **>$10M** and built the **NexaML engine** and **NexaSDK** (7.6K+ GitHub stars) for efficient generative AI model deployment. Our solutions were trusted by **Geely, HP, Lenovo**, and **İşbank**. I was also the principal architect of **Octopus V1–V4**, **OmniVLM**, **OmniAudio**, **AutoNeural**, and **NexaQuant**, with Octopus V2 representing ~2% of total HuggingFace downloads since 2022.
 
 My research and engineering interests span **AI systems**, **LLM/VLM inference optimization**, **hardware-software co-design**, and increasingly **robotics** — from embodied AI and autonomous systems to robot learning and physical intelligence. I was also an **Investment Scout at Sequoia Capital**, and hold a PhD from **Stanford University** (2024) and a Bachelor's degree from **Tongji University** (2019).
 
