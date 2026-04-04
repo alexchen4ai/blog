@@ -59,9 +59,9 @@ Go to **Actions → Deploy site → Run workflow** to trigger a deployment manua
 
 ## Commands
 
-| Command | Description |
-| --- | --- |
-| `bundle install` | Install dependencies |
-| `bundle exec jekyll serve` | Start dev server (localhost:4000) |
+| Command                                 | Description                       |
+| --------------------------------------- | --------------------------------- |
+| `bundle install`                        | Install dependencies              |
+| `bundle exec jekyll serve`              | Start dev server (localhost:4000) |
 | `bundle exec jekyll serve --livereload` | Start dev server with live reload |
-| `bundle exec jekyll build` | Build site to `_site/` |
+| `bundle exec jekyll build`              | Build site to `_site/`            |
