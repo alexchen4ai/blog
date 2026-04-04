@@ -15,7 +15,7 @@ Running a large language model fast enough to be useful — especially on edge h
 > ##### NOTE
 >
 > The techniques here are primarily relevant to inference-time optimization. Training-time efficiency (gradient checkpointing, mixed-precision training, etc.) is a separate topic.
-{: .block-tip }
+> {: .block-tip }
 
 ## Overview
 
@@ -34,14 +34,14 @@ The relative importance of each depends on the deployment target. For edge devic
 > ##### NOTE
 >
 > Quantization converts weights and activations from a high-precision format (e.g., FP32) to a lower-precision format (e.g., INT8 or INT4). The compressed representation is stored and loaded from memory; dequantization happens on-the-fly during computation. This is the key insight: you save memory bandwidth without necessarily sacrificing all the numerical fidelity of the computation.
-{: .block-tip }
+> {: .block-tip }
 
 ### Post-Training Quantization vs. Quantization-Aware Training
 
-| Method | When it runs | Quality | Cost |
-| --- | --- | --- | --- |
-| Post-Training Quantization (PTQ) | After training | Moderate | Low |
-| Quantization-Aware Training (QAT) | During training | High | High |
+| Method                            | When it runs    | Quality  | Cost |
+| --------------------------------- | --------------- | -------- | ---- |
+| Post-Training Quantization (PTQ)  | After training  | Moderate | Low  |
+| Quantization-Aware Training (QAT) | During training | High     | High |
 
 PTQ is the practical default for most deployments — you do not have access to the original training pipeline, and the quality degradation is acceptable for INT8 and, increasingly, INT4.
 
@@ -54,13 +54,13 @@ Within PTQ:
 
 Understanding the formats helps reason about the tradeoffs:
 
-| Format | Bits | Sign | Exponent | Mantissa | Range |
-| --- | --- | --- | --- | --- | --- |
-| FP32 | 32 | 1 | 8 | 23 | ~$10^{-38}$ to $10^{38}$ |
-| FP16 | 16 | 1 | 5 | 10 | ~$6 \times 10^{-8}$ to $6 \times 10^{4}$ |
-| BF16 | 16 | 1 | 8 | 7 | ~$10^{-38}$ to $10^{38}$ |
-| INT8 | 8 | — | — | — | $-128$ to $127$ |
-| INT4 | 4 | — | — | — | $-8$ to $7$ |
+| Format | Bits | Sign | Exponent | Mantissa | Range                                    |
+| ------ | ---- | ---- | -------- | -------- | ---------------------------------------- |
+| FP32   | 32   | 1    | 8        | 23       | ~$10^{-38}$ to $10^{38}$                 |
+| FP16   | 16   | 1    | 5        | 10       | ~$6 \times 10^{-8}$ to $6 \times 10^{4}$ |
+| BF16   | 16   | 1    | 8        | 7        | ~$10^{-38}$ to $10^{38}$                 |
+| INT8   | 8    | —    | —        | —        | $-128$ to $127$                          |
+| INT4   | 4    | —    | —        | —        | $-8$ to $7$                              |
 
 FP16 offers better precision than BF16, but BF16 preserves the dynamic range of FP32 — which matters more for deep networks where intermediate activations can span many orders of magnitude. INT8 and INT4 are integer-only and require explicit quantization/dequantization steps.
 

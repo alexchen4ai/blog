@@ -14,6 +14,7 @@ category: work
 Qualcomm's Hexagon DSP is a highly parallel, low-power processor present in every Snapdragon SoC. The Hexagon backend for llama.cpp enables transformer inference to offload key compute kernels (matrix-vector products, attention, activations) directly onto the DSP, bypassing the CPU and GPU for those operations entirely.
 
 Key engineering challenges:
+
 - **Memory layout translation** — aligning tensor strides to Hexagon's VMEM requirements
 - **Quantization-aware dispatch** — routing Q4_K, Q8_0, and FP16 weights through the appropriate HVX vector intrinsic paths
 - **Latency hiding** — overlapping DMA transfers with HVX compute to minimize stall cycles
@@ -26,6 +27,7 @@ The result is a significant reduction in prefill and decode latency for 1B–7B 
 The OpenCL backend targets the Adreno GPU (and any OpenCL 2.0+ device), providing a vendor-neutral path for GPU-accelerated inference without requiring proprietary APIs.
 
 Focus areas:
+
 - **Kernel authoring** — hand-tuned OpenCL kernels for GEMV, GEMM, and softmax that match or exceed vendor-library throughput on Adreno
 - **Buffer management** — zero-copy host-device buffer sharing via `cl_mem` with `CL_MEM_USE_HOST_PTR` where the Adreno MMU allows it
 - **Mixed-precision execution** — FP16 accumulation with FP32 output for accuracy-performance balance

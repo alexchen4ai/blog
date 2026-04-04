@@ -15,7 +15,7 @@ The landscape of large language model evaluation is rich and sometimes overwhelm
 > ##### NOTE
 >
 > Stanford CS224U is an excellent resource for building a deeper theoretical foundation in LLM evaluation beyond what is covered here.
-{: .block-tip }
+> {: .block-tip }
 
 ## LLM Leaderboards
 
@@ -32,59 +32,61 @@ For a comprehensive academic treatment, the survey paper [Evaluating Large Langu
 LLM evaluation broadly splits into two axes: **what** is being evaluated (knowledge, reasoning, alignment, safety, etc.) and **how** it is evaluated (automatic scoring, human judgment, LLM-as-judge).
 
 {% include figure.liquid loading="eager" path="assets/img/LLM_eval.png" title="The classification of LLM evaluation" class="img-fluid rounded z-depth-1" %}
+
 <div class="caption">Figure 1: The classification of LLM evaluation.</div>
 
 The knowledge and capability progression across model generations:
 
 {% include figure.liquid loading="eager" path="assets/img/knowledge_capability_evaluation.png" title="The progress of LLM knowledge capability evaluation" class="img-fluid rounded z-depth-1" %}
+
 <div class="caption">Figure 2: The progress of LLM knowledge capability evaluation.</div>
 
 ### Commonsense Reasoning Datasets
 
-| Dataset | Domain | Size | Source | Task |
-| --- | --- | --- | --- | --- |
-| ARC | Science | 7,787 | Various | Multiple-choice QA |
-| QASC | Science | 9,980 | Human-authored | Multiple-choice QA |
-| MCTACO | Temporal | 1,893 | MultiRC | Multiple-choice QA |
-| HellaSWAG | Event | 20K | ActivityNet, WikiHow | Multiple-choice QA |
-| PIQA | Physical | 21K | Human-authored | 2-choice QA |
-| Social IQA | Social | 38K | Human-authored | Multiple-choice QA |
-| CommonsenseQA | Generic | 12,247 | ConceptNet | Multiple-choice QA |
-| OpenBookQA | Generic | 6K | WorldTree | Multiple-choice QA |
+| Dataset       | Domain   | Size   | Source               | Task               |
+| ------------- | -------- | ------ | -------------------- | ------------------ |
+| ARC           | Science  | 7,787  | Various              | Multiple-choice QA |
+| QASC          | Science  | 9,980  | Human-authored       | Multiple-choice QA |
+| MCTACO        | Temporal | 1,893  | MultiRC              | Multiple-choice QA |
+| HellaSWAG     | Event    | 20K    | ActivityNet, WikiHow | Multiple-choice QA |
+| PIQA          | Physical | 21K    | Human-authored       | 2-choice QA        |
+| Social IQA    | Social   | 38K    | Human-authored       | Multiple-choice QA |
+| CommonsenseQA | Generic  | 12,247 | ConceptNet           | Multiple-choice QA |
+| OpenBookQA    | Generic  | 6K     | WorldTree            | Multiple-choice QA |
 
 ### Multi-Hop Reasoning Datasets
 
-| Dataset | Domain | Size | Hops | Task |
-| --- | --- | --- | --- | --- |
-| HotpotQA | Generic | 112,779 | 1–3 | Span extraction |
-| HybridQA | Generic | 69,611 | 2–3 | Span extraction |
-| MultiRC | Generic | 9,872 | ~2.4 | Multiple-choice |
-| NarrativeQA | Fiction | 46,765 | — | Generative |
-| MedHop | Medical | 2,508 | — | Multiple-choice |
-| WikiHop | Generic | 51,318 | — | Multiple-choice |
+| Dataset     | Domain  | Size    | Hops | Task            |
+| ----------- | ------- | ------- | ---- | --------------- |
+| HotpotQA    | Generic | 112,779 | 1–3  | Span extraction |
+| HybridQA    | Generic | 69,611  | 2–3  | Span extraction |
+| MultiRC     | Generic | 9,872   | ~2.4 | Multiple-choice |
+| NarrativeQA | Fiction | 46,765  | —    | Generative      |
+| MedHop      | Medical | 2,508   | —    | Multiple-choice |
+| WikiHop     | Generic | 51,318  | —    | Multiple-choice |
 
 ## Benchmarks
 
 Once you have a dataset, you need a benchmark — a standardized procedure that produces a comparable score. The following are the most commonly used:
 
-| Benchmark | Subjects | Language | Questions | Access |
-| --- | --- | --- | --- | --- |
-| MMLU | 57 | English | 15,908 | Local |
-| MMCU | 51 | Chinese | 11,900 | Local |
-| C-Eval | 52 | Chinese | 13,948 | Online |
-| AGIEval | 20 | English + Chinese | 8,062 | Local |
-| M3KE | 71 | Chinese | 20,477 | Local |
-| CMMLU | 67 | Chinese | 11,528 | Local |
+| Benchmark | Subjects | Language          | Questions | Access |
+| --------- | -------- | ----------------- | --------- | ------ |
+| MMLU      | 57       | English           | 15,908    | Local  |
+| MMCU      | 51       | Chinese           | 11,900    | Local  |
+| C-Eval    | 52       | Chinese           | 13,948    | Online |
+| AGIEval   | 20       | English + Chinese | 8,062     | Local  |
+| M3KE      | 71       | Chinese           | 20,477    | Local  |
+| CMMLU     | 67       | Chinese           | 11,528    | Local  |
 
 For holistic evaluation across many tasks simultaneously:
 
-| Benchmark | Language | Evaluation Method | Leaderboard |
-| --- | --- | --- | --- |
-| HELM | English | Automatic | Yes |
-| BIG-bench | English + others | Automatic | Yes |
-| OpenCompass | English + others | Automatic + LLM-judge | Yes |
-| Chatbot Arena | English + others | Human preference | Yes |
-| FlagEval | English + others | Automatic + Manual | No |
+| Benchmark     | Language         | Evaluation Method     | Leaderboard |
+| ------------- | ---------------- | --------------------- | ----------- |
+| HELM          | English          | Automatic             | Yes         |
+| BIG-bench     | English + others | Automatic             | Yes         |
+| OpenCompass   | English + others | Automatic + LLM-judge | Yes         |
+| Chatbot Arena | English + others | Human preference      | Yes         |
+| FlagEval      | English + others | Automatic + Manual    | No          |
 
 ## How to Calculate a Benchmark
 

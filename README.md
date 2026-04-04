@@ -39,8 +39,10 @@ bundle exec jekyll serve --livereload
 
 ---
 
-## Development 
+## Development
+
 For the development of site, I follow the steps below:
+
 - Use some markdown files as draft to write what ever I want;
 - Use the AI tools to help me reformat so that it is compatible with the site;
 

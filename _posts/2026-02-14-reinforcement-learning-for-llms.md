@@ -23,6 +23,7 @@ The RL setup involves an **agent** interacting with an **environment** in a loop
 3. The environment transitions to state $S_{t+1}$ and emits reward $R_{t+1}$
 
 {% include figure.liquid loading="eager" path="assets/img/RL_basic.png" title="The basic reinforcement learning loop" class="img-fluid rounded z-depth-1" %}
+
 <div class="caption">Figure 1: The agent-environment interaction loop in RL.</div>
 
 The tuple $(S_t, A_t, S_{t+1}, R_{t+1})$ is the fundamental unit of experience in RL.
@@ -37,11 +38,12 @@ The tuple $(S_t, A_t, S_{t+1}, R_{t+1})$ is the fundamental unit of experience i
 > ##### NOTE
 >
 > Deep learning is not natively designed for RL. RL is fundamentally a mathematical framework, and neural networks are just one (very powerful) way to represent the functions involved. Always think from the math first; the network architecture follows.
-{: .block-tip }
+> {: .block-tip }
 
 ## Value-Based Methods
 
 {% include figure.liquid loading="eager" path="assets/img/RL_classification.png" title="Taxonomy of RL methods" class="img-fluid rounded z-depth-1" %}
+
 <div class="caption">Figure 2: Taxonomy of RL methods — value-based, policy-based, and actor-critic.</div>
 
 Value-based methods learn to estimate how good a given state (or state-action pair) is, then derive a policy implicitly by acting greedily with respect to that estimate.
@@ -96,11 +98,13 @@ loss = F.mse_loss(td_target, old_val)
 Rather than learning a value function and deriving a policy implicitly, policy-based methods directly parameterize and optimize $\pi_\theta$.
 
 **Advantages over value-based methods:**
+
 - Naturally handles continuous and high-dimensional action spaces
 - Can represent stochastic policies
 - Better convergence properties in practice
 
 **Disadvantages:**
+
 - Often converges to local optima
 - High variance in the gradient estimate
 
@@ -171,6 +175,7 @@ optimizer.step()
 The main weakness of REINFORCE is high variance in the gradient estimate — returns from different episodes vary wildly. The **actor-critic** method addresses this by replacing the Monte Carlo return $R(\tau)$ with an online value estimate from a learned critic.
 
 Two networks are trained jointly:
+
 - **Actor** $\pi_\theta(s)$: the policy network
 - **Critic** $q_w(s, a)$: the value estimator
 
@@ -220,13 +225,13 @@ class Agent(nn.Module):
 
 The conceptual mapping from classical RL to LLM training (RLHF) is straightforward:
 
-| RL concept | LLM equivalent |
-| --- | --- |
+| RL concept  | LLM equivalent                                               |
+| ----------- | ------------------------------------------------------------ |
 | Environment | The language world; each generated token extends the context |
-| State $S_t$ | The full context so far (prompt + generated tokens) |
-| Agent | The LLM: $\pi_\theta(y \mid x)$ |
-| Action | Sampling the next token |
-| Reward | A learned reward model trained on human preferences |
+| State $S_t$ | The full context so far (prompt + generated tokens)          |
+| Agent       | The LLM: $\pi_\theta(y \mid x)$                              |
+| Action      | Sampling the next token                                      |
+| Reward      | A learned reward model trained on human preferences          |
 
 The LLM policy is a product of per-token probabilities:
 
@@ -264,12 +269,12 @@ DPO is simpler, more stable, and has become the dominant approach for preference
 
 ## Summary
 
-| Method | Key idea | Used for |
-| --- | --- | --- |
-| Q-learning / DQN | Learn $Q^*(s, a)$; act greedily | Discrete action spaces, game AI |
-| REINFORCE | Direct policy gradient via Monte Carlo | Simple policy optimization |
-| Actor-Critic | Critic reduces policy gradient variance | Continuous control |
-| PPO | Clipped surrogate objective for stable updates | RLHF, robotics |
-| DPO | Closed-form policy optimization from preferences | LLM alignment |
+| Method           | Key idea                                         | Used for                        |
+| ---------------- | ------------------------------------------------ | ------------------------------- |
+| Q-learning / DQN | Learn $Q^*(s, a)$; act greedily                  | Discrete action spaces, game AI |
+| REINFORCE        | Direct policy gradient via Monte Carlo           | Simple policy optimization      |
+| Actor-Critic     | Critic reduces policy gradient variance          | Continuous control              |
+| PPO              | Clipped surrogate objective for stable updates   | RLHF, robotics                  |
+| DPO              | Closed-form policy optimization from preferences | LLM alignment                   |
 
 The progression from Q-learning to DPO reflects a consistent theme: as the action space grows larger and less structured (from Atari to natural language), the methods need to become more sample-efficient and stable. DPO's elegance comes precisely from sidestepping the full RL loop for the specific case where preferences are available.
