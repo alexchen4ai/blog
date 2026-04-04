@@ -39,6 +39,13 @@ bundle exec jekyll serve --livereload
 
 ---
 
+## Development 
+For the development of site, I follow the steps below:
+- Use some markdown files as draft to write what ever I want;
+- Use the AI tools to help me reformat so that it is compatible with the site;
+
+---
+
 ## Deployment
 
 The site is automatically deployed to GitHub Pages on every push to `main` (or `master`) that touches content files (posts, assets, config, templates, scripts, etc.). Pure documentation changes like `README.md` do not trigger a deploy.
