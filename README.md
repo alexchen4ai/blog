@@ -1,113 +1,67 @@
 # Alex Chen — Personal Website
 
-Personal website of Alex Chen, AI researcher and startup founder. Built with Next.js, featuring technical articles, research notes, and project showcases. Supports LaTeX math, syntax-highlighted code blocks, and GitHub Issues-powered comments via Utterances.
+Personal website built with [Jekyll](https://jekyllrb.com/), deployed via GitHub Pages.
 
 ---
 
-## Getting Started
+## Local Development
 
 ### Prerequisites
 
-- Node.js >= 20.9.0
-- [pnpm](https://pnpm.io/)
+Install Ruby via Homebrew (one-time setup):
+
+```bash
+brew install ruby
+echo 'export PATH="/opt/homebrew/opt/ruby/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+gem install bundler
+```
 
 ### Install dependencies
 
 ```bash
-pnpm install
+bundle install
 ```
 
-### Run development server
+### Start dev server
 
 ```bash
-pnpm dev
+bundle exec jekyll serve
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:4000/](http://localhost:4000/) in your browser. The site auto-rebuilds when you save changes.
 
-### Build for production
+For live reload in the browser:
 
 ```bash
-pnpm build
-pnpm start
+bundle exec jekyll serve --livereload
 ```
 
 ---
 
-## Adding Content
+## Deployment
 
-### Writing articles
+The site is automatically deployed to GitHub Pages on every push to `main` (or `master`) that touches content files (posts, assets, config, templates, scripts, etc.). Pure documentation changes like `README.md` do not trigger a deploy.
 
-1. Create a `.md` file in `app/(articles)/md/`.
-2. Register it in `app/(articles)/list.ts`:
+The workflow builds the site, purges unused CSS, then pushes the output to the `gh-pages` branch. PRs against `main`/`master` also run the build as a check, but do not deploy.
 
-```ts
-import myPost from "./md/my-post.md";
+### Setup (one-time)
 
-{
-  id: "5",
-  title: "My New Post",
-  description: "A brief description of the post.",
-  content: myPost,
-  createdAt: "2026-02-11",
-  group: "Article",   // or "News"
-  tag: "Tutorial",
-  cover: "/home/image_project.png",  // optional
-}
-```
+1. In your GitHub repo, go to **Settings → Actions → General → Workflow permissions** and enable **Read and write permissions**.
+2. Push to `main` — the **Deploy site** workflow builds the site and pushes to the `gh-pages` branch automatically.
+3. Go to **Settings → Pages** and set the source branch to `gh-pages`.
 
-### Supported Markdown features
+### Manual deploy trigger
 
-- GFM (tables, task lists, strikethrough)
-- LaTeX math — inline `$...$` and block `$$...$$`
-- Code blocks with syntax highlighting
-- Obsidian-style callouts (`> [!tip]`, `> [!note]`, `> [!warning]`)
-- Images, HTML video, iframes
+Go to **Actions → Deploy site → Run workflow** to trigger a deployment manually without pushing a commit.
 
 ---
 
-## Comments (Utterances)
+## Commands
 
-Article detail pages support comments powered by [Utterances](https://github.com/utterance/utterances), which stores discussions as GitHub Issues.
-
-### Setup
-
-1. Install the Utterances GitHub App: [github.com/apps/utterances](https://github.com/apps/utterances)
-2. Copy `.env.example` to `.env.local` and set:
-
-```
-NEXT_PUBLIC_UTTERANCES_REPO=your-username/your-repo
-```
-
-3. Restart the dev server.
-
-If the variable is unset, the comments section is hidden automatically.
-
----
-
-## Project Structure
-
-```
-├── app/
-│   ├── (articles)/
-│   │   ├── list.ts          # Article registry and metadata
-│   │   └── md/              # Markdown source files
-│   ├── (component)/         # Shared UI components
-│   ├── (landing-page)/      # Home page
-│   ├── article/             # Article list page
-│   ├── news/                # News list page
-│   └── details/             # Article detail page
-├── public/                  # Static assets
-└── components/              # Generic/reusable components
-```
-
----
-
-## Scripts
-
-| Command      | Description               |
-| ------------ | ------------------------- |
-| `pnpm dev`   | Start development server  |
-| `pnpm build` | Build for production      |
-| `pnpm start` | Run production server     |
-| `pnpm lint`  | Run ESLint                |
+| Command | Description |
+| --- | --- |
+| `bundle install` | Install dependencies |
+| `bundle exec jekyll serve` | Start dev server (localhost:4000) |
+| `bundle exec jekyll serve --livereload` | Start dev server with live reload |
+| `bundle exec jekyll build` | Build site to `_site/` |
