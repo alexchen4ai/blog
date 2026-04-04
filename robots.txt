@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://alexchen.ai/sitemap.xml
+Sitemap: https://alexchen4ai.github.io/blog/sitemap.xml
