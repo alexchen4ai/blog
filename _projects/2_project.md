@@ -1,81 +1,38 @@
 ---
 layout: page
-title: project 2
-description: a project with a background image and giscus comments
-img: assets/img/3.jpg
-importance: 2
-category: work
-giscus_comments: true
+title: Cooking Chinese Food
+description: Recreating home flavors far from home
+img: assets/img/7.jpg
+importance: 1
+category: fun
 ---
 
-Every project has a beautiful feature showcase page.
-It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
+Before I came to the US, I never cooked. But I spent a lot of time in the kitchen with my mother — watching her, chatting with her while she worked. I did not think I was learning anything. I was just keeping her company.
 
-To give your project a background in the portfolio page, just add the img tag to the front matter like so:
+Then one day in California, far from home and missing that food, I tried to cook. And somehow, I could. The movements, the proportions, the sequence of things — it was all in there, stored from years of watching without realizing I was watching. I found that interesting. It felt like discovering a room in your own house you did not know existed.
 
-    ---
-    layout: page
-    title: project
-    description: a project with a background image
-    img: /assets/img/12.jpg
-    ---
+Everything I cook, I learned from my mother, even if I learned it passively.
 
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/1.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/3.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
-</div>
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    This image can also have a caption. It's like magic.
-</div>
+## What I Cook
 
-You can also put regular text between your rows of images.
-Say you wanted to write a little bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, _bled_ for your project, and then... you reveal its glory in the next row of images.
+**辣椒炒肉 — Stir-fried Pork with Chili Peppers**
+Thinly sliced pork belly or shoulder, long green peppers. High heat, do not overcrowd the pan. The pork should get a little charred at the edges before the peppers go in.
 
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
-</div>
+**炒鸡 — Stir-fried Chicken**
+Bone-in chicken pieces (the bones stay in — they carry flavor), Shaoxing wine, dark soy sauce, ginger, dried chilies. Let the sauce reduce and coat. This one rewards patience.
 
-The code is simple.
-Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
-To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
-Here's the code for the last row of images above:
+**辣炒鸡翅 — Spicy Stir-fried Chicken Wings**
+Chicken wings, dried chilies, doubanjiang, garlic, and a splash of dark soy. Fry the wings first until the skin is a little crisp, then toss them in the sauce. The skin absorbs the spice well.
 
-{% raw %}
+**排骨炖冬瓜 — Braised Pork Ribs with Winter Melon**
+Blanch the ribs first to remove the foam, then braise low and slow with ginger and scallion. Add winter melon in the last 20 minutes — it turns silky and soaks up the broth. Simple and deeply satisfying.
 
-```html
-<div class="row justify-content-sm-center">
-  <div class="col-sm-8 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-  <div class="col-sm-4 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-</div>
-```
+**鱼汤炖豆腐 — Fish Soup with Tofu**
+Pan-fry the fish until both sides are golden before adding water — this is what makes the broth go white and milky. Soft tofu, ginger, and scallion. Do not rush the simmer.
 
-{% endraw %}
+**番茄炒蛋 — Stir-fried Tomato and Egg**
+The dish everyone learns first and most people never perfect. The eggs should be barely set when the tomatoes go in. A pinch of sugar balances the acidity. Do not skip the sesame oil at the end.
+
+## One Trick That Actually Works
+
+**勾芡 — starch thickening.** Dissolve a small amount of cornstarch in cold water and stir it in near the end. It thickens the sauce just enough to cling to everything instead of pooling at the bottom of the plate. Works on stir-fries, braises, soups. Once you start using it, you will wonder how you cooked without it.

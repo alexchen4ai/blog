@@ -2,33 +2,36 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+subtitle: >
+  Director of Engineering (Principal Engineer/Manager), <a href="https://www.qualcomm.com" target="_blank">Qualcomm</a>. Santa Clara, CA.
 
 profile:
   align: right
   image: prof_pic.jpg
-  image_circular: false # crops the image to make it circular
+  image_circular: false
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p>Santa Clara, CA</p>
+    <p><a href="mailto:alexchen4ai@gmail.com">alexchen4ai@gmail.com</a></p>
 
-selected_papers: true # includes a list of papers marked as "selected={true}"
-social: true # includes social icons at the bottom of the page
+selected_papers: true
+social: true
 
 announcements:
-  enabled: true # includes a list of news items
-  scrollable: true # adds a vertical scroll bar if there are more than 3 news items
-  limit: 5 # leave blank to include all the news in the `_news` folder
+  enabled: true
+  scrollable: false
 
 latest_posts:
   enabled: true
-  scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
-  limit: 3 # leave blank to include all the blog posts
+  scrollable: true
+  limit: 3
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](https://www.reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+I am **Alex (Wei) Chen** <span style="font-family: 'Ma Shan Zheng', cursive; font-size: 1.15em; color: var(--global-theme-color);">陈伟</span>, a Director of Engineering (Principal Engineer/Manager) at [Qualcomm](https://www.qualcomm.com). I joined Qualcomm following the acquisition of [Nexa AI](https://nexa.ai), the company I founded.
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+Previously, I was the **Founder, CEO, and Chief Scientist** of Nexa AI, where I built the **NexaML engine** and **NexaSDK** (7.6K+ GitHub stars) for efficient generative AI model deployment. Our solutions were trusted by **Geely, HP, Lenovo**, and **İşbank**. I was also the principal architect of **Octopus V1–V4**, **OmniVLM**, **OmniAudio**, **AutoNeural**, and **NexaQuant**, with Octopus V2 representing ~2% of total HuggingFace downloads since 2022.
+
+My research and engineering interests span **AI systems**, **LLM/VLM inference optimization**, **hardware-software co-design**, and increasingly **robotics** — from embodied AI and autonomous systems to robot learning and physical intelligence. I was also an **Investment Scout at Sequoia Capital**, and hold a PhD from **Stanford University** (2024) and a Bachelor's degree from **Tongji University** (2019).
+
+Outside of work, I enjoy writing about AI, robotics, and the systems that make intelligence run in the real world — which you'll find in this blog.
