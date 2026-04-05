@@ -3,7 +3,7 @@ layout: about
 title: about
 permalink: /
 subtitle: >
-  Director of Engineering, <a href="https://www.qualcomm.com" target="_blank">Qualcomm</a>. Santa Clara, CA.
+  Director of Engineering (Principal Engineer/Manager), <a href="https://www.qualcomm.com" target="_blank">Qualcomm</a>. Santa Clara, CA.
 
 profile:
   align: right
