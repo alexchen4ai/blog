@@ -132,6 +132,32 @@ $$
 
 This works because $e^{m_A - m_C}$ corrects each partial sum from its local max to the global max. Critically, the merge does not depend on the order of $A$ and $B$ — swapping them gives the same result. This is exactly what we need for GPU execution, where SMs process tiles in arbitrary order. By recursively applying this divide-and-conquer strategy, we can compute the attention output for the entire query matrix in parallel.
 
+#### Step 4: Reduction Operators Across Threads
+
+The merge formulas in Step 3 rely on two fundamental reduction operators: **max** and **sum**. Both are associative and commutative, which means they can be computed in any order across threads — exactly what we need for GPU parallelism.
+
+**Max reduction.** Each thread block computes a local max $m_i$ over its tile of scores. To obtain the global max, we reduce across thread blocks:
+
+$$
+m = \max(m_1, m_2, \dots, m_P)
+$$
+
+where $P$ is the number of partitions. This is a tree reduction: pairs of threads compare their local maxes, the winners compare again, and so on in $\lceil \log_2 P \rceil$ steps. In practice this happens first within a warp via shuffle instructions, then across warps via shared memory.
+
+**Sum reduction.** Once the global max $m$ is known (or as we merge incrementally), each thread block's partial denominator must be rescaled and summed:
+
+$$
+\ell = \sum_{i=1}^{P} e^{m_i - m}\, \ell_i
+$$
+
+This is again a standard sum reduction — each thread contributes $e^{m_i - m}\, \ell_i$, and the partial sums are accumulated with the same tree pattern. The numerator $u$ follows identically:
+
+$$
+u = \sum_{i=1}^{P} e^{m_i - m}\, u_i
+$$
+
+These are exactly the merge formulas from Step 3, applied across $P$ thread blocks instead of two subsets. The key insight is that max and sum are the only two reduction primitives needed — max gives us the global shift for numerical stability, and sum (with the exponential correction factor) lets us accumulate both the denominator and the weighted value numerator. Because both reductions are associative, thread blocks can finish their local work in any order and merge results incrementally as they become available.
+
 #### Identifying the Auxiliary Variables
 
 The critical auxiliary state is the triple $(m, \ell, u)$ — the running max, the rescaled denominator, and the rescaled numerator. These are exactly the variables FlashAttention maintains per query row. Each thread block processes a tile of keys, produces a partial $(m, \ell, u)$, and the results are merged incrementally with $\oplus$.
