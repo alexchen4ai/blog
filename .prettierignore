@@ -5,6 +5,7 @@ assets/css/main.scss
 assets/js/distillpub/template.v2.js
 assets/js/search/*.js
 assets/plotly/demo.html
+assets/img/logos/*.svg
 lighthouse_results/**
 _posts/2015-10-20-math.md
 _sass/font-awesome/*.scss
