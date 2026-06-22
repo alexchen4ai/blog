@@ -125,13 +125,13 @@ My interests sit at the intersection of **AI systems**, **LLM/VLM inference**, *
   <div class="alan-work">
     <h3>NexaSDK</h3>
     <p class="type">Runtime</p>
-    <p>The world's first GenAI inference runtime that runs any model on NPU — <a href="https://github.com/NexaAI/nexa-sdk">8,000+ GitHub stars</a> and #1 on GitHub Trending.</p>
+    <p>A GenAI inference runtime that runs models on NPU — <a href="https://github.com/NexaAI/nexa-sdk">8,000+ GitHub stars</a> and #1 on GitHub Trending.</p>
   </div>
   <div class="alan-work">
     <h3>Hyperlink</h3>
     <p class="type">Application</p>
     <p>
-      The world's first local AI agent that lives inside your computer — it searches across all your files, fully private. 2.1M views and 30K users in two months, featured by
+      A local AI agent that lives inside your computer — it searches across all your files, fully private. 2.1M views and 30K users in two months, featured by
       <a href="https://blogs.nvidia.com/blog/rtx-ai-garage-nexa-hyperlink-local-agent/">NVIDIA</a>,
       <a href="https://blogs.windows.com/windowsexperience/2025/11/18/ignite-2025-windows-at-the-frontier-of-work/">Microsoft</a>,
       <a href="https://www.qualcomm.com/developer/blog/2026/03/run-nexa-ai-agents-locally-on-snapdragon-pc-with-hexagon-npu">Qualcomm</a>,
