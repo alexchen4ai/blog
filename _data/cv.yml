@@ -1,11 +1,11 @@
 cv:
   name: Alex (Wei) Chen
-  label: Director of Engineering
+  label: Director
   email: alexchen4ai@gmail.com
   location: Santa Clara, CA
   image: ""
   summary: >
-    Director of Engineering at Qualcomm (via acquisition of Nexa AI). Researcher and engineer
+    Director at Qualcomm (via acquisition of Nexa AI). Researcher and engineer
     focused on AI systems, LLM/VLM inference optimization, hardware-software co-design, and robotics.
     PhD from Stanford University (2024).
 
@@ -18,7 +18,7 @@ cv:
   sections:
     Experience:
       - company: Qualcomm
-        position: Director of Engineering (Principal Engineer/Manager)
+        position: Director (Principal Engineer/Manager)
         location: Santa Clara, CA
         start_date: 2026
         end_date: present
@@ -102,7 +102,7 @@ cv:
         authors:
           - "Wei Chen, Liangmin Wu, Yunhai Hu, Zhiyuan Li, et al."
         publisher: "arXiv:2512.02924"
-        releaseDate: 2024
+        releaseDate: 2025
         url: https://arxiv.org/abs/2512.02924
 
       - title: "OmniVLM: A Token-Compressed, Sub-Billion-Parameter Vision-Language Model for Efficient On-Device Inference"

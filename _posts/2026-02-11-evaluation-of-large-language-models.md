@@ -48,7 +48,7 @@ The knowledge and capability progression across model generations:
 | ARC           | Science  | 7,787  | Various              | Multiple-choice QA |
 | QASC          | Science  | 9,980  | Human-authored       | Multiple-choice QA |
 | MCTACO        | Temporal | 1,893  | MultiRC              | Multiple-choice QA |
-| HellaSWAG     | Event    | 20K    | ActivityNet, WikiHow | Multiple-choice QA |
+| HellaSwag     | Event    | 20K    | ActivityNet, WikiHow | Multiple-choice QA |
 | PIQA          | Physical | 21K    | Human-authored       | 2-choice QA        |
 | Social IQA    | Social   | 38K    | Human-authored       | Multiple-choice QA |
 | CommonsenseQA | Generic  | 12,247 | ConceptNet           | Multiple-choice QA |

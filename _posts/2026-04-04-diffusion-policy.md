@@ -42,4 +42,4 @@ Explicit policies (direct regression) struggle with multimodal demonstrations â€
 
 ## Results
 
-Across 15 tasks in simulation and real world, Diffusion Policy improves over prior state-of-the-art by an average of **46.9%**, with near-human performance on tasks like Push-T (95% success) and sauce spreading.
+Across 15 tasks in simulation and the real world, Diffusion Policy improves over prior state-of-the-art by an average of **46.9%**, with near-human performance on tasks like Push-T (95% success) and sauce spreading.

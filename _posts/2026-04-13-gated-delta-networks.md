@@ -2,7 +2,7 @@
 layout: post
 title: "Gated Delta Networks: Improving Mamba2 with the Delta Rule"
 date: 2026-04-13
-description: A reading note on Liu et al., 2024 — how combining Mamba2's decay gate with DeltaNet's selective memory update yields a flexible recurrent model, and why its parallel training algorithm requires a matrix inverse.
+description: A reading note on Yang et al., 2024 — how combining Mamba2's decay gate with DeltaNet's selective memory update yields a flexible recurrent model, and why its parallel training algorithm requires a matrix inverse.
 tags: transformers mamba linear-attention
 categories: ml
 related_posts: false
@@ -10,7 +10,7 @@ toc:
   beginning: true
 ---
 
-_A short reading note on Liu et al., 2024_
+_A short reading note on [Yang et al., 2024](https://arxiv.org/abs/2412.06464)_
 
 ## From Softmax Attention to Linear Attention
 

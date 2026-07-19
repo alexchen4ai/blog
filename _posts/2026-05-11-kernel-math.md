@@ -10,7 +10,7 @@ toc:
   beginning: true
 ---
 
-In this blog, we discuss writing kernels for ML model inference, relating some mathematical concepts to kernel design and implementation.
+In this post, I discuss writing kernels for ML model inference, relating some mathematical concepts to kernel design and implementation.
 
 ## Mathematical Background
 
@@ -38,9 +38,9 @@ This generalizes the commutative monoid by not requiring commutativity — the m
 
 ## Case Study
 
-### Fused Vector Add and GeLU
+### Fused Vector Add and GELU
 
-Writing and reading from HBM is expensive, so a natural strategy is to fuse the vector add and GeLU into a single kernel.
+Writing and reading from HBM is expensive, so a natural strategy is to fuse the vector add and GELU into a single kernel.
 
 **Unfused (two separate kernels):**
 
@@ -50,7 +50,7 @@ $$
 Z_i = X_i + Y_i
 $$
 
-Then, read $Z$ back from HBM and apply GeLU:
+Then, read $Z$ back from HBM and apply GELU:
 
 $$
 O_i = Z_i \cdot \Phi(Z_i)
@@ -66,7 +66,7 @@ $$
 
 The intermediate result $X_i + Y_i$ stays in registers — no HBM round-trip is needed. Since $i$ is a free index with no dummy indices, every element is independent and trivially parallelizable across threads.
 
-### Flash Attention
+### FlashAttention
 
 The typical attention computation is:
 

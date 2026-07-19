@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Joined Qualcomm as Director of Engineering following the acquisition of Nexa AI.
+Joined Qualcomm as Director following the acquisition of Nexa AI.
