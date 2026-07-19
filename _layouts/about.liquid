@@ -1,8 +1,11 @@
 ---
 layout: default
 ---
+<canvas id="recursive-bg" aria-hidden="true"></canvas>
+
 <div class="post">
-  <header class="post-header">
+  <header class="post-header about-hero">
+    <canvas id="recursive-canvas" aria-hidden="true"></canvas>
     <h1 class="post-title">
       {% if site.title == 'blank' %}
         <span class="font-weight-bold">{{ site.first_name }}</span> {{ site.middle_name }}
@@ -78,3 +81,5 @@ layout: default
     {% endif %}
   </article>
 </div>
+
+<script defer src="{{ '/assets/js/recursive-network.js' | relative_url | bust_file_cache }}"></script>
