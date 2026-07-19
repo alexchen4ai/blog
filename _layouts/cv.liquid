@@ -61,7 +61,7 @@ layout: default
         {% assign cv = site.data.cv.cv %}
 
         <!-- Header/Contact Information -->
-        {% if cv.name or cv.label or cv.location or cv.email or cv.phone or cv.website %}
+        {% if cv.name or cv.headline or cv.label or cv.location or cv.email or cv.phone or cv.website %}
           <div class="card mt-3 p-3">
             <h3 class="card-title font-weight-medium">Contact Information</h3>
             <table class="table table-cv table-sm table-borderless">
@@ -71,10 +71,11 @@ layout: default
                   <td class="p-1 pl-2 font-weight-light">{{ cv.name }}</td>
                 </tr>
               {% endif %}
-              {% if cv.label %}
+              {% assign cv_title = cv.headline | default: cv.label %}
+              {% if cv_title %}
                 <tr>
                   <td class="p-1 pr-2 font-weight-bold"><b>Professional Title</b></td>
-                  <td class="p-1 pl-2 font-weight-light">{{ cv.label }}</td>
+                  <td class="p-1 pl-2 font-weight-light">{{ cv_title }}</td>
                 </tr>
               {% endif %}
               {% if cv.email %}
@@ -189,6 +190,8 @@ layout: default
                     <div class="card-text font-weight-light">
                       <strong>{{ entry.label }}:</strong> {{ entry.details }}
                     </div>
+                  {% else %}
+                    <p class="card-text font-weight-light">{{ entry | markdownify | remove: '<p>' | remove: '</p>' }}</p>
                   {% endif %}
                 {% endfor %}
               {% endif %}

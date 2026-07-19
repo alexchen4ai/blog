@@ -1,13 +1,8 @@
 cv:
   name: Alex (Wei) Chen
-  label: Director
+  headline: Director
   email: alexchen4ai@gmail.com
   location: Santa Clara, CA
-  image: ""
-  summary: >
-    Director at Qualcomm (via acquisition of Nexa AI). Researcher and engineer
-    focused on AI systems, LLM/VLM inference optimization, hardware-software co-design, and robotics.
-    PhD from Stanford University (2024).
 
   social_networks:
     - network: GitHub
@@ -16,6 +11,11 @@ cv:
       username: wei-chen-stanford
 
   sections:
+    Summary:
+      - Director at Qualcomm (via acquisition of Nexa AI). Researcher and engineer
+        focused on AI systems, LLM/VLM inference optimization, hardware-software co-design, and robotics.
+        PhD from Stanford University (2024).
+
     Experience:
       - company: Qualcomm
         position: Director (Principal Engineer/Manager)
@@ -72,7 +72,7 @@ cv:
       - title: Best Paper Runner-Up Award
         authors:
           - "IEEE International Conference on Data Mining (ICDM 2025)"
-        date: 2025
+        date: "2025"
         awarder: IEEE ICDM
         summary: "For the paper: DP-FedLoRA: Privacy-Enhanced Federated Fine-Tuning for On-Device Large Language Models."
 
@@ -81,70 +81,70 @@ cv:
         authors:
           - "Wei Chen, Zhiyuan Li, Mingyuan Ma"
         publisher: "NAACL-HLT 2025"
-        releaseDate: 2025
+        releaseDate: "2025"
         url: https://aclanthology.org/2025.naacl-industry.27/
 
       - title: "Octo-planner: On-device Language Model for Planner-Action Agents"
         authors:
           - "Wei Chen, Zhiyuan Li, Zhen Guo, Yikang Shen"
         publisher: "EMAS 2025"
-        releaseDate: 2025
+        releaseDate: "2025"
         url: https://arxiv.org/abs/2406.18082
 
       - title: "DP-FedLoRA: Privacy-Enhanced Federated Fine-Tuning for On-Device LLMs"
         authors:
           - "Honghui Xu, Shiva Shrestha, Wei Chen, Zhiyuan Li, Zhipeng Cai"
         publisher: "IEEE ICDM 2025"
-        releaseDate: 2025
+        releaseDate: "2025"
         url: https://arxiv.org/abs/2509.09097
 
       - title: "AutoNeural: Co-Designing Vision-Language Models for NPU Inference"
         authors:
           - "Wei Chen, Liangmin Wu, Yunhai Hu, Zhiyuan Li, et al."
         publisher: "arXiv:2512.02924"
-        releaseDate: 2025
+        releaseDate: "2025"
         url: https://arxiv.org/abs/2512.02924
 
       - title: "OmniVLM: A Token-Compressed, Sub-Billion-Parameter Vision-Language Model for Efficient On-Device Inference"
         authors:
           - "Wei Chen, Zhiyuan Li, Shuo Xin"
         publisher: "arXiv:2412.11475"
-        releaseDate: 2024
+        releaseDate: "2024"
         url: https://arxiv.org/abs/2412.11475
 
       - title: "Dolphin: Long Context as a New Modality for Energy-Efficient On-Device Language Models"
         authors:
           - "Wei Chen, Zhiyuan Li, Shuo Xin, Yihao Wang"
         publisher: "arXiv:2408.15518"
-        releaseDate: 2024
+        releaseDate: "2024"
         url: https://arxiv.org/abs/2408.15518
 
       - title: "Octopus v4: Graph of language models"
         authors:
           - "Wei Chen, Zhiyuan Li"
         publisher: "arXiv:2404.19296"
-        releaseDate: 2024
+        releaseDate: "2024"
         url: https://arxiv.org/abs/2404.19296
 
       - title: "Octopus v3: Technical Report for On-device Sub-billion Multimodal AI Agent"
         authors:
           - "Wei Chen, Zhiyuan Li"
         publisher: "arXiv:2404.11459"
-        releaseDate: 2024
+        releaseDate: "2024"
         url: https://arxiv.org/abs/2404.11459
 
       - title: "Octopus v2: On-device language model for super agent"
         authors:
           - "Wei Chen, Zhiyuan Li"
         publisher: "arXiv:2404.01744"
-        releaseDate: 2024
+        releaseDate: "2024"
         url: https://arxiv.org/abs/2404.01744
 
       - title: "On-Device Language Models: A Comprehensive Review"
         authors:
           - "Jiajun Xu, Zhiyuan Li, Wei Chen, Qun Wang, Xin Gao, Qi Cai, Ziyuan Ling"
         publisher: "arXiv:2409.00088"
-        releaseDate: 2024
+        releaseDate: "2024"
         url: https://arxiv.org/abs/2409.00088
 
     Skills:
