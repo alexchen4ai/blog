@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Animations: about-page hero panel, scroll reveals, and hover polish
+ * About-page hero panel
  ******************************************************************************/
 
 .about-hero {
@@ -12,12 +12,6 @@
   background:
     radial-gradient(110% 90% at 82% 8%, rgba(124, 96, 255, 0.22), transparent 60%),
     radial-gradient(95% 85% at 12% 95%, rgba(255, 122, 60, 0.14), transparent 55%), #0d0b16;
-
-  .post-title,
-  .desc {
-    position: relative;
-    z-index: 1;
-  }
 
   .post-title,
   .post-title span {
@@ -42,88 +36,5 @@
 
   @media (max-width: 575px) {
     padding: 3rem 1.5rem 2.75rem;
-  }
-}
-
-// Scroll reveal — .reveal-ready is only added by JS, so content is never
-// hidden when scripts are unavailable.
-html.reveal-ready .reveal-item {
-  opacity: 0;
-  transform: translateY(14px);
-  transition:
-    opacity 0.55s ease var(--reveal-delay, 0ms),
-    transform 0.55s ease var(--reveal-delay, 0ms);
-
-  &.revealed {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-// Hover polish
-.card.hoverable {
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-  }
-}
-
-.navbar-nav .nav-link {
-  position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0.8rem;
-    right: 0.8rem;
-    bottom: 0.35rem;
-    height: 1px;
-    background: var(--global-theme-color);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.25s ease;
-  }
-
-  &:hover::after {
-    transform: scaleX(1);
-  }
-}
-
-.contact-icons a {
-  display: inline-block;
-  transition:
-    transform 0.2s ease,
-    color 0.2s ease;
-
-  &:hover {
-    transform: translateY(-3px);
-  }
-}
-
-.profile img {
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-
-  &:hover {
-    transform: scale(1.015);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html.reveal-ready .reveal-item {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-
-  .card.hoverable,
-  .navbar-nav .nav-link::after,
-  .contact-icons a,
-  .profile img {
-    transition: none;
   }
 }
