@@ -68,7 +68,7 @@
             <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">{{ entry.institution }}</h6>
           {% endif %}
 
-          {% if entry.area %}
+          {% if entry.area and entry.area != blank %}
             <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem; font-style: italic">{{ entry.area }}</h6>
           {% endif %}
 

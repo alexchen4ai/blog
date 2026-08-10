@@ -48,7 +48,7 @@ cv:
       - institution: Stanford University
         location: California, US
         url: https://www.stanford.edu/
-        area: Mechanics and Computation
+        area: ""
         studyType: PhD
         start_date: 2019
         end_date: 2024
@@ -59,7 +59,7 @@ cv:
       - institution: Tongji University
         location: Shanghai, China
         url: https://www.tongji.edu.cn/
-        area: Engineering (minor in Mathematics)
+        area: ""
         studyType: Bachelor
         start_date: 2015
         end_date: 2019
