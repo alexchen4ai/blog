@@ -1,6 +1,145 @@
 /*******************************************************************************
- * About-page hero panel
+ * About-page hero panel and shared about/recognition section styles
  ******************************************************************************/
+
+.alan-section {
+  margin: 2.5rem 0;
+
+  h2 {
+    margin-bottom: 1.25rem;
+    color: var(--global-theme-color);
+    font-size: 0.9rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+}
+
+.alan-kicker {
+  margin: 1.6rem 0 0.35rem;
+  color: var(--global-text-color-light);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.alan-work {
+  display: block;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--global-divider-color);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .type {
+    margin: 0.15rem 0 0.45rem;
+    color: var(--global-text-color-light);
+    font-size: 0.85rem;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.alan-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 210px) 1fr;
+  gap: 1.5rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--global-divider-color);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.alan-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--global-text-color);
+  font-weight: 700;
+}
+
+.alan-logo {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  background: var(--global-text-color);
+  opacity: 0.8;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.recog-grid {
+  margin-bottom: 0.5rem;
+
+  .alan-brand {
+    margin-bottom: 0.45rem;
+    font-size: 0.95rem;
+  }
+}
+
+.recog-card {
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 12px;
+  background: var(--global-card-bg-color);
+
+  > a {
+    display: block;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 8 / 5;
+    object-fit: cover;
+    border-bottom: 1px solid var(--global-divider-color);
+  }
+
+  .recog-body {
+    padding: 0.9rem 1rem 1.1rem;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.85rem;
+  }
+}
+
+.alan-talks {
+  margin: 0;
+  padding-left: 1.1rem;
+
+  li {
+    margin: 0.45rem 0;
+  }
+}
+
+@media (max-width: 575px) {
+  .alan-row {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+  }
+}
 
 .about-hero {
   position: relative;

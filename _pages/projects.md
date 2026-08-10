@@ -4,7 +4,7 @@ title: projects
 permalink: /projects/
 description: Selected engineering and research projects — from inference runtimes to things built for fun.
 nav: true
-nav_order: 3
+nav_order: 4
 display_categories: [work, fun]
 horizontal: false
 ---
