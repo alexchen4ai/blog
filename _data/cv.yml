@@ -39,13 +39,10 @@ cv:
           - "Solutions deliver ~55% faster throughput and ~28% better output quality vs. existing AI inference stacks. Trusted by Geely, HP, Lenovo, and İşbank."
           - "Official partner of Qualcomm, AMD, NVIDIA, IBM, Google, Microsoft, Intel, Docker, HP, Lenovo, and Dell."
 
-      - company: Sequoia Capital
+      - company: Sequoia China (now HongShan)
         position: Investment Scout
-        location: Palo Alto, CA
         start_date: 2021
         end_date: 2023
-        highlights:
-          - Sourced and evaluated early-stage startups in the Bay Area focusing on the Stanford ecosystem. Conducted market research, due diligence, and facilitated founder-partner connections.
 
     Education:
       - institution: Stanford University
