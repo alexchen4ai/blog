@@ -51,15 +51,6 @@ cv:
         highlights:
           - "Research: Large-scale numerical simulation frameworks combining HPC with ML-based surrogate models to accelerate PDE solvers."
 
-      - institution: Tongji University
-        location: Shanghai, China
-        url: https://www.tongji.edu.cn/
-        area: ""
-        studyType: Bachelor
-        start_date: 2015
-        end_date: 2019
-        score: "GPA: 93.7/100, Ranked 1st/439"
-
     Awards:
       - title: Best Paper Runner-Up Award
         authors:
