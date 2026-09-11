@@ -48,8 +48,6 @@ cv:
         start_date: 2019
         end_date: 2024
         score: "GPA: 3.98/4.0"
-        highlights:
-          - "Research: Large-scale numerical simulation frameworks combining HPC with ML-based surrogate models to accelerate PDE solvers."
 
     Awards:
       - title: Best Paper Runner-Up Award
