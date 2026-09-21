@@ -122,6 +122,13 @@ html.transition *:after {
   transition-delay: 0 !important;
 }
 
+// Mermaid measures label sizes while rendering; a global transition skews those
+// measurements and clips diagrams, so exclude it.
+html.transition .mermaid,
+html.transition .mermaid * {
+  transition: none !important;
+}
+
 // Copy button
 
 .code-display-wrapper {
