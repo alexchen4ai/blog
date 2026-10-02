@@ -2,7 +2,7 @@
 layout: page
 permalink: /repositories/
 title: repositories
-description: Open-source work and GitHub activity.
+description: Open-source work and GitHub activity of Alex Chen, including NexaSDK — the on-device generative AI inference runtime from Nexa AI.
 nav: false
 nav_order: 4
 ---

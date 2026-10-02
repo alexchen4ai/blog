@@ -10,6 +10,16 @@ toc:
   beginning: true
 ---
 
+<!-- prettier-ignore -->
+> ##### TL;DR
+> {:.no_toc}
+>
+> - RL is a loop of states, actions, and rewards; **value-based** methods (Q-learning, DQN) learn $Q^*(s,a)$ and act greedily, while **policy-based** methods (REINFORCE) optimize $\pi_\theta$ directly via the policy gradient theorem.
+> - **Actor-critic** methods cut REINFORCE's variance with a learned baseline and the advantage $A(s,a) = Q(s,a) - V(s)$; **PPO** adds a clipped probability-ratio objective so each update stays close to the old policy.
+> - In **RLHF**, the LLM is the policy, the context is the state, each token is an action, and a reward model trained on human preference pairs provides the reward; PPO maximizes reward minus a **KL penalty** to a frozen reference (SFT) model.
+> - **DPO** removes the reward model: the KL-regularized optimum has a closed form, so preference pairs can be fit with a logistic loss on $\beta \log \frac{\pi_\theta}{\pi_\text{ref}}$ differences. It is simpler and more stable than PPO-based RLHF and dominant in open-source alignment pipelines.
+{: .block-tip }
+
 Reinforcement learning has become a central technique in the post-pretraining phase of LLM development. RLHF (Reinforcement Learning from Human Feedback) is how models like ChatGPT learned to be helpful, and DPO (Direct Preference Optimization) is its cleaner, more tractable successor. But to understand why these methods work — and where they can fail — it helps to build up from RL fundamentals.
 
 This post covers the core RL concepts, the value-based and policy-based methods that underpin them, and how PPO and DPO are adapted for LLM training.

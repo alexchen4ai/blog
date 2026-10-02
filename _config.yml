@@ -8,12 +8,13 @@ middle_name:
 last_name: Chen
 contact_note: >
   Feel free to reach out via email for research collaborations, speaking invitations, or just to chat about AI systems, generative AI inference infrastructure, and robotics.
-description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Personal site of Wei (Alex) Chen — AI systems researcher, founder, and engineer.
+description: >- # the ">" symbol means to ignore newlines until "footer_text:"
+  Personal site of Alex (Wei) Chen — Director at Qualcomm, founder of Nexa AI (acquired by Qualcomm), Stanford PhD.
+  Writing on AI systems, on-device LLM/VLM inference, hardware-software co-design, and robotics.
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
-keywords: Alex Chen, Wei Chen, AI systems, LLM inference, on-device AI, edge AI, robotics, Nexa AI, Qualcomm
+keywords: Alex Chen, Wei Chen, AI systems, LLM inference, on-device AI, edge AI, NPU, robotics, Nexa AI, NexaSDK, Octopus, Qualcomm, Stanford
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: favicon.ico # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
@@ -67,9 +68,9 @@ max_width: 930px
 # -----------------------------------------------------------------------------
 # Display links to the page with a preview object on social media.
 # see https://schema.org/docs/faq.html for more information
-serve_og_meta: false # Include Open Graph meta tags in the HTML head
-serve_schema_org: false # Include Schema.org in the HTML head
-og_image: # The site-wide (default for all links) Open Graph preview image
+serve_og_meta: true # Include Open Graph meta tags in the HTML head
+serve_schema_org: true # Include Schema.org in the HTML head
+og_image: /assets/img/og-card.png # The site-wide (default for all links) Open Graph preview image (1200x630)
 
 # -----------------------------------------------------------------------------
 # Analytics and search engine verification
@@ -196,6 +197,16 @@ keep_files:
   - CNAME
   - .nojekyll
 
+# -----------------------------------------------------------------------------
+# Generative Engine Optimization (GEO)
+# -----------------------------------------------------------------------------
+# Structured data, Open Graph, llms.txt and the AI-crawler policy in robots.txt are driven by
+# _data/person.yml and _data/socials.yml. See _includes/metadata.liquid.
+geo:
+  # If true, robots.txt also allows model-training crawlers (GPTBot, ClaudeBot, Google-Extended, ...).
+  # Being in training data is what lets assistants answer questions about you without a live search.
+  allow_training_crawlers: true
+
 # Plug-ins
 plugins:
   - jekyll-3rd-party-libraries
@@ -225,6 +236,11 @@ defaults:
       path: "assets"
     values:
       sitemap: false
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      author: Alex Chen
 
 sass:
   style: compressed
@@ -235,7 +251,7 @@ sass:
 
 jekyll-minifier:
   compress_javascript: false # set to false since we are using terser as the js minifier
-  exclude: ["robots.txt", "assets/js/search/*.js"]
+  exclude: ["robots.txt", "llms.txt", "llms-full.txt", "assets/js/search/*.js"]
 
 # -----------------------------------------------------------------------------
 # Terser

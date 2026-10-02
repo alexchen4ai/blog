@@ -1,7 +1,91 @@
 ---
 permalink: /robots.txt
 ---
+{%- assign root = site.baseurl | prepend: site.url -%}
+# {{ site.data.person.name }} — {{ root }}
+# Everything on this site is public. Policy below is grouped by what each crawler does.
+
+# --- Default: allow all ---
 User-agent: *
 Disallow:
 
-Sitemap: {{ site.baseurl | prepend: site.url }}/sitemap.xml
+# --- Traditional search engines (also power Google AI Overviews / AI Mode, Bing Copilot, Siri) ---
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# --- AI search indexers: these decide whether the site can be cited in AI answers ---
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+# --- User-triggered fetchers: a person asked an assistant to read a page ---
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: meta-externalfetcher
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+{%- if site.geo.allow_training_crawlers %}
+
+# --- Model-training crawlers / control tokens ---
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+{%- endif %}
+
+Sitemap: {{ root }}/sitemap.xml
+
+# Machine-readable summaries for LLM agents (https://llmstxt.org)
+# {{ root }}/llms.txt
+# {{ root }}/llms-full.txt

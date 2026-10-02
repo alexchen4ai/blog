@@ -10,6 +10,18 @@ toc:
   beginning: true
 ---
 
+<!-- prettier-ignore -->
+> ##### TL;DR
+> {:.no_toc}
+>
+> - Five levers speed up LLM inference: **quantization, pruning, low-level implementation, KV caching, and hardware-specific kernels**. On edge devices, quantization and low-level implementation give the most leverage.
+> - Quantization stores weights in INT8/INT4 and dequantizes on the fly, so it mainly saves **memory bandwidth** — the real bottleneck. Post-training quantization is the practical default; use a block-wise affine scheme $x_q = \mathrm{round}(x/S + Z)$ and keep embeddings and the output projection in higher precision.
+> - **BF16** keeps FP32's dynamic range (8-bit exponent) with less mantissa; **FP16** has more precision but a far narrower range.
+> - The **KV cache** cuts per-step attention compute from $O(n)$ to $O(1)$; at long contexts it becomes the memory bottleneck, which GQA, MQA, and sliding-window attention shrink.
+> - FlashAttention's idea — fuse ops to minimize off-chip memory traffic — carries over to Qualcomm Hexagon HVX, Apple Neural Engine, and Mali/Adreno GPUs.
+> - For on-device deployment start with **GGUF + llama.cpp**; use Ollama for development and HuggingFace + bitsandbytes for server-side prototyping.
+{: .block-tip }
+
 Running a large language model fast enough to be useful — especially on edge hardware — requires going beyond the standard HuggingFace pipeline. This post covers the main optimization techniques, from high-level strategies to the arithmetic of quantization, with a focus on on-device deployment.
 
 > ##### NOTE

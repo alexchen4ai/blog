@@ -1,0 +1,49 @@
+# Canonical facts about the site owner. Used for Schema.org JSON-LD (Person / ProfilePage),
+# Open Graph, llms.txt, and the post author bio. Keep this in sync with _pages/about.md and _data/cv.yml.
+name: Alex Chen
+given_name: Wei
+family_name: Chen
+alternate_names:
+  - Wei Chen
+  - Alex (Wei) Chen
+  - Wei (Alex) Chen
+honorific_suffix: PhD
+job_title: Director
+image: /assets/img/prof_pic.jpg
+email: alexchen4ai@gmail.com
+short_bio: >-
+  Director at Qualcomm and founder of Nexa AI (acquired by Qualcomm). AI systems researcher working on
+  on-device LLM/VLM inference, hardware-software co-design, and robotics. PhD, Stanford University (2024).
+description: >-
+  Alex (Wei) Chen is a Director at Qualcomm and the founder, former CEO, and Chief Scientist of Nexa AI,
+  an on-device generative AI company acquired by Qualcomm in 2026. He is the main technical author of NexaSDK,
+  the Octopus on-device agent models, OmniVLM, OmniAudio, and NexaQuant. He holds a PhD from Stanford University (2024)
+  and works on AI systems, LLM/VLM inference optimization, hardware-software co-design, and robotics.
+address:
+  locality: Santa Clara
+  region: CA
+  country: US
+works_for:
+  name: Qualcomm
+  url: https://www.qualcomm.com
+founded:
+  name: Nexa AI
+  url: https://nexa.ai
+  founding_date: "2024"
+  description: On-device generative AI inference company (NexaSDK, NexaML, Octopus, OmniVLM, OmniAudio, NexaQuant); acquired by Qualcomm in 2026.
+alumni_of:
+  name: Stanford University
+  url: https://www.stanford.edu
+knows_about:
+  - AI systems
+  - Large language model inference
+  - On-device AI
+  - Edge AI
+  - Vision-language models
+  - Model quantization
+  - Hardware-software co-design
+  - NPU acceleration
+  - Robotics
+  - Imitation learning
+  - Reinforcement learning for LLMs
+  - GPU kernel design

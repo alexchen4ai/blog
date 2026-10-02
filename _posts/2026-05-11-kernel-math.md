@@ -10,6 +10,17 @@ toc:
   beginning: true
 ---
 
+<!-- prettier-ignore -->
+> ##### TL;DR
+> {:.no_toc}
+>
+> - Two mathematical tools explain most GPU kernel design decisions for ML inference: **index notation** (free indices are distributed across threads; dummy indices need intermediate storage) and **associative mergeable summaries** (a summary type with an associative merge $\oplus$ and a lift function).
+> - **Kernel fusion** removes HBM round-trips: computing $O_i = (X_i + Y_i)\,\Phi(X_i + Y_i)$ in one kernel keeps the intermediate in registers because $i$ is a free index with no reduction.
+> - **FlashAttention** is a mergeable summary over the KV length: per query row, keep the triple $(m, \ell, u)$ — running max, rescaled denominator, rescaled numerator — and merge partial tiles with $\ell_C = e^{m_A - m_C}\ell_A + e^{m_B - m_C}\ell_B$ (and likewise for $u$).
+> - The only reduction primitives needed are **max** and **sum**, both associative, so thread blocks can process tiles in any order and merge incrementally.
+> - General recipe: start from the final expression, split it into two disjoint parts, and ask which variables are needed to merge them — those variables become the summary state and the merge becomes $\oplus$.
+{: .block-tip }
+
 In this post, I discuss writing kernels for ML model inference, relating some mathematical concepts to kernel design and implementation.
 
 ## Mathematical Background

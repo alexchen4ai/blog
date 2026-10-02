@@ -10,6 +10,17 @@ toc:
   beginning: true
 ---
 
+<!-- prettier-ignore -->
+> ##### TL;DR
+> {:.no_toc}
+>
+> - LLM evaluation splits along two axes: **what** is measured (knowledge, reasoning, alignment, safety) and **how** (automatic scoring, human judgment, LLM-as-judge).
+> - The most-cited knowledge benchmarks are **MMLU** (57 subjects, 15,908 questions), **C-Eval**, **CMMLU**, and **AGIEval**; holistic suites include **HELM**, **BIG-bench**, **OpenCompass**, and **Chatbot Arena** (human preference).
+> - Run benchmarks with EleutherAI's **lm-evaluation-harness**, and always report the protocol — zero-shot vs. few-shot, prompt format, and harness version all move scores.
+> - Watch for **contamination**: test items leaking into pretraining corpora inflate leaderboard numbers; keep test splits strictly held out.
+> - No single benchmark is sufficient. For open-ended generation, **human preference (Chatbot Arena Elo)** remains the most reliable real-world signal.
+{: .block-tip }
+
 The landscape of large language model evaluation is rich and sometimes overwhelming. Dozens of leaderboards, hundreds of benchmarks, and no single agreed-upon standard for what "good" means. This post maps out the major categories of evaluation, the key benchmarks within each, and how to actually run them yourself.
 
 > ##### NOTE
