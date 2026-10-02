@@ -12,6 +12,17 @@ toc:
 
 _A short reading note on "Universal Manipulation Interface: In-The-Wild Robot Teaching Without In-The-Wild Robots" (Chi et al., 2024)_
 
+<!-- prettier-ignore -->
+> ##### TL;DR
+> {:.no_toc}
+>
+> - **UMI** (Chi et al., 2024) is a handheld, 3D-printed parallel gripper with a wrist-mounted GoPro fisheye camera and two side mirrors. A human holds it to collect demonstrations anywhere — **no robot is needed during data collection**.
+> - The mirrors put two laterally offset views into one frame, so the policy recovers **depth from stereo disparity** without extra sensors.
+> - Actions are **relative SE(3) end-effector displacements**, so the arm's kinematics never appear in observations or actions. Policies are hardware-agnostic, but a model-based IK controller on the target robot must track the Cartesian targets.
+> - Two retargeting steps make data deployable: **latency alignment** (shift action labels by the robot's delay $\tau$) and **kinematic filtering** (drop demonstrations the target arm cannot execute).
+> - With Diffusion Policy as the backbone, UMI transfers in-the-wild demonstrations (cup arrangement, dynamic tossing, bimanual cloth folding) to a real arm with no robot-specific data.
+{: .block-tip }
+
 Collecting robot demonstrations at scale requires either expensive teleoperation rigs or time on real hardware. UMI sidesteps both constraints with a **handheld data collection interface**: a carefully designed gripper that a human operator holds directly. Demonstrations captured this way are hardware-agnostic and can be collected anywhere, then deployed onto a target robot through a structured retargeting pipeline.
 
 ## Hardware Design: Gripper, GoPro, and Mirrors

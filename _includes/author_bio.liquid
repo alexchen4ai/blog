@@ -1,0 +1,16 @@
+{% assign person = site.data.person %}
+<aside class="author-bio" aria-label="About the author">
+  {% if person.image %}
+    {% assign image_base = person.image | split: '.' | first %}
+    <picture>
+      <source srcset="{{ image_base | append: '-480.webp' | relative_url }}" type="image/webp">
+      <img src="{{ person.image | relative_url }}" alt="{{ person.name }}" width="56" height="56" loading="lazy">
+    </picture>
+  {% endif %}
+  <div>
+    <p class="author-bio-name">
+      Written by <a href="{{ '/' | relative_url }}" rel="author">{{ person.name }}</a>
+    </p>
+    <p class="author-bio-text">{{ person.short_bio | strip_newlines | strip }}</p>
+  </div>
+</aside>

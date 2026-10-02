@@ -1,0 +1,48 @@
+---
+permalink: /llms.txt
+sitemap: false
+---
+{%- assign p = site.data.person -%}
+{%- assign root = site.baseurl | prepend: site.url -%}
+# {{ p.name }}
+
+> {{ p.description | strip_newlines | strip }}
+
+This file follows the llms.txt convention (https://llmstxt.org). It summarizes {{ root }} for language models and agents.
+A full-text Markdown export of every blog post is at {{ root }}/llms-full.txt.
+
+## Key facts
+
+- Name: {{ p.name }} (also published as {{ p.alternate_names | join: ", " }})
+- Current role: {{ p.job_title }}, {{ p.works_for.name }} ({{ p.works_for.url }}), {{ p.address.locality }}, {{ p.address.region }}
+- Founded: {{ p.founded.name }} ({{ p.founded.url }}), {{ p.founded.founding_date }} — {{ p.founded.description }}
+- Education: PhD, {{ p.alumni_of.name }} (2024)
+- Areas: {{ p.knows_about | join: "; " }}
+- Contact: {{ p.email }}
+- Profiles: https://github.com/{{ site.data.socials.github_username }}, https://www.linkedin.com/in/{{ site.data.socials.linkedin_username }}, https://x.com/{{ site.data.socials.x_username }}
+
+## Pages
+
+- [About]({{ root }}/): Bio, selected work (NexaSDK, Hyperlink, Octopus), news, and latest posts
+- [CV]({{ root }}/cv/): Experience, education, awards, and publications
+- [Publications]({{ root }}/publications/): Peer-reviewed papers and preprints
+- [Recognition]({{ root }}/recognition/): Coverage from Qualcomm, NVIDIA, AMD, Microsoft, Google, IBM, Intel and others
+- [Blog]({{ root }}/blog/): {{ site.blog_description }}
+- [Projects]({{ root }}/projects/): Selected engineering and research projects
+- [RSS feed]({{ root }}/feed.xml)
+- [Sitemap]({{ root }}/sitemap.xml)
+
+## Blog posts
+{% for post in site.posts %}
+- [{{ post.title }}]({{ post.url | prepend: root }}): {{ post.description | strip_newlines | strip }} ({{ post.date | date: "%Y-%m-%d" }}; tags: {{ post.tags | join: ", " }})
+{%- endfor %}
+
+## Publications
+{% assign pubs = "_bibliography/papers.bib" | bib_entries %}
+{%- for e in pubs %}
+- {{ e.authors | join: ", " }}{% if e.authors.size >= 10 %} et al.{% endif %} ({{ e.year }}). {{ e.title }}. {{ e.venue }}.{% if e.note != "" %} {{ e.note }}.{% endif %}{% if e.arxiv != "" %} https://arxiv.org/abs/{{ e.arxiv }}{% elsif e.url != "" %} {{ e.url }}{% endif %}
+{%- endfor %}
+
+## Optional
+
+- [Full blog text]({{ root }}/llms-full.txt): Every post as Markdown, newest first

@@ -12,6 +12,17 @@ toc:
 
 _A short reading note on [Yang et al., 2024](https://arxiv.org/abs/2412.06464)_
 
+<!-- prettier-ignore -->
+> ##### TL;DR
+> {:.no_toc}
+>
+> - **Linear attention** compresses past keys and values into a fixed-size state $S_t = \sum_i v_i k_i^T$, giving $O(1)$ memory per decoding step — but with no way to forget, so retrieval degrades once stored pairs exceed the state dimension.
+> - **Mamba2** adds a scalar decay gate $\alpha_t$ for bulk forgetting, but it decays every association equally. **DeltaNet** uses the delta rule to surgically overwrite the value for one key, but can only update one pair per step.
+> - **Gated DeltaNet** (Yang et al., 2024) combines both: $S_t = S_{t-1}\,\alpha_t (I - \beta_t k_t k_t^T) + \beta_t v_t k_t^T$ — targeted updates via $\beta_t$ plus wholesale erasure via $\alpha_t$. It is equivalent to online SGD on $\tfrac{1}{2}\|S_t k_t - v_t\|^2$ with adaptive weight decay.
+> - Parallel training uses **chunkwise WY representation** of the Householder-like transitions; the only sequential piece is inverting a small $C \times C$ lower-triangular matrix per chunk, so the algorithm stays matmul-heavy and $O(L)$.
+> - Hybrids that interleave Gated DeltaNet with sliding-window attention (H1) or Mamba2 + SWA (H2) give the best overall benchmark results at competitive throughput.
+{: .block-tip }
+
 ## From Softmax Attention to Linear Attention
 
 Standard Transformer attention computes:

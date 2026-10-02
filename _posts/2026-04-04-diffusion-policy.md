@@ -12,6 +12,16 @@ toc:
 
 _A short reading note on Chi et al., 2023_
 
+<!-- prettier-ignore -->
+> ##### TL;DR
+> {:.no_toc}
+>
+> - **Diffusion Policy** (Chi et al., 2023) treats robot action generation as DDPM denoising: start from Gaussian noise over an action sequence and iteratively denoise it, conditioned on the visual observation $O_t$.
+> - The observation is encoded **once** per step; only the small denoiser runs $K$ times. With DDIM, 100 training steps drop to **10 inference steps (~0.1 s on an RTX 3080)**, and a receding horizon (predict $T_p$, execute $T_a < T_p$) amortizes the cost.
+> - It handles **multimodal demonstrations** because it learns the score function without a normalization constant — no averaging between two valid trajectories (explicit regression) and no negative sampling (energy-based IBC).
+> - Results: an average **46.9% improvement** over prior state of the art across 15 tasks, with **95% success on Push-T**.
+{: .block-tip }
+
 Just as DDPM generates images by iteratively denoising Gaussian noise, Diffusion Policy applies the same process to **robot actions**. The generated artifact — a sequence of joint positions or end-effector poses — is tiny compared to an image, so the model itself is lightweight. The trade-off: to produce a clean action chunk, the model must run the denoising loop $K$ times at inference, requiring higher inference throughput than a single forward-pass policy.
 
 ## From Image Diffusion to Action Diffusion

@@ -14,6 +14,58 @@
   }
 }
 
+.post-meta a[rel="author"],
+.author-bio a[rel="author"] {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.author-bio {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin: 2.5rem 0 1.5rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 0.5rem;
+
+  picture {
+    flex: 0 0 56px;
+  }
+
+  img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .author-bio-name {
+    font-weight: 600;
+  }
+
+  .author-bio-text {
+    margin-top: 0.2rem;
+    color: var(--global-text-color-light);
+    font-size: 0.9rem;
+  }
+}
+
+.alan-faq {
+  dt {
+    margin-top: 1rem;
+    font-weight: 600;
+  }
+
+  dd {
+    margin: 0.25rem 0 0;
+  }
+}
+
 .alan-kicker {
   margin: 1.6rem 0 0.35rem;
   color: var(--global-text-color-light);

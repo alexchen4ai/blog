@@ -1,0 +1,25 @@
+---
+permalink: /llms-full.txt
+sitemap: false
+---
+{%- assign p = site.data.person -%}
+{%- assign root = site.baseurl | prepend: site.url -%}
+# {{ p.name }} — full blog text
+
+> {{ p.description | strip_newlines | strip }}
+
+Source: {{ root }}. Index: {{ root }}/llms.txt. Each section below is one blog post in its original Markdown.
+Liquid tags (figures, includes) are left as-is; images and layout are omitted.
+{% for post in site.posts %}
+---
+
+# {{ post.title }}
+
+- URL: {{ post.url | prepend: root }}
+- Author: {{ p.name }}
+- Published: {{ post.date | date: "%Y-%m-%d" }}
+- Tags: {{ post.tags | join: ", " }}
+- Summary: {{ post.description | strip_newlines | strip }}
+
+{{ post | raw_markdown }}
+{% endfor %}

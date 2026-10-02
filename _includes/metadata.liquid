@@ -15,6 +15,53 @@
 {% endif %}
 
 {% capture author_name %}{{ site.first_name }}{% if site.middle_name %} {{ site.middle_name }}{% endif %} {{ site.last_name }}{% endcapture %}
+{% assign person = site.data.person %}
+{% assign site_root = site.baseurl | prepend: site.url %}
+{% assign page_url = page.url | replace: 'index.html', '' | prepend: site_root %}
+{% if page.description %}
+  {% assign page_description = page.description %}
+{% elsif page.type == 'tag' %}
+  {% assign page_description = 'Blog posts by '
+    | append: site.data.person.name
+    | append: ' tagged "'
+    | append: page.title
+    | append: '" — '
+    | append: site.blog_description
+  %}
+{% elsif page.type == 'category' %}
+  {% assign page_description = 'Blog posts by '
+    | append: site.data.person.name
+    | append: ' in the "'
+    | append: page.title
+    | append: '" category — '
+    | append: site.blog_description
+  %}
+{% elsif page.type == 'year' %}
+  {% assign page_description = 'Blog posts by '
+    | append: site.data.person.name
+    | append: ' from '
+    | append: page.title
+    | append: ' — '
+    | append: site.blog_description
+  %}
+{% elsif page.url contains '/blog/' %}
+  {% assign page_description = site.blog_description | append: ' — by ' | append: site.data.person.name | append: '.' %}
+{% else %}
+  {% assign page_description = site.description %}
+{% endif %}
+{% assign page_description = page_description | strip_newlines | strip %}
+{% assign is_blog_post = false %}
+{% if page.collection == 'posts' %}
+  {% assign is_blog_post = true %}
+{% endif %}
+{% assign og_image = page.og_image | default: site.og_image %}
+{% if og_image and og_image != '' %}
+  {% unless og_image contains '://' %}
+    {% assign og_image = og_image | prepend: site_root %}
+  {% endunless %}
+{% endif %}
+{% assign date_published = page.date | date_to_xmlschema %}
+{% assign date_modified = page.last_modified_at | default: page.last_updated | default: page.date | date_to_xmlschema %}
 
 <!-- Standard metadata -->
 <meta charset="utf-8">
@@ -39,40 +86,62 @@
   {% endif %}
 </title>
 <meta name="author" content="{{ author_name }}">
-<meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+<meta name="description" content="{{ page_description | escape }}">
 {% if page.keywords or site.keywords %}
-  <meta name="keywords" content="{% if page.keywords %}{{ page.keywords }}{% else %}{{ site.keywords }}{% endif %}">
+  <meta
+    name="keywords"
+    content="{% if page.keywords %}{{ page.keywords }}{% elsif is_blog_post and page.tags.size > 0 %}{{ page.tags | join: ', ' }}, {{ site.keywords }}{% else %}{{ site.keywords }}{% endif %}"
+  >
 {% endif %}
-
-{% assign is_blog_post = false %}
-{% if page.url != '/blog/index.html' and page.url contains '/blog/' %}
-  {% unless page.url contains '/tag/' or page.url contains '/category/' %}
-    {% assign is_blog_post = true %}
-  {% endunless %}
+{% if page.noindex %}
+  <meta name="robots" content="noindex, follow">
+{% else %}
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 {% endif %}
+<link rel="alternate" type="application/atom+xml" title="{{ title | strip }}" href="{{ '/feed.xml' | prepend: site_root }}">
 
 {% if site.serve_og_meta %}
   <!-- OpenGraph -->
   <meta property="og:site_name" content="{{ title }}">
-  <meta property="og:type" content="{% if is_blog_post %}article{% else %}website{% endif %}">
-  <meta property="og:title" content="{% if page.title %}{{ title }} | {{ page.title }}{% else %}{{ title }}{% endif %}">
-  <meta property="og:url" content="{{ page.url | prepend: site.baseurl | prepend: site.url | remove_first: 'index.html' }}">
-  <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-  {% if page.og_image or site.og_image %}
-    <meta property="og:image" content="{% if page.og_image %}{{ page.og_image }}{% else %}{{ site.og_image }}{% endif %}">
+  <meta property="og:type" content="{% if is_blog_post %}article{% elsif page.url == '/' %}profile{% else %}website{% endif %}">
+  <meta property="og:title" content="{% if page.title and page.url != '/' %}{{ page.title | escape }} | {{ title }}{% else %}{{ title }}{% endif %}">
+  <meta property="og:url" content="{{ page_url }}">
+  <meta property="og:description" content="{{ page_description | escape }}">
+  {% if og_image and og_image != '' %}
+    <meta property="og:image" content="{{ og_image }}">
+    <meta
+      property="og:image:alt"
+      content="{% if page.og_image_alt %}{{ page.og_image_alt | escape }}{% else %}{{ author_name }} — {{ person.short_bio | strip_newlines | strip | escape }}{% endif %}"
+    >
   {% endif %}
-  <meta property="og:locale" content="{{ site.lang }}">
+  <meta property="og:locale" content="{{ site.lang | replace: '-', '_' }}">
+  {% if page.url == '/' %}
+    <meta property="profile:first_name" content="{{ site.first_name }}">
+    <meta property="profile:last_name" content="{{ site.last_name }}">
+  {% endif %}
+  {% if is_blog_post %}
+    <meta property="article:published_time" content="{{ date_published }}">
+    <meta property="article:modified_time" content="{{ date_modified }}">
+    <meta property="article:author" content="{{ site_root }}/">
+    {% for category in page.categories %}
+      <meta property="article:section" content="{{ category }}">
+    {% endfor %}
+    {% for tag in page.tags %}
+      <meta property="article:tag" content="{{ tag }}">
+    {% endfor %}
+  {% endif %}
 
   <!-- Twitter card -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}{{ title }}{% endif %}">
-  <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
-  {% if page.og_image or site.og_image %}
-    <meta name="twitter:image" content="{% if page.og_image %}{{ page.og_image }}{% else %}{{ site.og_image }}{% endif %}">
+  <meta name="twitter:card" content="{% if og_image and og_image != '' %}summary_large_image{% else %}summary{% endif %}">
+  <meta name="twitter:title" content="{% if page.title and page.url != '/' %}{{ page.title | escape }}{% else %}{{ title }}{% endif %}">
+  <meta name="twitter:description" content="{{ page_description | escape }}">
+  {% if og_image and og_image != '' %}
+    <meta name="twitter:image" content="{{ og_image }}">
   {% endif %}
-  {% if site.x_username %}
-    <meta name="twitter:site" content="@{{ site.x_username }}">
-    <meta name="twitter:creator" content="@{{ site.x_username }}">
+  {% assign x_username = site.data.socials.x_username | default: site.x_username %}
+  {% if x_username %}
+    <meta name="twitter:site" content="@{{ x_username }}">
+    <meta name="twitter:creator" content="@{{ x_username }}">
   {% endif %}
 {% endif %}
 
@@ -226,22 +295,166 @@
     {% endcase %}
   {% endfor %}
 
+  {% assign person_id = site_root | append: '/#person' %}
+  {% assign website_id = site_root | append: '/#website' %}
+  {% assign person_name = person.name | default: author_name %}
+  {% assign person_image = person.image | prepend: site_root %}
+  {% capture person_node %}
+    {
+      "@type": "Person",
+      "@id": {{ person_id | jsonify }},
+      "name": {{ person_name | jsonify }},
+      {% if person.alternate_names %}"alternateName": {{ person.alternate_names | jsonify }},{% endif %}
+      "givenName": {{ person.given_name | default: site.first_name | jsonify }},
+      "familyName": {{ person.family_name | default: site.last_name | jsonify }},
+      {% if person.honorific_suffix %}"honorificSuffix": {{ person.honorific_suffix | jsonify }},{% endif %}
+      {% if person.image %}"image": { "@type": "ImageObject", "url": {{ person_image | jsonify }}, "caption": {{ person_name | jsonify }} },{% endif %}
+      {% if person.job_title %}"jobTitle": {{ person.job_title | jsonify }},{% endif %}
+      {% if person.description %}"description": {{ person.description | strip_newlines | strip | jsonify }},{% endif %}
+      {% if person.email %}"email": {{ person.email | prepend: 'mailto:' | jsonify }},{% endif %}
+      {% if person.works_for %}
+        "worksFor": { "@type": "Organization", "name": {{ person.works_for.name | jsonify }}, "url": {{ person.works_for.url | jsonify }} },
+      {% endif %}
+      {% if person.alumni_of %}
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": {{ person.alumni_of.name | jsonify }}, "url": {{ person.alumni_of.url | jsonify }} },
+      {% endif %}
+      {% if person.address %}
+        "address": { "@type": "PostalAddress", "addressLocality": {{ person.address.locality | jsonify }}, "addressRegion": {{ person.address.region | jsonify }}, "addressCountry": {{ person.address.country | jsonify }} },
+      {% endif %}
+      {% if person.knows_about %}"knowsAbout": {{ person.knows_about | jsonify }},{% endif %}
+      {% if sameaslinks != blank %}"sameAs": {{ sameaslinks | jsonify }},{% endif %}
+      "url": {{ site_root | append: '/' | jsonify }}
+    }
+  {% endcapture %}
+  {% capture breadcrumb_items %}
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ site_root | append: '/' | jsonify }} }
+    {% if is_blog_post or page.url contains '/blog/' %}
+      , { "@type": "ListItem", "position": 2, "name": "Blog", "item": {{ site_root | append: '/blog/' | jsonify }} }
+      {% if page.url != '/blog/index.html' %}
+        , { "@type": "ListItem", "position": 3, "name": {{ page.title | default: page.date | jsonify }}, "item": {{ page_url | jsonify }} }
+      {% endif %}
+    {% elsif page.url != '/' %}
+      , { "@type": "ListItem", "position": 2, "name": {{ page.title | jsonify }}, "item": {{ page_url | jsonify }} }
+    {% endif %}
+  {% endcapture %}
   <script type="application/ld+json">
     {
-        "author":
+      "@context": "https://schema.org",
+      "@graph": [
+        {{ person_node | strip }},
         {
-            "@type": "Person",
-            "name": "{{ author_name }}"
+          "@type": "WebSite",
+          "@id": {{ website_id | jsonify }},
+          "url": {{ site_root | append: '/' | jsonify }},
+          "name": {{ title | strip | jsonify }},
+          "description": {{ site.description | strip_newlines | strip | jsonify }},
+          "inLanguage": {{ site.lang | jsonify }},
+          "author": { "@id": {{ person_id | jsonify }} },
+          "publisher": { "@id": {{ person_id | jsonify }} }
         },
-        "url": "{{ page.url | prepend: site.baseurl | prepend: site.url }}",
-        "@type": "{% if is_blog_post %}BlogPosting{% else %}WebSite{% endif %}",
-        "description": "{% if page.description %}{{ page.description }}{% else if site.description %}{{ site.description }}{% endif %}",
-        "headline": "{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}",
-        {% if sameaslinks != blank %}
-        "sameAs": {{ sameaslinks | jsonify }},
+        {% if page.url == '/' %}
+          {
+            "@type": "ProfilePage",
+            "@id": {{ page_url | append: '#webpage' | jsonify }},
+            "url": {{ page_url | jsonify }},
+            "name": {{ title | strip | jsonify }},
+            "description": {{ page_description | jsonify }},
+            "inLanguage": {{ site.lang | jsonify }},
+            "dateModified": {{ site.time | date_to_xmlschema | jsonify }},
+            "isPartOf": { "@id": {{ website_id | jsonify }} },
+            "about": { "@id": {{ person_id | jsonify }} },
+            "mainEntity": { "@id": {{ person_id | jsonify }} }
+            {% if og_image and og_image != '' %}, "primaryImageOfPage": { "@type": "ImageObject", "url": {{ og_image | jsonify }} }{% endif %}
+          }
+          {% if page.faq and page.faq.size > 0 %}
+            ,{
+              "@type": "FAQPage",
+              "@id": {{ page_url | append: '#faq' | jsonify }},
+              "isPartOf": { "@id": {{ page_url | append: '#webpage' | jsonify }} },
+              "mainEntity": [
+                {% for item in page.faq %}
+                  {
+                    "@type": "Question",
+                    "name": {{ item.q | strip | jsonify }},
+                    "acceptedAnswer": { "@type": "Answer", "text": {{ item.a | markdownify | strip_newlines | strip | jsonify }} }
+                  }{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+              ]
+            }
+          {% endif %}
+        {% elsif is_blog_post %}
+          {
+            "@type": "BlogPosting",
+            "@id": {{ page_url | append: '#article' | jsonify }},
+            "url": {{ page_url | jsonify }},
+            "mainEntityOfPage": { "@type": "WebPage", "@id": {{ page_url | jsonify }} },
+            "headline": {{ page.title | strip | jsonify }},
+            "name": {{ page.title | strip | jsonify }},
+            "description": {{ page_description | jsonify }},
+            "datePublished": {{ date_published | jsonify }},
+            "dateModified": {{ date_modified | jsonify }},
+            "author": { "@id": {{ person_id | jsonify }} },
+            "publisher": { "@id": {{ person_id | jsonify }} },
+            "inLanguage": {{ site.lang | jsonify }},
+            "isPartOf": { "@id": {{ website_id | jsonify }} },
+            {% if page.tags.size > 0 %}"keywords": {{ page.tags | join: ', ' | jsonify }},{% endif %}
+            {% if page.categories.size > 0 %}"articleSection": {{ page.categories | first | jsonify }},{% endif %}
+            {% if og_image and og_image != '' %}"image": {{ og_image | jsonify }},{% endif %}
+            "wordCount": {{ page.content | strip_html | number_of_words }},
+            "isAccessibleForFree": true
+          },
+          { "@type": "BreadcrumbList", "itemListElement": [ {{ breadcrumb_items | strip }} ] }
+        {% elsif page.url == '/publications/' %}
+          {% assign pubs = '_bibliography/papers.bib' | bib_entries %}
+          {
+            "@type": "CollectionPage",
+            "@id": {{ page_url | append: '#webpage' | jsonify }},
+            "url": {{ page_url | jsonify }},
+            "name": {{ page.title | strip | jsonify }},
+            "description": {{ page_description | jsonify }},
+            "inLanguage": {{ site.lang | jsonify }},
+            "isPartOf": { "@id": {{ website_id | jsonify }} },
+            "about": { "@id": {{ person_id | jsonify }} },
+            "mainEntity": {
+              "@type": "ItemList",
+              "itemListElement": [
+                {% for e in pubs %}
+                  {
+                    "@type": "ListItem",
+                    "position": {{ forloop.index }},
+                    "item": {
+                      "@type": "ScholarlyArticle",
+                      "headline": {{ e.title | jsonify }},
+                      "datePublished": {{ e.year | jsonify }},
+                      {% if e.venue != '' %}"isPartOf": { "@type": "Periodical", "name": {{ e.venue | jsonify }} },{% endif %}
+                      {% if e.arxiv != '' %}"sameAs": {{ e.arxiv | prepend: 'https://arxiv.org/abs/' | jsonify }},{% endif %}
+                      {% if e.url != '' %}"url": {{ e.url | jsonify }},{% endif %}
+                      "author": [
+                        {% for a in e.authors %}
+                          {% if a == 'Wei Chen' %}{ "@id": {{ person_id | jsonify }} }{% else %}{ "@type": "Person", "name": {{ a | jsonify }} }{% endif %}{% unless forloop.last %},{% endunless %}
+                        {% endfor %}
+                      ]
+                    }
+                  }{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+              ]
+            }
+          },
+          { "@type": "BreadcrumbList", "itemListElement": [ {{ breadcrumb_items | strip }} ] }
+        {% else %}
+          {
+            "@type": {% if page.url contains '/blog/' %}"CollectionPage"{% else %}"WebPage"{% endif %},
+            "@id": {{ page_url | append: '#webpage' | jsonify }},
+            "url": {{ page_url | jsonify }},
+            "name": {{ page.title | default: title | strip | jsonify }},
+            "description": {{ page_description | jsonify }},
+            "inLanguage": {{ site.lang | jsonify }},
+            "isPartOf": { "@id": {{ website_id | jsonify }} },
+            "about": { "@id": {{ person_id | jsonify }} }
+          },
+          { "@type": "BreadcrumbList", "itemListElement": [ {{ breadcrumb_items | strip }} ] }
         {% endif %}
-        "name": "{{ author_name }}",
-        "@context": "https://schema.org"
+      ]
     }
   </script>
 {% endif %}

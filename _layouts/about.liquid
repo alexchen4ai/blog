@@ -64,6 +64,19 @@ layout: default
       {% include selected_papers.liquid %}
     {% endif %}
 
+    <!-- FAQ (also emitted as FAQPage JSON-LD in metadata.liquid) -->
+    {% if page.faq and page.faq.size > 0 %}
+      <section class="alan-section alan-faq" id="faq">
+        <h2>FAQ</h2>
+        <dl>
+          {% for item in page.faq %}
+            <dt>{{ item.q }}</dt>
+            <dd>{{ item.a | markdownify }}</dd>
+          {% endfor %}
+        </dl>
+      </section>
+    {% endif %}
+
     <!-- Social -->
     {% if page.social %}
       <div class="social">

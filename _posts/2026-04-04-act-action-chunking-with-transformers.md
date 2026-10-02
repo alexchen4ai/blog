@@ -12,6 +12,17 @@ toc:
 
 _A short reading note on ALOHA (Zhao et al., 2023)_
 
+<!-- prettier-ignore -->
+> ##### TL;DR
+> {:.no_toc}
+>
+> - **ACT** (Action Chunking with Transformers), the learning algorithm behind ALOHA (Zhao et al., 2023), fixes compounding errors in fine bimanual manipulation with two ideas: predict a **chunk of $k$ future actions** at once, and model demonstration multimodality with a **Conditional VAE**.
+> - The policy sees 4 RGB cameras plus 14 joint positions and outputs **target joint positions**; motor-level PID loops track them, which makes ACT "half end-to-end".
+> - The CVAE encoder (BERT-style, `[CLS]` token → $z \in \mathbb{R}^{32}$) is used only in training; at test time **$z = 0$** gives deterministic, average-style behavior.
+> - The decoder uses fixed sinusoidal queries to emit all $k$ actions **in parallel** (no autoregression), and **temporal ensembling** with exponential weights smooths overlapping chunks.
+> - Results: **80–96% success** on battery insertion and cup opening where BeT, RT-1 and BC-ConvMLP reach 0–8%. Removing chunking drops 44% → 1%; removing the CVAE drops 35% → 2% on human data.
+{: .block-tip }
+
 Fine manipulation tasks — slotting a battery, threading a zip tie — fail catastrophically with standard imitation learning because small errors compound over time. ALOHA's learning algorithm, **ACT**, attacks this with two ideas: predict _chunks_ of future actions instead of one step at a time, and model the multimodality of human demonstrations with a **Conditional VAE**.
 
 **Observation and action space.** At each timestep the policy observes: 4 RGB camera images (top, front, two wrists) and the current joint positions of both arms (14 DoF total). The action it predicts is a sequence of _target joint positions_ — not torques or currents.
