@@ -10,11 +10,11 @@ contact_note: >
   Feel free to reach out via email for research collaborations, speaking invitations, or just to chat about AI systems, generative AI inference infrastructure, and robotics.
 description: >- # the ">" symbol means to ignore newlines until "footer_text:"
   Personal site of Alex (Wei) Chen — Director at Qualcomm, founder of Nexa AI (acquired by Qualcomm), Stanford PhD.
-  Writing on AI systems, on-device LLM/VLM inference, hardware-software co-design, and robotics.
+  Writing on AI systems, LLM/VLM inference, hardware-software co-design, and robotics.
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
-keywords: Alex Chen, Wei Chen, AI systems, LLM inference, on-device AI, edge AI, NPU, robotics, Nexa AI, NexaSDK, Octopus, Qualcomm, Stanford
+keywords: Alex Chen, Wei Chen, AI systems, AI inference, LLM inference, VLM inference, NPU, GPU, robotics, Nexa AI, NexaSDK, Octopus, Qualcomm, Stanford
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: favicon.ico # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
