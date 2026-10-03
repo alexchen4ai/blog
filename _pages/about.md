@@ -4,7 +4,7 @@ title: about
 permalink: /
 description: >-
   Alex (Wei) Chen — Director at Qualcomm; founder, CEO and Chief Scientist of Nexa AI (acquired by Qualcomm); Stanford PhD.
-  Builder of NexaSDK, Octopus, OmniVLM and OmniAudio. Writing on AI systems, LLM/VLM inference, and robotics.
+  Builder of NexaSDK, Octopus, OmniVLM and OmniAudio. Writing on AI systems, generative AI inference, and robotics.
 subtitle: >
   Founder, CEO & Chief Scientist of <a href="https://nexa.ai" target="_blank">Nexa AI</a> (acquired by Qualcomm); Director, <a href="https://www.qualcomm.com" target="_blank">Qualcomm</a>. Santa Clara, CA.
 
@@ -25,13 +25,13 @@ faq:
       and has been featured by NVIDIA, AMD, Microsoft, Google, IBM, Intel, and Qualcomm.
   - q: What do you work on at Qualcomm?
     a: >-
-      I lead AI inference research and engineering for generative models on Qualcomm Snapdragon platforms — in particular the
+      I lead generative AI inference research and engineering on Qualcomm Snapdragon platforms — in particular the
       Hexagon NPU — covering hardware-aware quantization, operator fusion, memory scheduling, kernel tuning, and SDK development,
       with a cross-functional team spanning model research and runtime optimization.
   - q: How can I get in touch?
     a: >-
       Email [alexchen4ai@gmail.com](mailto:alexchen4ai@gmail.com). I welcome research collaborations, speaking invitations,
-      and conversations about AI systems, AI inference, and robotics.
+      and conversations about AI systems, generative AI inference, and robotics.
 
 profile:
   align: right
@@ -56,16 +56,16 @@ latest_posts:
 
 I am **Alex (Wei) Chen**, a Director at [Qualcomm](https://www.qualcomm.com). Before joining Qualcomm through its acquisition of [Nexa AI](https://nexa.ai), I founded Nexa and served as its **Founder, CEO, and Chief Scientist**, with the goal of making generative AI more efficient and accessible on everyday hardware.
 
-At Nexa, our team built the [NexaSDK](https://github.com/NexaAI/nexa-sdk) — an open-source toolkit for running AI models on edge devices that has been widely adopted by the developer community. I was the main technical author behind much of this work, including the **Octopus** model series, **OmniVLM**, **OmniAudio**, and **NexaQuant**. Along the way, we worked closely with engineering teams at [NVIDIA](https://blogs.nvidia.com/blog/rtx-ai-garage-nexa-hyperlink-local-agent/), [AMD](https://www.amd.com/en/developer/resources/technical-articles/2025/advancing-ai-with-nexa-ai--image-generation-on-amd-npu-with-sdxl.html), [Microsoft](https://blogs.windows.com/windowsexperience/2025/11/18/ignite-2025-windows-at-the-frontier-of-work/), [Google](https://developers.googleblog.com/en/gemma-family-and-toolkit-expansion-io-2024/), [IBM](https://www.ibm.com/new/announcements/ibm-granite-4-0-hyper-efficient-high-performance-hybrid-models), and [Intel](https://www.linkedin.com/posts/intel-software_ai-ondeviceai-nexasdk-activity-7376337062087667712-xw7i), and deployed with enterprise partners like Geely, HP, Lenovo, and İşbank.
+At Nexa, our team built the [NexaSDK](https://github.com/NexaAI/nexa-sdk) — an open-source generative AI inference runtime that runs models across NPUs, GPUs, and CPUs and has been widely adopted by the developer community. I was the main technical author behind much of this work, including the **Octopus** model series, **OmniVLM**, **OmniAudio**, and **NexaQuant**. Along the way, we worked closely with engineering teams at [NVIDIA](https://blogs.nvidia.com/blog/rtx-ai-garage-nexa-hyperlink-local-agent/), [AMD](https://www.amd.com/en/developer/resources/technical-articles/2025/advancing-ai-with-nexa-ai--image-generation-on-amd-npu-with-sdxl.html), [Microsoft](https://blogs.windows.com/windowsexperience/2025/11/18/ignite-2025-windows-at-the-frontier-of-work/), [Google](https://developers.googleblog.com/en/gemma-family-and-toolkit-expansion-io-2024/), [IBM](https://www.ibm.com/new/announcements/ibm-granite-4-0-hyper-efficient-high-performance-hybrid-models), and [Intel](https://www.linkedin.com/posts/intel-software_ai-ondeviceai-nexasdk-activity-7376337062087667712-xw7i), and deployed with enterprise partners like Geely, HP, Lenovo, and İşbank.
 
-My interests sit at the intersection of **AI systems**, **LLM/VLM inference**, **hardware-software co-design**, and **robotics**. I'm especially drawn to the question of how we build intelligence that can act in the physical world. I hold a PhD from **Stanford University** (2024).
+My interests sit at the intersection of **AI systems**, **generative AI inference**, **hardware-software co-design**, and **robotics**. I'm especially drawn to the question of how we build intelligence that can act in the physical world. I hold a PhD from **Stanford University** (2024).
 
 <section class="alan-section">
   <h2>Selected Work</h2>
   <div class="alan-work">
     <h3>NexaSDK</h3>
     <p class="type">Runtime</p>
-    <p>A GenAI inference runtime that runs models on NPU — <a href="https://github.com/NexaAI/nexa-sdk">8,000+ GitHub stars</a> and #1 on GitHub Trending.</p>
+    <p>A generative AI inference runtime that runs models on NPU, GPU, and CPU — <a href="https://github.com/NexaAI/nexa-sdk">8,000+ GitHub stars</a> and #1 on GitHub Trending.</p>
   </div>
   <div class="alan-work">
     <h3>Hyperlink</h3>

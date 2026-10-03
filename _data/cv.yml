@@ -13,7 +13,7 @@ cv:
   sections:
     Summary:
       - Director at Qualcomm (via acquisition of Nexa AI). Researcher and engineer
-        focused on AI systems, LLM/VLM inference optimization, hardware-software co-design, and robotics.
+        focused on AI systems, generative AI inference, hardware-software co-design, and robotics.
         PhD from Stanford University (2024).
 
     Experience:
@@ -23,7 +23,7 @@ cv:
         start_date: 2026
         end_date: present
         highlights:
-          - Joined Qualcomm following the acquisition of Nexa AI. Lead on-device AI optimization research and engineering focused on accelerating generative AI inference on Qualcomm Snapdragon NPU (Hexagon HTP) and edge SoCs.
+          - Joined Qualcomm following the acquisition of Nexa AI. Lead generative AI inference research and engineering focused on accelerating LLMs and VLMs on Qualcomm Snapdragon NPU (Hexagon HTP) and Snapdragon SoCs.
           - Drive end-to-end optimization of LLMs and VLMs for Qualcomm Hexagon HTP NPU, encompassing hardware-aware quantization (INT4/INT8/FP16 mixed-precision), operator fusion, memory bandwidth scheduling, and kernel-level tuning.
           - Collaborate with silicon, compiler, and runtime teams to co-design neural network architectures and inference pipelines that fully exploit Hexagon NPU vector and tensor acceleration.
           - Manage a cross-functional team spanning model research, runtime optimization, and SDK development.
@@ -137,7 +137,7 @@ cv:
       - name: Machine Learning
         level: Expert
         icon: fa-solid fa-brain
-        keywords: "LLM/VLM Pretraining & Post-training, Quantization, Model Optimization, On-device Inference, PyTorch, ONNX"
+        keywords: "LLM/VLM Pretraining & Post-training, Quantization, Model Optimization, Generative AI Inference, PyTorch, ONNX"
 
       - name: Hardware Acceleration
         level: Expert

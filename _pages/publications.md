@@ -2,7 +2,7 @@
 layout: page
 permalink: /publications/
 title: publications
-description: Papers on on-device AI, efficient inference, and agentic models, in reversed chronological order.
+description: Papers on generative AI inference, efficient language and vision-language models, and agentic models, in reversed chronological order.
 nav: true
 nav_order: 2
 ---
