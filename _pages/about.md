@@ -4,7 +4,7 @@ title: about
 permalink: /
 description: >-
   Alex (Wei) Chen — Director at Qualcomm; founder, CEO and Chief Scientist of Nexa AI (acquired by Qualcomm); Stanford PhD.
-  Builder of NexaSDK, Octopus, OmniVLM and OmniAudio. Writing on AI systems, on-device LLM/VLM inference, and robotics.
+  Builder of NexaSDK, Octopus, OmniVLM and OmniAudio. Writing on AI systems, LLM/VLM inference, and robotics.
 subtitle: >
   Founder, CEO & Chief Scientist of <a href="https://nexa.ai" target="_blank">Nexa AI</a> (acquired by Qualcomm); Director, <a href="https://www.qualcomm.com" target="_blank">Qualcomm</a>. Santa Clara, CA.
 
@@ -20,18 +20,18 @@ faq:
       NexaQuant. Nexa AI was acquired by Qualcomm in 2026, and I joined Qualcomm as a Director.
   - q: What is NexaSDK?
     a: >-
-      [NexaSDK](https://github.com/NexaAI/nexa-sdk) is an open-source on-device inference runtime for LLMs, vision-language, and
-      audio models that targets NPUs as well as GPUs and CPUs. It has 8,000+ GitHub stars, reached #1 on GitHub Trending,
+      [NexaSDK](https://github.com/NexaAI/nexa-sdk) is an open-source inference runtime for LLMs, vision-language, and
+      audio models that runs across NPUs, GPUs, and CPUs. It has 8,000+ GitHub stars, reached #1 on GitHub Trending,
       and has been featured by NVIDIA, AMD, Microsoft, Google, IBM, Intel, and Qualcomm.
   - q: What do you work on at Qualcomm?
     a: >-
-      I lead on-device AI research and engineering for generative models on Qualcomm Snapdragon platforms — in particular the
+      I lead AI inference research and engineering for generative models on Qualcomm Snapdragon platforms — in particular the
       Hexagon NPU — covering hardware-aware quantization, operator fusion, memory scheduling, kernel tuning, and SDK development,
       with a cross-functional team spanning model research and runtime optimization.
   - q: How can I get in touch?
     a: >-
       Email [alexchen4ai@gmail.com](mailto:alexchen4ai@gmail.com). I welcome research collaborations, speaking invitations,
-      and conversations about AI systems, on-device inference, and robotics.
+      and conversations about AI systems, AI inference, and robotics.
 
 profile:
   align: right

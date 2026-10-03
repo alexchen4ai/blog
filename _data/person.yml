@@ -13,11 +13,11 @@ image: /assets/img/prof_pic.jpg
 email: alexchen4ai@gmail.com
 short_bio: >-
   Director at Qualcomm and founder of Nexa AI (acquired by Qualcomm). AI systems researcher working on
-  on-device LLM/VLM inference, hardware-software co-design, and robotics. PhD, Stanford University (2024).
+  LLM/VLM inference, hardware-software co-design, and robotics. PhD, Stanford University (2024).
 description: >-
   Alex (Wei) Chen is a Director at Qualcomm and the founder, former CEO, and Chief Scientist of Nexa AI,
-  an on-device generative AI company acquired by Qualcomm in 2026. He is the main technical author of NexaSDK,
-  the Octopus on-device agent models, OmniVLM, OmniAudio, and NexaQuant. He holds a PhD from Stanford University (2024)
+  a generative AI inference company acquired by Qualcomm in 2026. He is the main technical author of NexaSDK,
+  the Octopus agent models, OmniVLM, OmniAudio, and NexaQuant. He holds a PhD from Stanford University (2024)
   and works on AI systems, LLM/VLM inference optimization, hardware-software co-design, and robotics.
 address:
   locality: Santa Clara
@@ -30,19 +30,18 @@ founded:
   name: Nexa AI
   url: https://nexa.ai
   founding_date: "2024"
-  description: On-device generative AI inference company (NexaSDK, NexaML, Octopus, OmniVLM, OmniAudio, NexaQuant); acquired by Qualcomm in 2026.
+  description: Generative AI inference company (NexaSDK, NexaML, Octopus, OmniVLM, OmniAudio, NexaQuant); acquired by Qualcomm in 2026.
 alumni_of:
   name: Stanford University
   url: https://www.stanford.edu
 knows_about:
   - AI systems
+  - AI inference
   - Large language model inference
-  - On-device AI
-  - Edge AI
   - Vision-language models
   - Model quantization
   - Hardware-software co-design
-  - NPU acceleration
+  - NPU and GPU acceleration
   - Robotics
   - Imitation learning
   - Reinforcement learning for LLMs
