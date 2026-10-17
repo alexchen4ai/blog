@@ -7,18 +7,31 @@
 :root {
   color-scheme: light;
   --global-bg-color: #{v.$white-color};
-  --global-code-bg-color: #{v.$code-bg-color-light};
-  --global-text-color: #{v.$black-color};
-  --global-text-color-light: #{v.$grey-color};
-  --global-theme-color: #{v.$purple-color};
-  --global-hover-color: #{v.$purple-color};
+  --global-code-bg-color: #f4f4f2;
+  --global-text-color: #111;
+  --global-text-color-body: #333;
+  --global-text-color-light: #555;
+  --global-text-color-muted: #6a6a6a;
+  --global-theme-color: #111;
+  --global-hover-color: #000;
   --global-hover-text-color: #{v.$white-color};
   --global-footer-bg-color: #{v.$grey-color-dark};
   --global-footer-text-color: #{v.$grey-color-light};
   --global-footer-link-color: #{v.$white-color};
   --global-distill-app-color: #{v.$grey-color};
-  --global-divider-color: rgba(0, 0, 0, 0.1);
+  --global-divider-color: #e6e2dc;
   --global-card-bg-color: #{v.$white-color};
+  --global-card-border-color: #e9e5db;
+  --global-card-border-hover-color: #dcd6c8;
+  --global-underline-color: #ccc;
+  --global-chip-bg-color: #f4f4f2;
+  --global-badge-bg-color: #fff;
+  --global-badge-border-color: #d7d3ef;
+  --global-badge-border-hover-color: #b7b0e6;
+  --global-badge-label-color: #7a7a8c;
+  --global-badge-text-color: #2b2b52;
+  --global-button-bg-color: #111;
+  --global-button-text-color: #fff;
   --global-highlight-color: #{v.$red-color-dark};
   --global-back-to-top-bg-color: rgba(
     #{color.channel(v.$black-color, "red", v.$space: rgb)},
@@ -76,19 +89,32 @@
 
 html[data-theme="dark"] {
   color-scheme: dark;
-  --global-bg-color: #{v.$grey-color-dark};
-  --global-code-bg-color: #{v.$code-bg-color-dark};
-  --global-text-color: #{v.$grey-color-light};
-  --global-text-color-light: #{v.$grey-color};
-  --global-theme-color: #{v.$cyan-color};
-  --global-hover-color: #{v.$cyan-color};
+  --global-bg-color: #0d0d0f;
+  --global-code-bg-color: #18181b;
+  --global-text-color: #ededed;
+  --global-text-color-body: #d0d0d0;
+  --global-text-color-light: #ababab;
+  --global-text-color-muted: #8f8f8f;
+  --global-theme-color: #ededed;
+  --global-hover-color: #fff;
   --global-hover-text-color: #{v.$white-color};
   --global-footer-bg-color: #{v.$grey-color-light};
   --global-footer-text-color: #{v.$grey-color-dark};
   --global-footer-link-color: #{v.$black-color};
   --global-distill-app-color: #{v.$grey-color-light};
-  --global-divider-color: #424246;
-  --global-card-bg-color: #{v.$grey-900};
+  --global-divider-color: #2a2a2e;
+  --global-card-bg-color: #141417;
+  --global-card-border-color: #2c2c30;
+  --global-card-border-hover-color: #46464e;
+  --global-underline-color: #555;
+  --global-chip-bg-color: #1b1b1f;
+  --global-badge-bg-color: #17171d;
+  --global-badge-border-color: #363654;
+  --global-badge-border-hover-color: #5b4bce;
+  --global-badge-label-color: #a6a6c4;
+  --global-badge-text-color: #e3e1f7;
+  --global-button-bg-color: #e8e5dd;
+  --global-button-text-color: #16130d;
   --global-back-to-top-bg-color: rgba(
     #{color.channel(v.$white-color, "red", v.$space: rgb)},
     #{color.channel(v.$white-color, "green", v.$space: rgb)},

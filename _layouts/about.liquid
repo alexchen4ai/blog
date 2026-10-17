@@ -1,93 +1,165 @@
 ---
 layout: default
 ---
-<div class="post">
-  <header class="post-header about-hero">
-    <h1 class="post-title">
-      {% if site.title == 'blank' %}
-        <span class="font-weight-bold">{{ site.first_name }}</span> {{ site.middle_name }}
-        {{ site.last_name }}
-      {% else %}
-        {{ site.title }}
+{% assign person = site.data.person %}
+{% assign cv = site.data.cv.cv.sections %}
+<div class="lp">
+  <section class="lp-hero" aria-labelledby="lp-name">
+    <h1 class="lp-name" id="lp-name">{{ person.name }}</h1>
+    <p class="lp-handle">@{{ site.data.socials.github_username }} &middot; also published as {{ person.alternate_names | first }}</p>
+    <p class="lp-tagline">{{ page.subtitle }}</p>
+    <div class="lp-intro">
+      <div class="lp-bio">{{ content }}</div>
+      {% if page.profile.image %}
+        {% assign image_base = page.profile.image | split: '.' | first | prepend: '/assets/img/' %}
+        <figure class="lp-portrait">
+          <picture>
+            <source
+              srcset="{{ image_base | append: '-480.webp' | relative_url }} 480w, {{ image_base | append: '-800.webp' | relative_url }} 800w"
+              sizes="(min-width: 768px) 360px, 90vw"
+              type="image/webp"
+            >
+            <img
+              src="{{ page.profile.image | prepend: '/assets/img/' | relative_url }}"
+              alt="{{ person.name }} ({{ person.alternate_names | first }}), {{ person.job_title }} at {{ person.works_for.name }}"
+              width="800"
+              height="800"
+              loading="eager"
+              fetchpriority="high"
+            >
+          </picture>
+        </figure>
       {% endif %}
-    </h1>
-    <p class="desc">{{ page.subtitle }}</p>
-  </header>
+    </div>
+    {% include social_row.liquid %}
+  </section>
 
-  <article>
-    {% if page.profile %}
-      <div class="profile float-{% if page.profile.align == 'left' %}left{% else %}right{% endif %}">
-        {% if page.profile.image %}
-          {% assign profile_image_path = page.profile.image | prepend: 'assets/img/' %}
-          {% if page.profile.image_circular %}
-            {% assign profile_image_class = 'img-fluid z-depth-1 rounded-circle' %}
-          {% else %}
-            {% assign profile_image_class = 'img-fluid z-depth-1
-      rounded' %}
-          {% endif %}
-          {% capture sizes %}(min-width: {{ site.max_width }}) {{ site.max_width | minus: 30 | times: 0.3}}px, (min-width: 576px)
-      30vw, 95vw"{% endcapture %}
-          {%
-            include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes alt=page.profile.image
-            cache_bust=true
-          %}
-        {% endif %}
-        {% if page.profile.more_info %}
-          <div class="more-info">{{ page.profile.more_info }}</div>
-        {% endif %}
-      </div>
-    {% endif %}
+  <section class="lp-section" id="recognition" aria-labelledby="recog-title">
+    <h2 class="lp-title" id="recog-title"><a href="{{ '/recognition/' | relative_url }}">Industrial recognition</a></h2>
+    {% assign recognizers = '' | split: ',' %}
+    {% for group in site.data.recognition.groups %}
+      {% for item in group.items %}
+        {% assign recognizer = item.name | split: ' (' | first %}
+        {% assign recognizers = recognizers | push: recognizer %}
+      {% endfor %}
+    {% endfor %}
+    {% assign recognizers = recognizers | uniq %}
+    <p class="lp-recog-summary">
+      {{ person.name }}'s work at {{ person.founded.name }} — NexaSDK, Hyperlink, and the Octopus and Omni models — has been featured by
+      {% for name in recognizers %}
+        {%- if forloop.last %}and {% endif -%}
+        <strong>{{ name }}</strong>
+        {%- unless forloop.last %}, {% endunless %}
+      {%- endfor -%}
+      , and presented at {{ site.data.recognition.talks | map: 'name' | slice: 0, 3 | join: ', ' }}, and more.
+    </p>
+    {% include recognition_grid.liquid %}
+  </section>
 
-    <div class="clearfix">{{ content }}</div>
+  {% if page.latest_posts.enabled %}
+    <section class="lp-section" id="blog" aria-labelledby="blog-title">
+      <h2 class="lp-title" id="blog-title"><a href="{{ '/blog/' | relative_url }}">Blog posts</a></h2>
+      <ul class="lp-posts">
+        {% for post in site.posts limit: page.latest_posts.limit %}
+          {% assign category = post.categories | first %}
+          <li>
+            <div>
+              <a class="lp-post-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+              {% if category %}
+                <a class="lp-chip" href="{{ category | slugify | prepend: '/blog/category/' | relative_url }}">
+                  {{- site.category_labels[category] | default: category -}}
+                </a>
+              {% endif %}
+            </div>
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%B %-d, %Y' }}</time>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
 
-    <!-- News -->
-    {% if page.announcements and page.announcements.enabled %}
-      <h2>
-        <a href="{{ '/news/' | relative_url }}" style="color: inherit">news</a>
-      </h2>
-      {% include news.liquid limit=true %}
-    {% endif %}
+  {% if site.data.work %}
+    <section class="lp-section" id="work" aria-labelledby="work-title">
+      <h2 class="lp-title" id="work-title">Selected work</h2>
+      {% for work in site.data.work %}
+        <article class="lp-work">
+          <p class="lp-kicker">{{ work.group }}</p>
+          <div class="lp-work-grid">
+            <div>
+              <h3>
+                <a href="{{ work.url }}">{{ work.name }}</a>
+              </h3>
+              <div class="lp-badges">
+                {% for badge in work.badges %}
+                  {% if badge.url %}<a class="lp-badge" href="{{ badge.url }}">{% else %}<span class="lp-badge">{% endif %}
+                  {% if badge.logo %}
+                    <span
+                      class="lp-logo"
+                      aria-hidden="true"
+                      style="--logo: url('{{ badge.logo | prepend: '/assets/img/logos/' | append: '.svg' | relative_url }}')"
+                    ></span>
+                  {% else %}
+                    <i class="{{ badge.icon }}" aria-hidden="true"></i>
+                  {% endif %}
+                  <span
+                    ><small>{{ badge.label }}</small>{{ badge.value -}}
+                  </span>
+                  {% if badge.url %}</a>{% else %}</span>{% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div>
+              <p>{{ work.summary }}</p>
+              {% if work.cta %}
+                <a class="lp-button" href="{{ work.cta.url }}">
+                  {{- work.cta.label }}
+                  <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i
+                ></a>
+              {% endif %}
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </section>
+  {% endif %}
 
-    <!-- Latest posts -->
-    {% if page.latest_posts and page.latest_posts.enabled %}
-      <h2>
-        <a href="{{ '/blog/' | relative_url }}" style="color: inherit">latest posts</a>
-      </h2>
-      {% include latest_posts.liquid %}
-    {% endif %}
-
-    <!-- Selected papers -->
-    {% if page.selected_papers %}
-      <h2>
-        <a href="{{ '/publications/' | relative_url }}" style="color: inherit">selected publications</a>
-      </h2>
+  {% if page.selected_papers %}
+    <section class="lp-section" id="publications" aria-labelledby="pubs-title">
+      <h2 class="lp-title" id="pubs-title"><a href="{{ '/publications/' | relative_url }}">Selected publications</a></h2>
       {% include selected_papers.liquid %}
-    {% endif %}
+    </section>
+  {% endif %}
+  <section class="lp-section" id="experience" aria-labelledby="exp-title">
+    <h2 class="lp-title" id="exp-title"><a href="{{ '/cv/' | relative_url }}">Experience</a></h2>
+    <ul class="lp-timeline">
+      {% for job in cv.Experience %}
+        <li>
+          <div>
+            <strong>{{ job.position }}</strong> &middot; {{ job.company }}
+          </div>
+          <span>{{ job.start_date }} — {{ job.end_date | capitalize }}</span>
+        </li>
+      {% endfor %}
+      {% for school in cv.Education %}
+        <li>
+          <div>
+            <strong>{{ school.studyType }}</strong> &middot; {{ school.institution }}
+          </div>
+          <span>{{ school.start_date }} — {{ school.end_date }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
 
-    <!-- FAQ (also emitted as FAQPage JSON-LD in metadata.liquid) -->
-    {% if page.faq and page.faq.size > 0 %}
-      <section class="alan-section alan-faq" id="faq">
-        <h2>FAQ</h2>
-        <dl>
-          {% for item in page.faq %}
-            <dt>{{ item.q }}</dt>
-            <dd>{{ item.a | markdownify }}</dd>
-          {% endfor %}
-        </dl>
-      </section>
-    {% endif %}
-
-    <!-- Social -->
-    {% if page.social %}
-      <div class="social">
-        <div class="contact-icons">{% social_links %}</div>
-
-        <div class="contact-note">{{ site.contact_note }}</div>
-      </div>
-    {% endif %}
-
-    {% if site.newsletter and site.newsletter.enabled and site.footer_fixed %}
-      {% include newsletter.liquid center=true %}
-    {% endif %}
-  </article>
+  {% if page.faq and page.faq.size > 0 %}
+    <section class="lp-section lp-faq" id="faq" aria-labelledby="faq-title">
+      <h2 class="lp-title" id="faq-title">FAQ</h2>
+      {% for item in page.faq %}
+        <details>
+          <summary>{{ item.q }}</summary>
+          {{ item.a | markdownify }}
+        </details>
+      {% endfor %}
+    </section>
+  {% endif %}
 </div>

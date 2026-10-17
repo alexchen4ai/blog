@@ -11,9 +11,7 @@ contact_note: >
 description: >- # the ">" symbol means to ignore newlines until "footer_text:"
   Personal site of Alex (Wei) Chen — Director at Qualcomm, founder of Nexa AI (acquired by Qualcomm), Stanford PhD.
   Writing on AI systems, generative AI inference, hardware-software co-design, and robotics.
-footer_text: >
-  Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
-  Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
+footer_text:
 keywords: Alex Chen, Wei Chen, AI systems, generative AI inference, LLM inference, VLM inference, NPU, GPU, robotics, Nexa AI, NexaSDK, Octopus, Qualcomm, Stanford
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: favicon.ico # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
@@ -54,14 +52,14 @@ external_services:
 # -----------------------------------------------------------------------------
 
 navbar_fixed: true
-footer_fixed: true
+footer_fixed: false
 search_enabled: true
 socials_in_search: true
 posts_in_search: true
 bib_search: true
 
 # Dimensions
-max_width: 930px
+max_width: 1120px
 
 # -----------------------------------------------------------------------------
 # Open Graph & Schema.org
@@ -276,7 +274,10 @@ jekyll-archives:
     enabled: [year, tags, categories] # enables year, tag and category archives (remove if you need to disable one of them).
 
 display_tags: ["llm", "inference", "on-device-ai", "reinforcement-learning", "robotics", "kernel"] # these tags will be displayed on the front page of your blog
-display_categories: ["ml"] # these categories will be displayed on the front page of your blog
+display_categories: ["ml", "engineering"] # these categories will be displayed on the front page of your blog
+category_labels: # display names for post categories (chips on the homepage and blog list)
+  ml: AI / ML
+  engineering: Software engineering
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar
@@ -465,7 +466,7 @@ third_party_libraries:
     version: "5.5.0"
   google_fonts:
     url:
-      fonts: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&display=swap"
+      fonts: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Playfair+Display:600i|Material+Icons&display=swap"
   highlightjs:
     integrity:
       css:

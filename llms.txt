@@ -17,13 +17,46 @@ A full-text Markdown export of every blog post is at {{ root }}/llms-full.txt.
 - Current role: {{ p.job_title }}, {{ p.works_for.name }} ({{ p.works_for.url }}), {{ p.address.locality }}, {{ p.address.region }}
 - Founded: {{ p.founded.name }} ({{ p.founded.url }}), {{ p.founded.founding_date }} — {{ p.founded.description }}
 - Education: PhD, {{ p.alumni_of.name }} (2024)
+- Awards: {{ p.awards | join: "; " }}
+{%- assign recognizers = "" | split: "," -%}
+{%- for group in site.data.recognition.groups -%}{%- for item in group.items -%}
+{%- assign recognizer = item.name | split: " (" | first -%}{%- assign recognizers = recognizers | push: recognizer -%}
+{%- endfor -%}{%- endfor %}
+- Recognized by: {{ recognizers | uniq | join: ", " }} (sources below)
 - Areas: {{ p.knows_about | join: "; " }}
 - Contact: {{ p.email }}
 - Profiles: https://github.com/{{ site.data.socials.github_username }}, https://www.linkedin.com/in/{{ site.data.socials.linkedin_username }}, https://x.com/{{ site.data.socials.x_username }}
 
+## Industry recognition
+
+Third-party coverage of this work at Nexa AI, grouped by sector. Each link is the original source.
+{% for group in site.data.recognition.groups %}
+### {{ group.name }}
+{% for item in group.items %}
+- [{{ item.name }}]({{ item.url }}): {{ item.summary | strip_html | normalize_whitespace }}
+{%- endfor %}
+{% endfor %}
+### Talks
+{% for talk in site.data.recognition.talks %}
+- {% if talk.url %}[{{ talk.name }}]({{ talk.url }}){% else %}{{ talk.name }}{% endif %}
+{%- endfor %}
+
+## Experience
+{% for job in site.data.cv.cv.sections.Experience %}
+- {{ job.position }}, {{ job.company }} ({{ job.start_date }}–{{ job.end_date | capitalize }})
+{%- endfor %}
+{%- for school in site.data.cv.cv.sections.Education %}
+- {{ school.studyType }}, {{ school.institution }} ({{ school.start_date }}–{{ school.end_date }})
+{%- endfor %}
+
+## Selected work
+{% for work in site.data.work %}
+- [{{ work.name }}]({{ work.url }}) ({{ work.group }}): {{ work.summary | strip_html | normalize_whitespace }}
+{%- endfor %}
+
 ## Pages
 
-- [About]({{ root }}/): Bio, selected work (NexaSDK, Hyperlink, Octopus), news, and latest posts
+- [About]({{ root }}/): Bio, latest posts, selected work (NexaSDK, Hyperlink, Octopus and Omni models), selected publications, industry recognition, experience, and FAQ
 - [CV]({{ root }}/cv/): Experience, education, awards, and publications
 - [Publications]({{ root }}/publications/): Peer-reviewed papers and preprints
 - [Recognition]({{ root }}/recognition/): Coverage from Qualcomm, NVIDIA, AMD, Microsoft, Google, IBM, Intel and others

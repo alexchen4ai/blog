@@ -38,3 +38,6 @@
 @use "font-awesome/brands";
 @use "font-awesome/solid";
 @use "font-awesome/regular";
+
+// Landing-page design system (loaded last so it overrides theme defaults)
+@use "landing";

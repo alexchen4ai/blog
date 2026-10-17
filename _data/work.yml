@@ -1,0 +1,77 @@
+# Selected work on the homepage. Also exported to llms.txt and the homepage JSON-LD.
+# type is the Schema.org type; category maps to applicationCategory.
+# badge.logo is a file in assets/img/logos/ (without .svg); badge.icon is a Font Awesome class.
+- group: AI Infra
+  name: NexaSDK
+  type: SoftwareApplication
+  category: DeveloperApplication
+  url: https://github.com/NexaAI/nexa-sdk
+  summary: >-
+    An open-source generative AI inference runtime that runs LLM, vision-language, and audio models across
+    NPU, GPU, and CPU. Hit <strong>#1 on GitHub Trending</strong> with <a href="https://github.com/NexaAI/nexa-sdk">8,000+ GitHub stars</a>,
+    and recognized by Qualcomm, AMD, NVIDIA, Intel, IBM, and Microsoft.
+  badges:
+    - label: GitHub stars
+      value: 8k+
+      icon: fa-brands fa-github
+      url: https://github.com/NexaAI/nexa-sdk
+    - label: GitHub Trending
+      value: "#1 Repository of the Day"
+      icon: fa-solid fa-arrow-trend-up
+    - label: Product Hunt
+      value: "#1 Product of the Day"
+      icon: fa-brands fa-product-hunt
+      url: https://www.producthunt.com/products/nexasdk-for-mobile
+  cta:
+    label: Try NexaSDK
+    url: https://github.com/NexaAI/nexa-sdk
+- group: Application
+  name: Hyperlink
+  type: SoftwareApplication
+  category: UtilitiesApplication
+  url: https://blogs.nvidia.com/blog/rtx-ai-garage-nexa-hyperlink-local-agent/
+  summary: >-
+    A local AI agent that lives inside your computer — it searches across all your files, fully private.
+    Reached <strong>2.1M views</strong> and <strong>30K users</strong> in two months, featured by
+    <a href="https://blogs.nvidia.com/blog/rtx-ai-garage-nexa-hyperlink-local-agent/">NVIDIA</a>,
+    <a href="https://blogs.windows.com/windowsexperience/2025/11/18/ignite-2025-windows-at-the-frontier-of-work/">Microsoft</a>,
+    <a href="https://www.qualcomm.com/developer/blog/2026/03/run-nexa-ai-agents-locally-on-snapdragon-pc-with-hexagon-npu">Qualcomm</a>,
+    and AMD.
+  badges:
+    - label: Featured by
+      value: NVIDIA RTX AI Garage
+      logo: nvidia
+      url: https://blogs.nvidia.com/blog/rtx-ai-garage-nexa-hyperlink-local-agent/
+    - label: Featured by
+      value: Microsoft Ignite 2025
+      logo: microsoft
+      url: https://blogs.windows.com/windowsexperience/2025/11/18/ignite-2025-windows-at-the-frontier-of-work/
+  cta:
+    label: Read the story
+    url: https://blogs.nvidia.com/blog/rtx-ai-garage-nexa-hyperlink-local-agent/
+- group: Models
+  name: Octopus and Omni Model Series
+  type: CreativeWork
+  url: https://arxiv.org/abs/2404.01744
+  summary: >-
+    The first AI agent models built to run directly on hardware — function calling across PCs, phones, wearables,
+    automotive, and robots — plus the OmniVLM and OmniAudio multimodal models. The line trended
+    <a href="https://x.com/Thom_Wolf/status/1864227910099366327">top-3 on Hugging Face</a> and was featured at
+    <a href="https://developers.googleblog.com/en/gemma-family-and-toolkit-expansion-io-2024/">Google I/O</a>
+    and by <a href="https://deepmind.google/models/gemma/gemmaverse/omniaudio/">Google DeepMind</a>.
+  badges:
+    - label: Featured by
+      value: Google I/O 2024
+      logo: google
+      url: https://developers.googleblog.com/en/gemma-family-and-toolkit-expansion-io-2024/
+    - label: Featured by
+      value: Google DeepMind
+      logo: deepmind
+      url: https://deepmind.google/models/gemma/gemmaverse/omniaudio/
+    - label: Hugging Face
+      value: Top-3 trending
+      logo: huggingface
+      url: https://x.com/Thom_Wolf/status/1864227910099366327
+  cta:
+    label: Read the paper
+    url: https://arxiv.org/abs/2404.01744

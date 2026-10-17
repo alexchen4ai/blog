@@ -1,0 +1,27 @@
+{% assign s = site.data.socials %}
+<ul class="lp-socials">
+  {% if s.github_username %}
+    <li>
+      <a href="https://github.com/{{ s.github_username }}" rel="me noopener" target="_blank"
+        ><i class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a
+      >
+    </li>
+  {% endif %}
+  {% if s.linkedin_username %}
+    <li>
+      <a href="https://www.linkedin.com/in/{{ s.linkedin_username }}" rel="me noopener" target="_blank"
+        ><i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn</a
+      >
+    </li>
+  {% endif %}
+  {% if s.x_username %}
+    <li>
+      <a href="https://x.com/{{ s.x_username }}" rel="me noopener" target="_blank"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i> X</a>
+    </li>
+  {% endif %}
+  {% if s.email %}
+    <li>
+      <a href="mailto:{{ s.email }}" rel="me"><i class="fa-regular fa-envelope" aria-hidden="true"></i> {{ s.email }}</a>
+    </li>
+  {% endif %}
+</ul>

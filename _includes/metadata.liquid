@@ -99,6 +99,7 @@
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 {% endif %}
 <link rel="alternate" type="application/atom+xml" title="{{ title | strip }}" href="{{ '/feed.xml' | prepend: site_root }}">
+<link rel="alternate" type="text/markdown" title="llms.txt" href="{{ '/llms.txt' | prepend: site_root }}">
 
 {% if site.serve_og_meta %}
   <!-- OpenGraph -->
@@ -282,7 +283,7 @@
         {% capture link %}{{ social[1] }}{% endcapture %}
         {% assign sameaslinks = sameaslinks | push: link %}
       {% when 'x_username' %}
-        {% capture link %}https://twitter.com/{{ social[1] }}{% endcapture %}
+        {% capture link %}https://x.com/{{ social[1] }}{% endcapture %}
         {% assign sameaslinks = sameaslinks | push: link %}
       {% when 'youtube_id' %}
         {% capture link %}https://youtube.com/@{{ social[1] }}{% endcapture %}
@@ -322,7 +323,11 @@
         "address": { "@type": "PostalAddress", "addressLocality": {{ person.address.locality | jsonify }}, "addressRegion": {{ person.address.region | jsonify }}, "addressCountry": {{ person.address.country | jsonify }} },
       {% endif %}
       {% if person.knows_about %}"knowsAbout": {{ person.knows_about | jsonify }},{% endif %}
-      {% if sameaslinks != blank %}"sameAs": {{ sameaslinks | jsonify }},{% endif %}
+      {% if person.degree and person.alumni_of %}
+        "hasCredential": { "@type": "EducationalOccupationalCredential", "credentialCategory": "degree", "name": {{ person.degree | append: ', ' | append: person.alumni_of.name | jsonify }}, "recognizedBy": { "@type": "CollegeOrUniversity", "name": {{ person.alumni_of.name | jsonify }} } },
+      {% endif %}
+      {% if person.awards %}"award": {{ person.awards | jsonify }},{% endif %}
+      {% if person.languages %}"knowsLanguage": {{ person.languages | jsonify }},{% endif %}      {% if sameaslinks != blank %}"sameAs": {{ sameaslinks | jsonify }},{% endif %}
       "url": {{ site_root | append: '/' | jsonify }}
     }
   {% endcapture %}
@@ -382,6 +387,46 @@
               ]
             }
           {% endif %}
+          {% assign org_id = site_root | append: '/#nexa-ai' %}
+          {% if person.founded %}
+            ,{
+              "@type": "Organization",
+              "@id": {{ org_id | jsonify }},
+              "name": {{ person.founded.name | jsonify }},
+              "url": {{ person.founded.url | jsonify }},
+              "foundingDate": {{ person.founded.founding_date | jsonify }},
+              "description": {{ person.founded.description | jsonify }},
+              "founder": { "@id": {{ person_id | jsonify }} },
+              {% if person.founded.same_as %}"sameAs": {{ person.founded.same_as | jsonify }},{% endif %}
+              "parentOrganization": { "@type": "Organization", "name": {{ person.works_for.name | jsonify }}, "url": {{ person.works_for.url | jsonify }} },
+              "subjectOf": [
+                {% for group in site.data.recognition.groups %}
+                  {% for item in group.items %}
+                    {% assign publisher = item.name | split: ' (' | first %}
+                    {
+                      "@type": "Article",
+                      "url": {{ item.url | jsonify }},
+                      "headline": {{ item.summary | strip_html | normalize_whitespace | jsonify }},
+                      "publisher": { "@type": "Organization", "name": {{ publisher | jsonify }} }
+                    }{% unless forloop.last %},{% endunless %}
+                  {% endfor %}{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+              ]
+            }
+          {% endif %}
+          {% for work in site.data.work %}
+            {% assign work_slug = work.name | slugify %}
+            ,{
+              "@type": {{ work.type | default: 'CreativeWork' | jsonify }},
+              "@id": {{ site_root | append: '/#' | append: work_slug | jsonify }},
+              "name": {{ work.name | jsonify }},
+              "url": {{ work.url | jsonify }},
+              "description": {{ work.summary | strip_html | normalize_whitespace | jsonify }},
+              {% if work.category %}"applicationCategory": {{ work.category | jsonify }},{% endif %}
+              "creator": { "@id": {{ person_id | jsonify }} },
+              "producer": { "@id": {{ org_id | jsonify }} }
+            }
+          {% endfor %}
         {% elsif is_blog_post %}
           {
             "@type": "BlogPosting",
@@ -436,6 +481,42 @@
                       ]
                     }
                   }{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+              ]
+            }
+          },
+          { "@type": "BreadcrumbList", "itemListElement": [ {{ breadcrumb_items | strip }} ] }
+        {% elsif page.url == '/recognition/' %}
+          {
+            "@type": "CollectionPage",
+            "@id": {{ page_url | append: '#webpage' | jsonify }},
+            "url": {{ page_url | jsonify }},
+            "name": {{ page.title | strip | jsonify }},
+            "description": {{ page_description | jsonify }},
+            "inLanguage": {{ site.lang | jsonify }},
+            "isPartOf": { "@id": {{ website_id | jsonify }} },
+            "about": { "@id": {{ person_id | jsonify }} },
+            "mainEntity": {
+              "@type": "ItemList",
+              "itemListElement": [
+                {% assign position = 0 %}
+                {% for group in site.data.recognition.groups %}
+                  {% for item in group.items %}
+                    {% assign position = position | plus: 1 %}
+                    {% assign publisher = item.name | split: ' (' | first %}
+                    {
+                      "@type": "ListItem",
+                      "position": {{ position }},
+                      "item": {
+                        "@type": "Article",
+                        "url": {{ item.url | jsonify }},
+                        "headline": {{ item.summary | strip_html | normalize_whitespace | jsonify }},
+                        "genre": {{ group.name | jsonify }},
+                        "publisher": { "@type": "Organization", "name": {{ publisher | jsonify }} },
+                        "about": { "@type": "Organization", "name": {{ person.founded.name | jsonify }}, "url": {{ person.founded.url | jsonify }} }
+                      }
+                    }{% unless forloop.last %},{% endunless %}
+                  {% endfor %}{% unless forloop.last %},{% endunless %}
                 {% endfor %}
               ]
             }

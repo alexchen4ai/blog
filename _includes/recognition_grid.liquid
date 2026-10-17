@@ -1,0 +1,38 @@
+{% assign heading = include.heading | default: 'h3' %}
+{% assign card_heading = include.card_heading | default: 'h4' %}
+{% for group in site.data.recognition.groups %}
+  <{{ heading }} class="lp-kicker">{{ group.name }}</{{ heading }}>
+  <div class="lp-card-grid">
+    {% for item in group.items %}
+      <article class="lp-card">
+        <a class="lp-card-shot" href="{{ item.url }}" aria-label="{{ item.name }}: open the featured coverage">
+          <img src="{{ item.image | prepend: '/assets/img/recognition/' | relative_url }}" alt="{{ item.name }} featuring Nexa AI" loading="lazy">
+        </a>
+        <{{ card_heading }} class="lp-brand">
+          {% if item.logo %}
+            <span
+              class="lp-logo"
+              aria-hidden="true"
+              style="--logo: url('{{ item.logo | prepend: '/assets/img/logos/' | append: '.svg' | relative_url }}')"
+            ></span>
+          {% endif %}
+          {{ item.name }}
+        </{{ card_heading }}>
+        <p>{{ item.summary }}</p>
+      </article>
+    {% endfor %}
+  </div>
+{% endfor %}
+
+<{{ heading }} class="lp-kicker">Industry Talks</{{ heading }}>
+<ul class="lp-talks">
+  {% for talk in site.data.recognition.talks %}
+    <li>
+      {% if talk.url -%}
+        <a href="{{ talk.url }}">{{ talk.name }}</a>
+      {%- else -%}
+        {{- talk.name -}}
+      {%- endif %}
+    </li>
+  {% endfor %}
+</ul>
