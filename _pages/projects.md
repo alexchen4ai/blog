@@ -1,6 +1,6 @@
 ---
 layout: page
-title: projects
+title: Projects
 permalink: /projects/
 description: Selected engineering and research projects — from inference runtimes to things built for fun.
 nav: true

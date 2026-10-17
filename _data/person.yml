@@ -31,9 +31,19 @@ founded:
   url: https://nexa.ai
   founding_date: "2024"
   description: Generative AI inference company (NexaSDK, NexaML, Octopus, OmniVLM, OmniAudio, NexaQuant); acquired by Qualcomm in 2026.
+  same_as:
+    - https://github.com/NexaAI
+    - https://huggingface.co/NexaAI
+    - https://x.com/nexa_ai
 alumni_of:
   name: Stanford University
   url: https://www.stanford.edu
+degree: PhD
+awards:
+  - Best Paper Runner-Up Award, IEEE International Conference on Data Mining (ICDM 2025)
+languages:
+  - English
+  - Chinese
 knows_about:
   - AI systems
   - Generative AI inference

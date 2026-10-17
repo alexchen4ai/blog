@@ -2,28 +2,14 @@
   <!-- Nav Bar -->
   <nav id="navbar" class="navbar navbar-light navbar-expand-sm {% if site.navbar_fixed %}fixed-top{% else %}sticky-top{% endif %}" role="navigation">
     <div class="container">
-      {% if page.permalink != '/' %}
-        <a class="navbar-brand title font-weight-lighter" href="{{ site.baseurl }}/">
-          {% if site.title == 'blank' %}
-            {% if site.first_name %}
-              <span class="font-weight-bold">
-                {{- site.first_name -}}
-              </span>
-            {% endif %}
-            {% if site.middle_name %}
-              {{- site.middle_name -}}
-            {% endif %}
-            {% if site.last_name %}
-              {{- site.last_name -}}
-            {% endif %}
-          {% else %}
-            {{- site.title -}}
-          {% endif %}
-        </a>
-      {% elsif site.enable_navbar_social %}
-        <!-- Social Icons -->
-        <div class="navbar-brand social">{% social_links %}</div>
-      {% endif %}
+      <a class="navbar-brand title" href="{{ site.baseurl }}/" aria-label="{{ site.data.person.name }} — home">
+        {%- if site.title == 'blank' -%}
+          {{ site.first_name }}
+          {{ site.last_name }}
+        {%- else -%}
+          {{ site.title }}
+        {%- endif -%}
+      </a>
       <!-- Navbar Toggle -->
       <button
         class="navbar-toggler collapsed ml-auto"
@@ -120,8 +106,8 @@
           {% if site.search_enabled %}
             <!-- Search -->
             <li class="nav-item">
-              <button id="search-toggle" title="Search" onclick="openSearchModal()">
-                <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span>
+              <button id="search-toggle" title="Search (Ctrl K)" aria-label="Search" onclick="openSearchModal()">
+                <span class="nav-link"><i class="fa-solid fa-magnifying-glass"></i></span>
               </button>
             </li>
           {% endif %}
@@ -139,7 +125,7 @@
       </div>
     </div>
   </nav>
-  {% if site.enable_progressbar %}
+  {% if site.enable_progressbar and page.layout != 'about' %}
     <!-- Scrolling Progress Bar -->
     <progress id="progress" value="0">
       <div class="progress-container">

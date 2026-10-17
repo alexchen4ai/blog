@@ -32,6 +32,8 @@ module Jekyll
           'authors' => authors,
           'year' => e[:year].to_s,
           'venue' => (e[:booktitle] || e[:journal]).to_s.gsub(/[{}]/, ''),
+          'abbr' => e[:abbr].to_s,
+          'selected' => e[:selected].to_s == 'true',
           'arxiv' => e[:arxiv].to_s,
           'url' => e[:html].to_s,
           'note' => e[:note].to_s
