@@ -89,7 +89,6 @@ h6 {
 .lp-work p a,
 .lp-card p a,
 .lp-talks a,
-.lp-pubs a,
 .lp-post-title,
 .lp-back {
   @extend %lp-link;
@@ -489,32 +488,20 @@ a.lp-badge:hover {
   }
 }
 
-/* Publications ------------------------------------------------------------- */
+/* Recognition cards -------------------------------------------------------- */
 
-.lp-pubs {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.lp-recog-summary {
+  max-width: 52rem;
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--global-text-color-body);
 
-  li {
-    margin: 0 0 1.1rem;
-    padding: 0.1rem 0 0.1rem 1.1rem;
-    border-left: 2px solid var(--global-divider-color);
-  }
-
-  a {
-    font-size: 0.95rem;
-  }
-
-  span {
-    display: block;
-    margin-top: 0.3rem;
-    font-size: 0.875rem;
-    color: var(--global-text-color-muted);
+  strong {
+    font-weight: 600;
+    color: var(--global-text-color);
   }
 }
-
-/* Recognition cards -------------------------------------------------------- */
 
 .lp-card-grid {
   display: grid;

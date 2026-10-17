@@ -4,7 +4,7 @@ title: About
 permalink: /
 description: >-
   Alex (Wei) Chen — Director at Qualcomm; founder, CEO and Chief Scientist of Nexa AI (acquired by Qualcomm); Stanford PhD.
-  Builder of NexaSDK, Hyperlink, Octopus, OmniVLM and OmniAudio. Writing on AI systems, generative AI inference, and robotics.
+  Builder of NexaSDK, Hyperlink, Octopus, OmniVLM and OmniAudio, featured by NVIDIA, AMD, Microsoft, Google DeepMind, IBM, and Intel.
 subtitle: >-
   Director at <a href="https://www.qualcomm.com">Qualcomm</a> — founder, CEO &amp; Chief Scientist of
   <a href="https://nexa.ai">Nexa AI</a> (acquired by Qualcomm). Stanford PhD. Santa Clara, CA.
@@ -14,6 +14,16 @@ faq:
     a: >-
       Yes. My legal name is Wei Chen and I go by Alex. Academic publications and my Stanford PhD appear under "Wei Chen";
       my industry work at Nexa AI and Qualcomm uses "Alex Chen". Both refer to the same person.
+  - q: What industry recognition has Alex Chen's work received?
+    a: >-
+      Work from Nexa AI — NexaSDK, the Hyperlink local agent, and the Octopus and Omni models — has been featured by
+      Qualcomm, [NVIDIA](https://blogs.nvidia.com/blog/rtx-ai-garage-nexa-hyperlink-local-agent/), AMD, Intel,
+      [Google DeepMind](https://deepmind.google/models/gemma/gemmaverse/omniaudio/), Google (2024 Gemma keynote at Google I/O),
+      OpenAI, Hugging Face, [IBM](https://www.ibm.com/new/announcements/ibm-granite-4-0-hyper-efficient-high-performance-hybrid-models)
+      (a supported framework for Granite 4.0), Alibaba Qwen, Liquid AI, pyannoteAI,
+      [Microsoft](https://blogs.windows.com/windowsexperience/2025/11/18/ignite-2025-windows-at-the-frontier-of-work/)
+      (on stage at the Ignite 2025 keynote), and Apple. Talks include Microsoft Ignite 2025, CES 2026, and the Qualcomm
+      Snapdragon Summit. The full list with sources is on the [recognition](/recognition/) page.
   - q: What is Nexa AI and what happened to it?
     a: >-
       [Nexa AI](https://nexa.ai) is the company I founded in 2024 to make generative AI run efficiently on everyday hardware

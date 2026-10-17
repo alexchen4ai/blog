@@ -34,6 +34,28 @@ layout: default
     {% include social_row.liquid %}
   </section>
 
+  <section class="lp-section" id="recognition" aria-labelledby="recog-title">
+    <h2 class="lp-title" id="recog-title"><a href="{{ '/recognition/' | relative_url }}">Industrial recognition</a></h2>
+    {% assign recognizers = '' | split: ',' %}
+    {% for group in site.data.recognition.groups %}
+      {% for item in group.items %}
+        {% assign recognizer = item.name | split: ' (' | first %}
+        {% assign recognizers = recognizers | push: recognizer %}
+      {% endfor %}
+    {% endfor %}
+    {% assign recognizers = recognizers | uniq %}
+    <p class="lp-recog-summary">
+      {{ person.name }}'s work at {{ person.founded.name }} — NexaSDK, Hyperlink, and the Octopus and Omni models — has been featured by
+      {% for name in recognizers %}
+        {%- if forloop.last %}and {% endif -%}
+        <strong>{{ name }}</strong>
+        {%- unless forloop.last %}, {% endunless %}
+      {%- endfor -%}
+      , and presented at {{ site.data.recognition.talks | map: 'name' | slice: 0, 3 | join: ', ' }}, and more.
+    </p>
+    {% include recognition_grid.liquid %}
+  </section>
+
   {% if page.latest_posts.enabled %}
     <section class="lp-section" id="blog" aria-labelledby="blog-title">
       <h2 class="lp-title" id="blog-title"><a href="{{ '/blog/' | relative_url }}">Blog posts</a></h2>
@@ -102,34 +124,11 @@ layout: default
   {% endif %}
 
   {% if page.selected_papers %}
-    {% assign pubs = '_bibliography/papers.bib' | bib_entries | where: 'selected', true %}
     <section class="lp-section" id="publications" aria-labelledby="pubs-title">
       <h2 class="lp-title" id="pubs-title"><a href="{{ '/publications/' | relative_url }}">Selected publications</a></h2>
-      <ul class="lp-pubs">
-        {% for e in pubs %}
-          {% if e.url != '' %}
-            {% assign href = e.url %}
-          {% else %}
-            {% assign href = e.arxiv | prepend: 'https://arxiv.org/abs/' %}
-          {% endif %}
-          <li>
-            <a href="{{ href }}">{{ e.title }}</a>
-            <span>
-              {{- e.abbr | default: e.venue }}
-              {{ e.year -}}
-              {%- if e.note != '' %} &middot; {{ e.note }}{% endif -%}
-            </span>
-          </li>
-        {% endfor %}
-      </ul>
+      {% include selected_papers.liquid %}
     </section>
   {% endif %}
-
-  <section class="lp-section" id="recognition" aria-labelledby="recog-title">
-    <h2 class="lp-title" id="recog-title"><a href="{{ '/recognition/' | relative_url }}">Industrial recognition</a></h2>
-    {% include recognition_grid.liquid %}
-  </section>
-
   <section class="lp-section" id="experience" aria-labelledby="exp-title">
     <h2 class="lp-title" id="exp-title"><a href="{{ '/cv/' | relative_url }}">Experience</a></h2>
     <ul class="lp-timeline">
