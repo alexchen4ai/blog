@@ -471,7 +471,7 @@
                       "@type": "ScholarlyArticle",
                       "headline": {{ e.title | jsonify }},
                       "datePublished": {{ e.year | jsonify }},
-                      {% if e.venue != '' %}"isPartOf": { "@type": "Periodical", "name": {{ e.venue | jsonify }} },{% endif %}
+                      {% if e.venue != '' %}{% unless e.venue contains 'arXiv' %}"isPartOf": { "@type": "Periodical", "name": {{ e.venue | jsonify }} },{% endunless %}{% endif %}
                       {% if e.arxiv != '' %}"sameAs": {{ e.arxiv | prepend: 'https://arxiv.org/abs/' | jsonify }},{% endif %}
                       {% if e.url != '' %}"url": {{ e.url | jsonify }},{% endif %}
                       "author": [

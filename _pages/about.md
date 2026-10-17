@@ -47,8 +47,6 @@ faq:
 profile:
   image: prof_pic.jpg
 
-selected_papers: true
-
 latest_posts:
   enabled: true
   limit: 5

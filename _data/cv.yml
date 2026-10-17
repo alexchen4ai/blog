@@ -82,49 +82,42 @@ cv:
       - title: "AutoNeural: Co-Designing Vision-Language Models for NPU Inference"
         authors:
           - "Wei Chen, Liangmin Wu, Yunhai Hu, Zhiyuan Li, et al."
-        publisher: "arXiv:2512.02924"
         releaseDate: "2025"
         url: https://arxiv.org/abs/2512.02924
 
       - title: "OmniVLM: A Token-Compressed, Sub-Billion-Parameter Vision-Language Model for Efficient On-Device Inference"
         authors:
           - "Wei Chen, Zhiyuan Li, Shuo Xin"
-        publisher: "arXiv:2412.11475"
         releaseDate: "2024"
         url: https://arxiv.org/abs/2412.11475
 
       - title: "Dolphin: Long Context as a New Modality for Energy-Efficient On-Device Language Models"
         authors:
           - "Wei Chen, Zhiyuan Li, Shuo Xin, Yihao Wang"
-        publisher: "arXiv:2408.15518"
         releaseDate: "2024"
         url: https://arxiv.org/abs/2408.15518
 
       - title: "Octopus v4: Graph of language models"
         authors:
           - "Wei Chen, Zhiyuan Li"
-        publisher: "arXiv:2404.19296"
         releaseDate: "2024"
         url: https://arxiv.org/abs/2404.19296
 
       - title: "Octopus v3: Technical Report for On-device Sub-billion Multimodal AI Agent"
         authors:
           - "Wei Chen, Zhiyuan Li"
-        publisher: "arXiv:2404.11459"
         releaseDate: "2024"
         url: https://arxiv.org/abs/2404.11459
 
       - title: "Octopus v2: On-device language model for super agent"
         authors:
           - "Wei Chen, Zhiyuan Li"
-        publisher: "arXiv:2404.01744"
         releaseDate: "2024"
         url: https://arxiv.org/abs/2404.01744
 
       - title: "On-Device Language Models: A Comprehensive Review"
         authors:
           - "Jiajun Xu, Zhiyuan Li, Wei Chen, Qun Wang, Xin Gao, Qi Cai, Ziyuan Ling"
-        publisher: "arXiv:2409.00088"
         releaseDate: "2024"
         url: https://arxiv.org/abs/2409.00088
 

@@ -73,7 +73,7 @@ Third-party coverage of this work at Nexa AI, grouped by sector. Each link is th
 ## Publications
 {% assign pubs = "_bibliography/papers.bib" | bib_entries %}
 {%- for e in pubs %}
-- {{ e.authors | join: ", " }}{% if e.authors.size >= 10 %} et al.{% endif %} ({{ e.year }}). {{ e.title }}. {{ e.venue }}.{% if e.note != "" %} {{ e.note }}.{% endif %}{% if e.arxiv != "" %} https://arxiv.org/abs/{{ e.arxiv }}{% elsif e.url != "" %} {{ e.url }}{% endif %}
+- {{ e.authors | join: ", " }}{% if e.authors.size >= 10 %} et al.{% endif %} ({{ e.year }}). {{ e.title }}.{% unless e.venue contains "arXiv" %} {{ e.venue }}.{% endunless %}{% if e.note != "" %} {{ e.note }}.{% endif %}{% if e.arxiv != "" %} https://arxiv.org/abs/{{ e.arxiv }}{% elsif e.url != "" %} {{ e.url }}{% endif %}
 {%- endfor %}
 
 ## Optional
